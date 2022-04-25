@@ -1,4 +1,9 @@
 import React from "react";
+import Layout from "./components/Layout/Layout";
+import Game from "./pages/Game/Game";
+
 export const App = () => {
-  return <h1>Hello World</h1>;
+  return <Layout>
+    <Game />
+  </Layout>
 };
