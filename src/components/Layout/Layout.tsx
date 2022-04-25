@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Footer from "../Footer";
+import './Layout.pcss';
 
 interface Props {
   children: ReactNode
@@ -9,11 +10,11 @@ interface Props {
 
 export default function Layout({children}: Props) {
   return <div>
-    <Header />
-    <div>
+    {/* <Header /> */}
+    <div className={'content'}>
       <Sidebar />
       {children}
     </div>
-    <Footer />
+    {/* <Footer /> */}
   </div>
 }

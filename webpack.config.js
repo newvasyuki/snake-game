@@ -50,6 +50,10 @@ module.exports = (_, argv) => {
             loader: "ts-loader",
           },
         },
+        {
+          test:/\.pcss$/,
+          use:['style-loader', 'css-loader', 'postcss-loader']
+      }
       ],
     },
     plugins: [new HtmlWebpackPlugin(htmlPluginConfig)],
