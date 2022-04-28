@@ -51,9 +51,27 @@ module.exports = (_, argv) => {
           },
         },
         {
-          test:/\.pcss$/,
-          use:['style-loader', 'css-loader', 'postcss-loader']
-      }
+          test: /\.pcss$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            }
+          ]
+        },
+        {
+          test: /\.svg$/,
+          use: ['@svgr/webpack'],
+        },
       ],
     },
     plugins: [new HtmlWebpackPlugin(htmlPluginConfig)],
