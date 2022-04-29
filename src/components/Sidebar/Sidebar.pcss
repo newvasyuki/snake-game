@@ -1,17 +1,50 @@
+.sidebar__logo {
+  display: flex;
+  width: var(--sidebar-width);
+  height: var(--header-heigth);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  outline: 1px solid red;
+  padding: 0.5rem 4rem;
+
+  &_collapsed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 1.5rem 0;
+  }
+}
+
 .sidebar {
   background-color: #EEE4DA;
-  width: 22rem;
+  width: var(--sidebar-width);
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 500;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &_collapsed {
+    background-color: #EEE4DA;
+    width: var(--sidebar-width-collapsed);
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 
   &__menu {
     display: flex;
     flex-direction: column;
     list-style-type: none;
+    flex-grow: 1;
     padding: 0;
+    justify-content: center;
   }
 
   &__menuItemIcon {
@@ -19,20 +52,33 @@
   }
 
   &__menuItem {
+    position: relative;
+    width: 17rem;
+    height: 3rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: relative;
-    width: 15rem;
-    height: 3rem;
     &:hover {
       text-decoration: underline;
       cursor: pointer;
     }
+
+    &_collapsed {
+      position: relative;
+      width: var(--sidebar-width-collapsed);
+      height: 3rem;
+      border-radius: 0 10px 10px 0;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   
     &_selected {
       position: relative;
-      width: 15rem;
       height: 3rem;
       background-color: #F59565;
       border-radius: 0 10px 10px 0;
@@ -44,13 +90,35 @@
         text-decoration: underline;
         cursor: pointer;
       }
-    }
-  
-    &::after {
-      position: absolute;
-      width: 1rem;
-      height: 1rem;
-      background-image: url('./menuItemGame.svg');
+
+      &_collapsed {
+        position: relative;
+        width: var(--sidebar-width-collapsed);
+        height: 3rem;
+        background-color: #F59565;
+        border-radius: 0 10px 10px 0;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
+}
+
+.sidebar__collapseIcon {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.sidebar__text_collapsed {
+  display: none;
+}
+
+.sidebar__collapseIcon_collapsed {
+  transform: scale(-1,1);
 }

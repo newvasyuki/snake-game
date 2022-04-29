@@ -41,6 +41,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
+    "postcss-preset-env": "^7.4.4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router": "^6.3.0",

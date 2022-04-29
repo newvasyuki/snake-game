@@ -3,6 +3,6 @@ import './Game.pcss';
 
 export default function Game() {
   return <div className={'game'}>
-    This is game!
+    This is a game!
   </div>
 }
