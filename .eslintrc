@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+
+  "parserOptions": {
+      "project": ["./tsconfig.json"]
+  },
+
+  "rules": {
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-var-requires": 0,
+    "semi": "error"
+  },
+
+  "plugins": [
+    "editorconfig"
+  ]
+}

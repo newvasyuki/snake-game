@@ -1,0 +1,17 @@
+{
+  "extends": "stylelint-config-airbnb",
+
+  "rules": {
+    "indentation": [
+      2,
+      {
+        "ignore": ["inside-parens"]
+      }
+    ],
+    "at-rule-no-unknown": null,
+    "selector-class-pattern": "^[a-z][a-zA-Z-_]+$"
+  },
+  "ignoreFiles": [
+    "build/*"
+  ]
+}
