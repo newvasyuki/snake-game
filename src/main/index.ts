@@ -1,3 +1,3 @@
-export { Main } from './Main';
+import Main from './Main';
 
-export default {};
+export default Main;
