@@ -6,8 +6,11 @@ import { object, string } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ProfileInput from './components/ProfileInput';
 import Button from '../../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
+  const navigate = useNavigate();
+
   const getUserData = () => Promise.resolve({
     first_name: 'Иван',
     last_name: 'Иванов',
@@ -70,7 +73,7 @@ export default function Profile() {
   return (
     <div className={'profile-page'}>
       <div className={'profile-page__sidebar'}>
-        <button className={'profile-page__button-back'} />
+        <Button className={'profile-page__button-back'} onClick={() => navigate(-1)} />
       </div>
       <div className={'profile-page__content'}>
         <ProfileImage className={'profile-page__image'} />

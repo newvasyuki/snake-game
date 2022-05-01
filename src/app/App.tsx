@@ -2,6 +2,8 @@ import React from "react";
 import { Main } from "../main";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { ROUTES } from "../constants";
+import Profile from "../pages/Profile/Profile";
+import '../constants/constants.pcss';
 
 export const App = () => {
   return (
@@ -15,12 +17,7 @@ export const App = () => {
         </Route>
         <Route
           path={ROUTES.profile}
-          element={
-            <>
-              <h1>Profile</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          }
+          element={<Profile />}
         />
         <Route
           path={ROUTES.signIn}
