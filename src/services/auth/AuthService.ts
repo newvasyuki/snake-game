@@ -1,4 +1,4 @@
-import { AuthApi, SignInData, SignUpData } from "../../api";
+import { authApi, AuthApi, SignInData, SignUpData } from "../../api";
 
 export class AuthService {
   protected authApi: AuthApi;
@@ -49,3 +49,5 @@ export class AuthService {
     }
   }
 }
+
+export const authService = new AuthService(authApi);

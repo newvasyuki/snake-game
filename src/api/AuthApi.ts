@@ -1,6 +1,6 @@
 export type SignUpData = {
-  firstName: string;
-  secondName: string;
+  first_name: string;
+  second_name: string;
   login: string;
   email: string;
   password: string;
@@ -35,9 +35,13 @@ export class AuthApi {
   }
 
   signUp(userData: SignUpData) {
-    return fetch(`${this.baseUrl}/signup`, {
+    return fetch(`${this.baseUrl}/auth/signup`, {
       method: "POST",
       body: JSON.stringify(userData),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data: SignUpResponse) => data.id)
@@ -47,24 +51,32 @@ export class AuthApi {
   }
 
   signIn(data: SignInData) {
-    return fetch(`${this.baseUrl}/signin`, {
+    return fetch(`${this.baseUrl}/auth/signin`, {
       method: "POST",
       body: JSON.stringify(data),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).catch((error: unknown) => {
       console.log(error);
     });
   }
 
   logout() {
-    return fetch(`${this.baseUrl}/logout`, {
+    return fetch(`${this.baseUrl}/auth/logout`, {
       method: "POST",
+      credentials: "include",
     }).catch((error: unknown) => {
       console.log(error);
     });
   }
 
   getUserInfo() {
-    return fetch(`${this.baseUrl}/user`)
+    return fetch(`${this.baseUrl}/auth/user`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((userData: User) => userData)
       .catch((error: unknown) => {
