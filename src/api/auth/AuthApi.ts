@@ -1,30 +1,7 @@
-export type SignUpData = {
-  first_name: string;
-  second_name: string;
-  login: string;
-  email: string;
-  password: string;
-  phone: string;
-};
+import { SignUpData, SignInData, User } from "./types";
 
 type SignUpResponse = {
   id: number;
-};
-
-export type SignInData = {
-  login: string;
-  password: string;
-};
-
-type User = {
-  id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  email: string;
-  phone: number;
-  avatar: string;
 };
 
 export class AuthApi {
