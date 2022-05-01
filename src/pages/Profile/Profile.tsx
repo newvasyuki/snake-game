@@ -8,36 +8,44 @@ import ProfileInput from './components/ProfileInput';
 import Button from '../../components/Button';
 
 export default function Profile() {
+  const getUserData = () => Promise.resolve({
+    first_name: 'Иван',
+    last_name: 'Иванов',
+    email: 'pochta@yandex.ru',
+    login: 'ivanivanov'
+  });
+
   const [userData, setUserData] = useState({  
     first_name: '',
     last_name: '',
     email: '',
     login: ''
   });
-  useEffect(() => {
-    // todo fetch data from the backend based on a cookie
-    setUserData({
-      first_name: 'Иван',
-      last_name: 'Иванов',
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov'
-    })
-  }, []);
 
   const schema =
-    object()
-      .shape({
-        first_name: string().required('Укажите значение'),
-        last_name: string().required('Укажите значение'),
-        email: string().email('Укажите email в корректном формате').required('Укажите значение'),
-        login: string().required('Укажите значение'),
-      })
-      .required();
+  object()
+    .shape({
+      first_name: string().required('Укажите значение'),
+      last_name: string().required('Укажите значение'),
+      email: string().email('Укажите email в корректном формате').required('Укажите значение'),
+      login: string().required('Укажите значение'),
+    })
+    .required();
 
-  const { handleSubmit, formState: { errors }, register } = useForm({
+  const { handleSubmit, formState: { errors }, register, reset } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    // todo fetch data from the backend based on a cookie
+    const loadData = async () => {
+      const res = await getUserData();
+      reset(res);
+      setUserData(res);
+    };
+    loadData();
+  }, [reset]);
 
   const onFormSubmission = async (data: Record<any, any>) => {
     console.log(data)
