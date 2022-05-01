@@ -15,14 +15,81 @@
 
   &__content {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
   }
 
   &__image {
-    width: 10rem;
-    height: 10rem;
+    width: 9rem;
+    height: 9rem;
+    cursor: pointer;
+  }
+
+  &__name {
+    color: #7D7369;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    margin: 2rem 0;
+  }
+
+  &__input-wrapper {
+    display: flex;
+  }
+
+  &__userdata-form {
+    width: 30rem;
+  }
+  
+  &__change-data-btn-wrapper {
+
+  }
+
+  &__change-data-btn {
+    color: #72685D;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #EAEAEA;
+  }
+
+  &__change-data-btn:hover,  {
+    color: black;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+  }
+
+  &__buttons-wrapper {
+    margin: 3rem 0 0 0;
+  }
+
+  &__exit-btn {
+    color: red;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #EAEAEA;
+  }
+
+  &__exit-btn:hover {
+    cursor: pointer;
+    border-bottom: 1px solid black;
   }
 }
 
@@ -38,8 +105,7 @@
 
   &:before {
     content: url("../../../assets/backToPage.svg");
-    width: 1rem;
-    height: 1rem;
+    height: .9rem;
     display: flex;
   }
 }
