@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import './Sidebar.pcss';
-import MenuItemGame from '../../../assets/MenuItemGame.svg';
-import MenuItemForum from './MenuItemForum.svg';
-import MenuItemLeaders from './MenuItemLeaders.svg';
-import MenuItemRules from './MenuItemRules.svg';
-import CollapseIcon from './CollapseIcon.svg';
+import MenuItemGame from '../../../assets/menuItemGame.react.svg';
+import MenuItemForum from '../../../assets/menuItemForum.react.svg';
+import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
+import MenuItemRules from '../../../assets/menuItemRules.react.svg';
+import CollapseIcon from './CollapseIcon.react.svg';
 import Logo from '../Logo';
 
 export default function Sidebar() {

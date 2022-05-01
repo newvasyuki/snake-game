@@ -1,7 +1,7 @@
 import React from "react";
 import './Logo.pcss';
-import LogoBig from './logo.svg';
-import LogoSmall from './logoSmall.svg';
+import LogoBig from './logo.react.svg';
+import LogoSmall from './logoSmall.react.svg';
 
 interface Props {
   isSmall: boolean
