@@ -6,6 +6,7 @@ import {
   Routes,
 } from 'react-router-dom';
 import Main from '../main';
+import { Game } from '../pages/Game'
 import { ROUTES } from '../constants';
 
 const App = () => {
