@@ -1,11 +1,14 @@
-import React from "react";
-import { Main } from "../main";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { ROUTES } from "../constants";
-import Game from "../pages/Game";
-import '../constants/constants.pcss';
+import React from 'react';
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+} from 'react-router-dom';
+import Main from '../main';
+import { ROUTES } from '../constants';
 
-export const App = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -17,41 +20,43 @@ export const App = () => {
         <Route path={ROUTES.game} element={<Game />} />
         <Route
           path={ROUTES.profile}
-          element={
+          element={(
             <>
               <h1>Profile</h1>
               <Link to={ROUTES.home}>Go to main</Link>
             </>
-          }
+          )}
         />
         <Route
           path={ROUTES.signIn}
-          element={
+          element={(
             <>
               <h1>SignIn</h1>
               <Link to={ROUTES.home}>Go to main</Link>
             </>
-          }
+          )}
         />
         <Route
           path={ROUTES.signUp}
-          element={
+          element={(
             <>
               <h1>SignUp</h1>
               <Link to={ROUTES.home}>Go to main</Link>
             </>
-          }
+          )}
         />
         <Route
           path="*"
-          element={
+          element={(
             <>
               <h1>404</h1>
               <Link to={ROUTES.home}>Go to main</Link>
             </>
-          }
+          )}
         />
       </Routes>
     </BrowserRouter>
   );
 };
+
+export default App;
