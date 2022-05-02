@@ -5,59 +5,65 @@ import MenuItemForum from '../../../assets/menuItemForum.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.svg';
 import MenuItemRules from '../../../assets/menuItemRules.svg';
 import CollapseIcon from './CollapseIcon.svg';
-import { Logo } from '../Logo';
 
-const listToIcons = {
-  Игра: <MenuItemGame />,
-  Лидеры: <MenuItemLeaders />,
-  Форум: <MenuItemForum />,
-  Правила: <MenuItemRules />
+const menuItems = {
+  game: {
+    icon: <MenuItemGame />,
+    route: '/game',
+    label: 'Игра',
+  },
+  leaders: {
+    icon: <MenuItemLeaders />,
+    route: '/leaders',
+    label: 'Лидеры',
+  },
+  forum: {
+    icon: <MenuItemForum />,
+    route: '/forum',
+    label: 'Форум',
+  },
+  rules: {
+    icon: <MenuItemRules />,
+    route: '/rules',
+    label: 'Правила',
+  },
 }
 
-// todo: connect with Router
-const listToLinks = {
-  game: '/game',
-  leaders: '/leaders',
-  forum: '/forum',
-  rules: '/rules'
+interface ChildProps {
+  onChangeSidebar: (v: boolean) => void,
+  isExpanded: boolean,
 }
 
-export default function Sidebar() {
-
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [active, setActive] = useState('Игра');
+export default function Sidebar ({onChangeSidebar, isExpanded}: ChildProps) {
+  const [active, setActive] = useState(0);
 
   const handleToggler = () => {
     if (isExpanded) {
-      setIsExpanded(false);
+      onChangeSidebar(false);
       return;
     }
-    setIsExpanded(true);
+    onChangeSidebar(true);
   }
 
-  const handleSelectedListItem = (e: React.MouseEvent) => {
-    setActive((e.target as HTMLElement).innerText);
+  const handleSelectedListItem = (index: number) => {
+    setActive(index);
   }
 
   return (
     <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'}>
-      <div className={isExpanded ? 'sidebar__logo' : 'sidebar__logo_collapsed'}>
-        <Logo isSmall={!isExpanded} />
-      </div>
       <ul className={'sidebar__menu'}>
-
-        {Object.entries(listToIcons).map((item, index) => {
+        {Object.entries(menuItems).map((item, index) => {
           return (
-            <li className={
-              `${active === item[0] ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
+            <li key={item[0]} className={
+              `${active === index ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
              ${isExpanded ? 'sidebar__menu-item' : 'sidebar__menu-item_collapsed'}`
             }
-              key={index} onClick={handleSelectedListItem}>
+              onClick={() => handleSelectedListItem(index)}>
               <div className={'sidebar__menu__item-icon'}>
-                {item[1]}
+                {item[1].icon}
               </div>
               <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>
-                {item[0]}
+                {item[1].label}
               </div>
             </li>
           )
