@@ -5,6 +5,7 @@ import MenuItemForum from '../../../assets/menuItemForum.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.svg';
 import MenuItemRules from '../../../assets/menuItemRules.svg';
 import CollapseIcon from './CollapseIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const menuItems = {
   game: {
@@ -35,6 +36,7 @@ interface ChildProps {
 }
 
 const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
+  const navigate = useNavigate();
   const [active, setActive] = useState(0);
 
   const handleToggler = () => {
@@ -45,8 +47,9 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
     onChangeSidebar(true);
   };
 
-  const handleSelectedListItem = (index: number) => {
+  const handleSelectedListItem = (index: number, path: string) => {
     setActive(index);
+    navigate(`/${path}`);
   };
 
   return (
@@ -61,7 +64,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
                 `${active === index ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
              ${isExpanded ? 'sidebar__menu-item' : 'sidebar__menu-item_collapsed'}`
               }
-              onClick={() => handleSelectedListItem(index)}
+              onClick={() => handleSelectedListItem(index, item[0])}
             >
               <div className="sidebar__menu__item-icon">
                 {item[1].icon}
