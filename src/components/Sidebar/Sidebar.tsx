@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import './Sidebar.pcss';
 import MenuItemGame from '../../../assets/menuItemGame.svg';
 import MenuItemForum from '../../../assets/menuItemForum.svg';
@@ -27,14 +27,14 @@ const menuItems = {
     route: '/rules',
     label: 'Правила',
   },
-}
+};
 
 interface ChildProps {
   onChangeSidebar: (v: boolean) => void,
   isExpanded: boolean,
 }
 
-export default function Sidebar ({onChangeSidebar, isExpanded}: ChildProps) {
+const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
   const [active, setActive] = useState(0);
 
   const handleToggler = () => {
@@ -43,39 +43,44 @@ export default function Sidebar ({onChangeSidebar, isExpanded}: ChildProps) {
       return;
     }
     onChangeSidebar(true);
-  }
+  };
 
   const handleSelectedListItem = (index: number) => {
     setActive(index);
-  }
+  };
 
   return (
     <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'}>
-      <ul className={'sidebar__menu'}>
+      <ul className="sidebar__menu">
         {Object.entries(menuItems).map((item, index) => {
           return (
-            <li key={item[0]} className={
-              `${active === index ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
+            <li
+              key={item[0]}
+              role="presentation"
+              className={
+                `${active === index ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
              ${isExpanded ? 'sidebar__menu-item' : 'sidebar__menu-item_collapsed'}`
-            }
-              onClick={() => handleSelectedListItem(index)}>
-              <div className={'sidebar__menu__item-icon'}>
+              }
+              onClick={() => handleSelectedListItem(index)}
+            >
+              <div className="sidebar__menu__item-icon">
                 {item[1].icon}
               </div>
               <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>
                 {item[1].label}
               </div>
             </li>
-          )
-        })
-        }
+          );
+        })}
       </ul>
-      <div className={'sidebar__collapse-icon'}>
+      <div className="sidebar__collapse-icon">
         <CollapseIcon
           onClick={handleToggler}
           className={isExpanded ? '' : 'sidebar__collapse-icon_collapsed'}
         />
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Sidebar;
