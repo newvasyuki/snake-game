@@ -2,11 +2,11 @@ import React, { SyntheticEvent, useState, useEffect, ChangeEvent } from 'react';
 import './Profile.pcss';
 import ProfileImage from '../../../assets/noProfileImage.react.svg';
 import { useForm } from 'react-hook-form';
-import { object, string } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ProfileInput from './components/ProfileInput';
-import Button from '../../components/Button';
+import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { schema } from './formSchema';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -18,22 +18,13 @@ const Profile = () => {
     login: 'ivanivanov'
   });
 
-  const [userData, setUserData] = useState({  
+  const [userData, setUserData] = useState({
     first_name: '',
     last_name: '',
     email: '',
     login: ''
   });
 
-  const schema =
-  object()
-    .shape({
-      first_name: string().required('Укажите значение'),
-      last_name: string().required('Укажите значение'),
-      email: string().email('Укажите email в корректном формате').required('Укажите значение'),
-      login: string().required('Укажите значение'),
-    })
-    .required();
 
   const { handleSubmit, formState: { errors }, register, reset } = useForm({
     mode: 'all',
@@ -67,7 +58,7 @@ const Profile = () => {
   }
 
   const changeInputField = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserData({...userData, [e.target.name]: e.target.value})
+    setUserData({ ...userData, [e.target.name]: e.target.value })
   }
 
   return (
@@ -77,7 +68,7 @@ const Profile = () => {
       </div>
       <div className={'profile-page__content'}>
         <ProfileImage className={'profile-page__image'} />
-        <span className={'profile-page__name'}>Иван</span>
+        <span className={'profile-page__name'}>{userData.first_name} {userData.last_name}</span>
         <form className='profile-page__userdata-form' onSubmit={handleSubmit(onFormSubmission)}>
           <ProfileInput
             id='profile-page__email'

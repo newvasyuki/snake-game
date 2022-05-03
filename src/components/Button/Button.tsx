@@ -5,7 +5,7 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonClass?: string,
 }
 
-export default function Button(props: IButtonProps) {
+const Button = (props: IButtonProps) => {
   const {
     text,
     buttonClass,
@@ -16,3 +16,5 @@ export default function Button(props: IButtonProps) {
     <button {...restProps}>{text}</button>
   )
 }
+
+export default Button;

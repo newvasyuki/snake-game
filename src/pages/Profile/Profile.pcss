@@ -6,7 +6,7 @@
 
   &__sidebar{
     display: flex;
-    background-color: #EEE4DA;
+    background-color: #var(--whiteChoco);
     width: 5rem;
     align-items: center;
     justify-content: center;
@@ -21,8 +21,8 @@
   }
 
   &__image {
-    width: 9rem;
-    height: 9rem;
+    width: 8.5rem;
+    height: 8.5rem;
     cursor: pointer;
   }
 
@@ -59,7 +59,7 @@
     background: none;
     border: none;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--brightGray);
   }
 
   &__change-data-btn:hover,  {
@@ -83,28 +83,28 @@
     background: none;
     border: none;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--brightGray);
   }
 
   &__exit-btn:hover {
     cursor: pointer;
     border-bottom: 1px solid black;
   }
-}
 
-.profile-page__button-back {
-  position: relative;
-  outline: none;
-  cursor: pointer;
-  background-color: #7C746B;
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 50px;
-  border: none;
-
-  &:before {
-    content: url("../../../assets/backToPage.svg");
-    height: .9rem;
-    display: flex;
+  &__button-back {
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    background-color: #7C746B;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50px;
+    border: none;
+  
+    &:before {
+      content: url("../../../assets/backToPage.svg");
+      height: .9rem;
+      display: flex;
+    }
   }
 }
