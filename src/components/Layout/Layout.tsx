@@ -4,9 +4,7 @@ import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
 import '../../constants/constants.pcss';
 
-interface Props {
-  children: ReactNode
-}
+interface Props {}
 
 const Layout = ({ children }: PropsWithChildren<Props>) => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
