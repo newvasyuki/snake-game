@@ -6,12 +6,13 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
-
   "parserOptions": {
-      "project": ["./tsconfig.json"]
+    "project": [
+      "./tsconfig.json"
+    ]
   },
-
   "rules": {
+    "import/prefer-default-export": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-var-requires": 0,
     "semi": "error",
@@ -24,8 +25,12 @@
       }
     ]
   },
-
   "plugins": [
     "editorconfig"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"]
+    }
   ]
 }

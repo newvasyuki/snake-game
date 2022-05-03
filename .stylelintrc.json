@@ -2,6 +2,7 @@
   "extends": "stylelint-config-airbnb",
 
   "rules": {
+    "selector-max-id": 1,
     "indentation": [
       2,
       {
