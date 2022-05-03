@@ -8,7 +8,7 @@ import ProfileInput from './components/ProfileInput';
 import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 
-export default function Profile() {
+const Profile = () => {
   const navigate = useNavigate();
 
   const getUserData = () => Promise.resolve({
@@ -137,3 +137,5 @@ export default function Profile() {
     </div>
   );
 };
+
+export default Profile;

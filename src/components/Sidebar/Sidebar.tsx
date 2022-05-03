@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './Sidebar.pcss';
-import MenuItemGame from '../../../assets/menuItemGame.svg';
-import MenuItemForum from '../../../assets/menuItemForum.svg';
-import MenuItemLeaders from '../../../assets/menuItemLeaders.svg';
-import MenuItemRules from '../../../assets/menuItemRules.svg';
-import CollapseIcon from './CollapseIcon.svg';
+import MenuItemGame from '../../../assets/menuItemGame.react.svg';
+import MenuItemForum from '../../../assets/menuItemForum.react.svg';
+import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
+import MenuItemRules from '../../../assets/menuItemRules.react.svg';
+import CollapseIcon from './CollapseIcon.react.svg';
 import { useNavigate } from 'react-router-dom';
 
 const menuItems = {
