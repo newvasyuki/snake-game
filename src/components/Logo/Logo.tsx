@@ -1,15 +1,17 @@
-import React from "react";
+import React from 'react';
 import './Logo.pcss';
-import LogoBig from './logo.react.svg';
-import LogoSmall from './logoSmall.react.svg';
+import LogoSVG from './logo.svg';
 
 interface Props {
   isSmall: boolean
 }
 
-export default function Logo(props: Props) {
-  if (props.isSmall) {
-    return <LogoSmall className={'logo'} />
-  }
-  return <LogoBig className={'logo'} />
-}
+const Logo = ({ isSmall = false }: Props) => {
+  return (
+    <div className={isSmall ? 'logo-wrapper_collapsed' : 'logo-wrapper'}>
+      <LogoSVG />
+    </div>
+  );
+};
+
+export default Logo;

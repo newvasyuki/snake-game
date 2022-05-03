@@ -1,22 +1,3 @@
-.sidebar__logo {
-  display: flex;
-  width: var(--sidebar-width);
-  height: var(--header-heigth);
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  outline: 1px solid red;
-  padding: 0.5rem 4rem;
-
-  &_collapsed {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 1.5rem 0;
-  }
-}
-
 .sidebar {
   background-color: #EEE4DA;
   width: var(--sidebar-width);
@@ -26,6 +7,20 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  &__text_collapsed {
+    display: none;
+  }
+
+  &__collapse-icon {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+
+    &_collapsed {
+      transform: scale(-1,1);
+    }
+  }
 
   &_collapsed {
     background-color: #EEE4DA;
@@ -47,11 +42,11 @@
     justify-content: center;
   }
 
-  &__menuItemIcon {
+  &__menu__item-icon {
     margin: 0 2rem 0 1rem;
   }
 
-  &__menuItem {
+  &__menu-item {
     position: relative;
     width: 17rem;
     height: 3rem;
@@ -67,7 +62,7 @@
       position: relative;
       width: var(--sidebar-width-collapsed);
       height: 3rem;
-      border-radius: 0 10px 10px 0;
+      border-radius: 0 0.6rem 0.6rem 0;
       color: white;
       display: flex;
       flex-direction: row;
@@ -81,7 +76,7 @@
       position: relative;
       height: 3rem;
       background-color: #F59565;
-      border-radius: 0 10px 10px 0;
+      border-radius: 0 0.6rem 0.6rem 0;
       color: white;
       display: flex;
       flex-direction: row;
@@ -96,7 +91,7 @@
         width: var(--sidebar-width-collapsed);
         height: 3rem;
         background-color: #F59565;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 0.6rem 0.6rem 0;
         color: white;
         display: flex;
         flex-direction: row;
@@ -107,18 +102,4 @@
       }
     }
   }
-}
-
-.sidebar__collapseIcon {
-  display: flex;
-  justify-content: flex-end;
-  cursor: pointer;
-}
-
-.sidebar__text_collapsed {
-  display: none;
-}
-
-.sidebar__collapseIcon_collapsed {
-  transform: scale(-1,1);
 }
