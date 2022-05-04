@@ -83,7 +83,7 @@ const Profile = () => {
           {' '}
           {userData.last_name}
         </span>
-        <form className="profile-page__userdata-form" onSubmit={() => handleSubmit(onFormSubmission)}>
+        <form className="profile-page__userdata-form" onSubmit={handleSubmit(onFormSubmission)}>
           <ProfileInput
             id="profile-page__email"
             label="E-Mail"
