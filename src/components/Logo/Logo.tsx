@@ -1,6 +1,6 @@
 import React from 'react';
 import './Logo.pcss';
-import LogoSVG from './logo.svg';
+import LogoSVG from '../../../assets/logo.svg';
 
 interface Props {
   isSmall: boolean
