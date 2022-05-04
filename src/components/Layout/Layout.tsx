@@ -1,21 +1,23 @@
-import React, { ReactNode, PropsWithChildren } from "react";
-import { Header } from "../Header";
-import { Sidebar } from "../Sidebar";
+import React, { ReactNode, PropsWithChildren, useState } from 'react';
+import { Header } from '../Header';
+import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
 import '../../constants/constants.pcss';
 
-interface Props {
-  children: ReactNode
-}
+interface Props {}
 
-export default function Layout({ children }: PropsWithChildren<Props>) {
+const Layout = ({ children }: PropsWithChildren<Props>) => {
+  const [sideBarExpanded, setSideBarExpanded] = useState(true);
+
   return (
     <>
-      <Header />
-      <div className={'content'}>
-        <Sidebar />
+      <Header isLogoSmall={!sideBarExpanded} />
+      <div className="content">
+        <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
         {children}
       </div>
     </>
-  )
-}
+  );
+};
+
+export default Layout;

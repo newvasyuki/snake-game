@@ -4,7 +4,7 @@ import { Layout } from '../../components/Layout';
 import Screen from './components/Screen';
 import Progress from './components/Progress';
 
-export default function Game() {
+const Game = () => {
   return (
     <Layout>
       <div className={'game'}>
