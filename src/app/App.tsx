@@ -8,6 +8,7 @@ import {
 import { Game } from '../pages/Game';
 import { ROUTES } from '../constants';
 import { Layout } from '../components/Layout';
+import { Forum } from '../pages/Forum';
 
 const App = () => {
   return (
@@ -15,7 +16,10 @@ const App = () => {
       <Routes>
         <Route path={ROUTES.home} element={<Layout />}>
           <Route path={ROUTES.leaderboard} element={<h1>LeaderBoard</h1>} />
-          <Route path={ROUTES.forum} element={<h1>Forum</h1>} />
+          <Route path={`${ROUTES.forum}/*`} element={<Forum />}>
+            {/* <Route path="top" element={'top'} />
+            <Route path="latest" element={'latest'} /> */}
+          </Route>
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
           <Route path={ROUTES.game} element={<Game />} />
         </Route>
