@@ -1,21 +1,24 @@
-import { authApi, AuthApi, SignInData, SignUpData } from "../../api";
+import {
+ authApi, AuthApi, SignInData, SignUpData,
+} from '../../api';
 
 export class AuthService {
   protected authApi: AuthApi;
-  //можно сохранить ссылку на стор чтобы диспатчить экшены
+
+  // можно сохранить ссылку на стор чтобы диспатчить экшены
   protected store: null;
 
-  constructor(authApi: AuthApi) {
-    this.authApi = authApi;
+  constructor(authApiObj: AuthApi) {
+    this.authApi = authApiObj;
     this.store = null;
   }
 
   async signIn(data: SignInData) {
     try {
       await this.authApi.signIn(data);
-      //тут можно сетать в сторе что юзер залогинен
+      // тут можно сетать в сторе что юзер залогинен
     } catch (error) {
-      //как-то обрабатываем ошибку
+      // как-то обрабатываем ошибку
       console.log(error);
     }
   }
@@ -23,7 +26,7 @@ export class AuthService {
   async signUp(data: SignUpData) {
     try {
       const userId = await this.authApi.signUp(data);
-      //делаем что-то с айдишником, если нужно
+      // делаем что-то с айдишником, если нужно
       console.log(userId);
     } catch (error) {
       console.log(error);
@@ -33,7 +36,7 @@ export class AuthService {
   async logout() {
     try {
       await this.authApi.logout();
-      //тут можно сетать в стор, что юзер не залогинен
+      // тут можно сетать в стор, что юзер не залогинен
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +45,7 @@ export class AuthService {
   async getUserInfo() {
     try {
       const userInfo = await this.authApi.getUserInfo();
-      //кладем в стор
+      // кладем в стор
       console.log(userInfo);
     } catch (error) {
       console.log(error);

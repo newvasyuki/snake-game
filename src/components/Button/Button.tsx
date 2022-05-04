@@ -1,20 +1,15 @@
-import React, { ReactNode, ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  text?: string,
-  buttonClass?: string,
-}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = (props: IButtonProps) => {
+const Button = (props: PropsWithChildren<ButtonProps>) => {
   const {
-    text,
-    buttonClass,
     ...restProps
   } = props;
 
-  return(
-    <button {...restProps}>{text}</button>
-  )
-}
+  return (
+    <button type="button" {...restProps}>{props.children}</button>
+  );
+};
 
 export default Button;
