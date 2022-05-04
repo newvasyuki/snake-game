@@ -17,6 +17,7 @@ const MODE = {
 const getOutputConfig = (mode) => ({
   filename: mode === MODE.DEV ? "[name].js" : "[name].[fullhash].js",
   path: path.resolve(__dirname, "build"),
+  publicPath: '/',
 });
 
 module.exports = (_, argv) => {
