@@ -2,11 +2,13 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Navigation } from './Navigation';
 import './Forum.pcss';
+import { AddButton } from './AddButton/AddButton';
 
 export const Forum = () => {
   return (
     <div className="forum">
       <Navigation />
+      <AddButton />
       <Routes>
         {/* подумать над реализацией перехода в топ */}
         <Route index element="top" />
