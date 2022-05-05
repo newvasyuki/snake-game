@@ -7,10 +7,12 @@ import Progress from './components/Progress';
 const Game = () => {
   return (
     <Layout>
-      <div className={'game'}>
+      <div className="game">
         <Screen />
         <Progress />
       </div>
     </Layout>
-  )
-}
+  );
+};
+
+export default Game;
