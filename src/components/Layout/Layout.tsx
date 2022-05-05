@@ -8,7 +8,7 @@ interface Props {
   selectedRoute?: string;
 }
 
-const Layout = ({ children, selectedRoute}: PropsWithChildren<Props>) => {
+const Layout = ({ children, selectedRoute }: PropsWithChildren<Props>) => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
 
   return (

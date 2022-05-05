@@ -21,7 +21,7 @@ const menuItems = {
   },
   forum: {
     icon: <MenuItemForum />,
-    route:  ROUTES.forum,
+    route: ROUTES.forum,
     label: 'Форум',
   },
   rules: {
@@ -57,7 +57,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded, selectedRoute = ROUTES.game }: C
   return (
     <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'}>
       <ul className="sidebar__menu">
-        {Object.entries(menuItems).map(item => {
+        {Object.entries(menuItems).map((item) => {
           return (
             <li
               key={item[0]}
