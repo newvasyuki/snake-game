@@ -38,7 +38,7 @@ const LeaderBoard = () => {
           {leaders.map((leader, i) => {
             return (
               <div className={'leaderboard__raw_content'}>
-                <div className={'leaderboard__cell_player'}>{leader.playerName}({leader.login})</div>
+                <div className={'leaderboard__cell_player'}>{i+1}{'. '}{leader.playerName}({leader.login})</div>
                 <div className={'leaderboard__cell_snakelength'}>{leader.snakeLength}</div>
               </div>
             )
