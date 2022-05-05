@@ -1,0 +1,39 @@
+.leaderboard {
+  width: 100%;
+  background-color: #FBF8F1;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+
+  &__raw {
+    &_header {
+      display: flex;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      width: 500px;
+      border-bottom: 1px solid #CDC1B3;
+      padding: 10px 0;
+    }
+   
+    &_content {
+      display: flex;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      padding: 10px 0;
+    }
+  }
+
+  &__cell {
+    &_player {
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    &_snakelength {
+      width: 70%;
+      text-align: center;
+    }
+  }
+}

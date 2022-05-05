@@ -8,16 +8,17 @@ import {
 import Main from '../main';
 import { Game } from '../pages/Game';
 import { ROUTES } from '../constants';
+import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.home} element={<Main />}>
-          <Route path={ROUTES.leaderboard} element={<h1>LeaderBoard</h1>} />
           <Route path={ROUTES.forum} element={<h1>Forum</h1>} />
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
         </Route>
+        <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
         <Route path={ROUTES.game} element={<Game />} />
         <Route
           path={ROUTES.profile}

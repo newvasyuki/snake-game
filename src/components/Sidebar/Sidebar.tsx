@@ -6,26 +6,27 @@ import MenuItemForum from '../../../assets/menuItemForum.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.svg';
 import MenuItemRules from '../../../assets/menuItemRules.svg';
 import CollapseIcon from './CollapseIcon.svg';
+import { ROUTES } from '../../constants';
 
 const menuItems = {
   game: {
     icon: <MenuItemGame />,
-    route: '/game',
+    route: ROUTES.game,
     label: 'Игра',
   },
   leaders: {
     icon: <MenuItemLeaders />,
-    route: '/leaders',
+    route: ROUTES.leaderboard,
     label: 'Лидеры',
   },
   forum: {
     icon: <MenuItemForum />,
-    route: '/forum',
+    route:  ROUTES.forum,
     label: 'Форум',
   },
   rules: {
     icon: <MenuItemRules />,
-    route: '/rules',
+    route: ROUTES.rules,
     label: 'Правила',
   },
 };
@@ -33,11 +34,12 @@ const menuItems = {
 interface ChildProps {
   onChangeSidebar: (v: boolean) => void,
   isExpanded: boolean,
+  selectedRoute?: string,
 }
 
-const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
+const Sidebar = ({ onChangeSidebar, isExpanded, selectedRoute = ROUTES.game }: ChildProps) => {
   const navigate = useNavigate();
-  const [active, setActive] = useState(0);
+  const [activeRoute, setActiveRoute] = useState(selectedRoute);
 
   const handleToggler = () => {
     if (isExpanded) {
@@ -47,24 +49,24 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
     onChangeSidebar(true);
   };
 
-  const handleSelectedListItem = (index: number, path: string) => {
-    setActive(index);
-    navigate(`/${path}`);
+  const handleSelectedListItem = (route: string) => {
+    setActiveRoute(route);
+    navigate(route);
   };
 
   return (
     <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'}>
       <ul className="sidebar__menu">
-        {Object.entries(menuItems).map((item, index) => {
+        {Object.entries(menuItems).map(item => {
           return (
             <li
               key={item[0]}
               role="presentation"
               className={
-                `${active === index ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
+                `${activeRoute === item[1].route ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
              ${isExpanded ? 'sidebar__menu-item' : 'sidebar__menu-item_collapsed'}`
               }
-              onClick={() => handleSelectedListItem(index, item[0])}
+              onClick={() => handleSelectedListItem(item[1].route)}
             >
               <div className="sidebar__menu__item-icon">
                 {item[1].icon}
