@@ -22,11 +22,11 @@ export const Navigation = () => {
   return (
     <nav className={block()}>
       <ul className={block('list')}>
-        {
-          navigationItems.map(
-            (item) => (<NavItem to={item.route} key={item.key}>{item.label}</NavItem>),
-            )
-        }
+        {navigationItems.map((item) => (
+          <NavItem to={item.route} key={item.key}>
+            {item.label}
+          </NavItem>
+        ))}
       </ul>
     </nav>
   );

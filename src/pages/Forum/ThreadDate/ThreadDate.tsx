@@ -13,6 +13,8 @@ export const ThreadDate = ({ date = new Date(), className }: Props) => {
   const dateString = date.toLocaleDateString();
 
   return (
-    <time className={block(null, className)} dateTime={dateString}>{dateString}</time>
+    <time className={block(null, className)} dateTime={dateString}>
+      {dateString}
+    </time>
   );
 };

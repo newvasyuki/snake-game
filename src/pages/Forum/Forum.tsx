@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
-import { ForumSubPage } from './ForumSubPage/ForumSubPage';
-import { Header } from './Header/Header';
+import { ForumSubPage } from './ForumSubPage';
+import { Header } from './Header';
 import { getMockThreads } from '../../mocks';
 import './Forum.pcss';
 

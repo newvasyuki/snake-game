@@ -1,8 +1,8 @@
 import bemClassNameLite from 'bem-cn-lite';
 import React from 'react';
 import { User } from '../../../../api/auth/types';
-import { ThreadDate } from '../../ThreadDate/ThreadDate';
-import { UserInfo } from '../../UserInfo/UserInfo';
+import { ThreadDate } from '../../ThreadDate';
+import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
 
 type Props = {

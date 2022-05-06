@@ -16,11 +16,7 @@ export const AnswersCount = ({ count, className }: Props) => {
       <div className={block('icon-wrapper')}>
         <AnswerIcon />
       </div>
-      <span className={block('count')}>
-        {count ?? 0}
-        {' '}
-        Ответов
-      </span>
+      <span className={block('count')}>{count ?? 0} Ответов</span>
     </div>
   );
 };

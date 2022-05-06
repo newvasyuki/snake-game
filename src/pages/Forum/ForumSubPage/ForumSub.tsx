@@ -1,7 +1,7 @@
 import bemCn from 'bem-cn-lite';
 import React from 'react';
-import { Thread, ThreadType } from '../Thread/Thread';
-import { ThreadList } from '../ThreadList/ThreadList';
+import { Thread, ThreadType } from '../Thread';
+import { ThreadList } from '../ThreadList';
 
 type Props = {
   threads?: ThreadType[];

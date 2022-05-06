@@ -1,7 +1,7 @@
 import bemCn from 'bem-cn-lite';
 import React, { useMemo } from 'react';
 import { User } from '../../../api/auth/types';
-import { Avatar } from './Avatar/Avatar';
+import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
 type Props = {
@@ -19,5 +19,5 @@ export const UserInfo = ({ user, className }: Props) => {
       <Avatar src={user.avatar} />
       <span className={block('user-name')}>{userName}</span>
     </div>
-);
+  );
 };

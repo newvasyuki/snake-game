@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import bemCn from 'bem-cn-lite';
-import { AnswersCount } from '../AnswersCount/AnswersCount';
-import { ThreadDate } from '../ThreadDate/ThreadDate';
-import { ThreadLikes } from '../ThreadLikes/ThreadLikes';
-import { UserInfo } from '../UserInfo/UserInfo';
-import { ThreadContent } from './ThreadContent/ThreadContent';
-import { Answer } from './Answer/Answer';
-import { AnswersList } from './AnswersList/AnswersList';
+import { AnswersCount } from '../AnswersCount';
+import { ThreadDate } from '../ThreadDate';
+import { ThreadLikes } from '../ThreadLikes';
+import { UserInfo } from '../UserInfo';
+import { ThreadContent } from './ThreadContent';
+import { Answer } from './Answer';
+import { AnswersList } from './AnswersList';
 import { User } from '../../../api/auth/types';
 import './Thread.pcss';
 
@@ -23,7 +23,7 @@ export type ThreadType = {
   date: Date;
   likes: number;
   content: {
-    message:string;
+    message: string;
     title: string;
   };
   answers: AnswerType[];
@@ -36,9 +36,7 @@ type Props = {
 };
 
 export const Thread: React.FC<Props> = ({ thread }) => {
-  const {
- user, content, answers, date, likes,
-} = thread;
+  const { user, content, answers, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
 
   useEffect(() => {
