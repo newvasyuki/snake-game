@@ -7,6 +7,7 @@ import mockAvatar from '../../../assets/avatar.jpg';
 import { UserInfo } from './UserInfo/UserInfo';
 import { User } from '../../api/auth/types';
 import { ThreadLikes } from './ThreadLikes/ThreadLikes';
+import { AnswersCount } from './AnswersCount/AnswersCount';
 
 const mockUserData: Pick<User, 'avatar' | 'first_name' | 'second_name'> = {
   avatar: mockAvatar,
@@ -15,7 +16,7 @@ const mockUserData: Pick<User, 'avatar' | 'first_name' | 'second_name'> = {
 };
 
 export const Forum = () => {
-  const [likesCount, setLikesCount] = useState(0);
+  const [likesCount, setLikesCount] = useState(2048);
   return (
     <div className="forum">
       <Header />
@@ -25,6 +26,7 @@ export const Forum = () => {
         count={likesCount}
         likeClickHandler={() => setLikesCount((count) => count + 1)}
       />
+      <AnswersCount count={15} />
       <Routes>
         {/* подумать над реализацией перехода в топ */}
         <Route index element="top" />
