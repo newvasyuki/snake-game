@@ -21,7 +21,7 @@
       2,
       {
         "namedComponents": "arrow-function",
-        "unnamedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
       }
     ]
   },
@@ -30,7 +30,12 @@
   ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"]
+      "files": ["*.ts", "*.tsx"],
+      "plugins": ["eslint-plugin-react"],
+      "rules": {
+        "react/prop-types": 0,
+        "react/require-default-props": 0
+      }
     }
   ]
 }
