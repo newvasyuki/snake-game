@@ -17,15 +17,15 @@ interface FormData {
   login: string
 }
 
+const getUserData = () => Promise.resolve({
+  first_name: 'Иван',
+  last_name: 'Иванов',
+  email: 'pochta@yandex.ru',
+  login: 'ivanivanov',
+});
+
 const Profile = () => {
   const navigate = useNavigate();
-
-  const getUserData = () => Promise.resolve({
-    first_name: 'Иван',
-    last_name: 'Иванов',
-    email: 'pochta@yandex.ru',
-    login: 'ivanivanov',
-  });
 
   const [userData, setUserData] = useState({
     first_name: '',

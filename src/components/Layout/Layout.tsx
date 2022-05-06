@@ -4,7 +4,7 @@ import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
 import '../../constants/constants.pcss';
 
-const Layout = (props: PropsWithChildren<unknown>) => {
+const Layout = ({ children }: PropsWithChildren<{}>) => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
 
   return (
@@ -12,7 +12,7 @@ const Layout = (props: PropsWithChildren<unknown>) => {
       <Header isLogoSmall={!sideBarExpanded} />
       <div className="content">
         <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
-        {props.children}
+        {children}
       </div>
     </>
   );
