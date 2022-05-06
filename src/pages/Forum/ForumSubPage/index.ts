@@ -1,1 +1,1 @@
-export { ForumSubPage } from './ForumSub';
+export { ForumSubPage } from './ForumSubPage';
