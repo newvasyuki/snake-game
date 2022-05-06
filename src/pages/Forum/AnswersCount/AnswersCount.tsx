@@ -5,13 +5,14 @@ import './AnswersCount.pcss';
 
 type Props = {
   count?: number;
+  className?: string;
 };
 
 const block = bemCn('answers-count');
 
-export const AnswersCount = ({ count }: Props) => {
+export const AnswersCount = ({ count, className }: Props) => {
   return (
-    <div className={block()}>
+    <div className={block(null, className)}>
       <div className={block('icon-wrapper')}>
         <AnswerIcon />
       </div>

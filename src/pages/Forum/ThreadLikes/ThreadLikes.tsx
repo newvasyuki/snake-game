@@ -6,13 +6,14 @@ import './ThreadLikes.pcss';
 type Props = {
   count?: number;
   likeClickHandler?: () => void;
+  className?: string;
 };
 
 const block = bemCn('likes');
 
-export const ThreadLikes = ({ count, likeClickHandler }: Props) => {
+export const ThreadLikes = ({ count, likeClickHandler, className }: Props) => {
   return (
-    <div className={block()}>
+    <div className={block(null, className)}>
       <button type="button" onClick={likeClickHandler} className={block('button')}>
         <div className={block('icon')}>
           <HeartIcon />

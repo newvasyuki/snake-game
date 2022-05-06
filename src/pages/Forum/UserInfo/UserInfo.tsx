@@ -6,15 +6,16 @@ import './UserInfo.pcss';
 
 type Props = {
   user: Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+  className?: string;
 };
 
 const block = bemCn('user-info');
 
-export const UserInfo = ({ user }: Props) => {
+export const UserInfo = ({ user, className }: Props) => {
   const userName = useMemo(() => `${user.first_name} ${user.second_name[0]}.`, [user]);
 
   return (
-    <div className={block()}>
+    <div className={block(null, className)}>
       <Avatar src={user.avatar} />
       <span className={block('user-name')}>{userName}</span>
     </div>
