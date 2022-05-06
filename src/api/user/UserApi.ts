@@ -14,7 +14,7 @@ export class UserApi {
 
   changeProfile(userData: User) {
     return fetch(`${this.baseUrl}/user/profile`, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(userData),
       credentials: 'include',
       headers: {
@@ -45,7 +45,7 @@ export class UserApi {
   }
 
   changePassword(data: PasswordData) {
-    return fetch(`${this.baseUrl}/profile/avatar`, {
+    return fetch(`${this.baseUrl}/password`, {
       method: 'PUT',
       body: JSON.stringify(data),
       credentials: 'include',
