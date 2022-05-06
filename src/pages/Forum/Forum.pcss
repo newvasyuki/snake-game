@@ -1,6 +1,13 @@
 .forum {
-  /* display: grid; */
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
   width: 100%;
   padding: 50px 150px;
   box-sizing: border-box;
+  background-color: #FBF8F1;
+
+  &__inner-page-container {
+    overflow: auto;
+  }
 }

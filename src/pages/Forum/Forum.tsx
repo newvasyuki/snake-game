@@ -1,20 +1,28 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './Forum.pcss';
+import bemCn from 'bem-cn-lite';
+import { ForumSubPage } from './ForumSubPage/ForumSubPage';
 import { Header } from './Header/Header';
-import { Thread } from './Thread/Thread';
+import { getMockThreads } from '../../mocks';
+import './Forum.pcss';
+
+const Top = <ForumSubPage threads={getMockThreads(1)} />;
+const Latest = <ForumSubPage threads={getMockThreads(2)} />;
+
+const block = bemCn('forum');
 
 export const Forum = () => {
   return (
-    <div className="forum">
+    <div className={block()}>
       <Header />
-      <Thread />
-      <Routes>
-        {/* подумать над реализацией перехода в топ */}
-        <Route index element="top" />
-        <Route path="top" element="top" />
-        <Route path="latest" element="latest" />
-      </Routes>
+      <div className={block('inner-page-container')}>
+        <Routes>
+          {/* подумать над реализацией перехода в топ при переходе в форум */}
+          <Route index element={Top} />
+          <Route path="top" element={Top} />
+          <Route path="latest" element={Latest} />
+        </Routes>
+      </div>
     </div>
   );
 };
