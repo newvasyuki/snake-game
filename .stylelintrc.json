@@ -12,7 +12,5 @@
     "at-rule-no-unknown": null,
     "selector-class-pattern": "^[a-z][a-zA-Z-_]+$"
   },
-  "ignoreFiles": [
-    "build/*"
-  ]
+  "ignoreFiles": ["build/*"]
 }
