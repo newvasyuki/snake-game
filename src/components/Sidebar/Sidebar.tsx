@@ -7,26 +7,27 @@ import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
 import MenuItemRules from '../../../assets/menuItemRules.react.svg';
 import CollapseIcon from './CollapseIcon.react.svg';
 import { ROUTES } from '../../constants';
+import { NavLink } from 'react-router-dom';
 
 const menuItems = {
   game: {
     icon: <MenuItemGame />,
-    route: ROUTES.game,
+    route: ROUTES.game.replace('/', ''),
     label: 'Игра',
   },
   leaders: {
     icon: <MenuItemLeaders />,
-    route: ROUTES.leaderboard,
+    route: ROUTES.leaderboard.replace('/', ''),
     label: 'Лидеры',
   },
   forum: {
     icon: <MenuItemForum />,
-    route: ROUTES.forum,
+    route: ROUTES.forum.replace('/', ''),
     label: 'Форум',
   },
   rules: {
     icon: <MenuItemRules />,
-    route: ROUTES.rules,
+    route: ROUTES.rules.replace('/', ''),
     label: 'Правила',
   },
 };
@@ -34,12 +35,9 @@ const menuItems = {
 interface ChildProps {
   onChangeSidebar: (v: boolean) => void,
   isExpanded: boolean,
-  selectedRoute?: string,
 }
 
-const Sidebar = ({ onChangeSidebar, isExpanded, selectedRoute = ROUTES.game }: ChildProps) => {
-  const navigate = useNavigate();
-  const [activeRoute, setActiveRoute] = useState(selectedRoute);
+const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
 
   const handleToggler = () => {
     if (isExpanded) {
@@ -49,9 +47,27 @@ const Sidebar = ({ onChangeSidebar, isExpanded, selectedRoute = ROUTES.game }: C
     onChangeSidebar(true);
   };
 
-  const handleSelectedListItem = (route: string) => {
-    setActiveRoute(route);
-    navigate(route);
+  let activeStyle = {
+    Position: "relative",
+    height: "3rem",
+    backgroundColor: "var(--bittersweet)",
+    borderRadius: "0 0.6rem 0.6rem 0",
+    color: "white",
+    display: "flex",
+    FlexDirection: "row",
+    alignItems: "center",
+    TextDecoration: "underline",
+    cursor: "pointer"
+  };
+
+  let defaultStyle = {
+    Position: "relative",
+    width: "17rem",
+    height: "3rem",
+    display: "flex",
+    FlexDirection: "row",
+    alignItems: "center",
+    cursor: "pointer"
   };
 
   return (
@@ -59,21 +75,20 @@ const Sidebar = ({ onChangeSidebar, isExpanded, selectedRoute = ROUTES.game }: C
       <ul className="sidebar__menu">
         {Object.entries(menuItems).map((item) => {
           return (
-            <li
-              key={item[0]}
-              role="presentation"
-              className={
-                `${activeRoute === item[1].route ? 'sidebar__menu-item_selected' : 'sidebar__menu-item'}
-             ${isExpanded ? 'sidebar__menu-item' : 'sidebar__menu-item_collapsed'}`
-              }
-              onClick={() => handleSelectedListItem(item[1].route)}
-            >
-              <div className="sidebar__menu__item-icon">
-                {item[1].icon}
-              </div>
-              <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>
-                {item[1].label}
-              </div>
+            <li>
+              <NavLink to={item[1].route}
+                style={({ isActive }) =>
+                  isActive ? activeStyle : defaultStyle
+                }
+              >
+                <div className="sidebar__menu__item-icon">
+                  {item[1].icon}
+                </div>
+                <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>
+                  {item[1].label}
+                </div>
+              </NavLink>
+
             </li>
           );
         })}
