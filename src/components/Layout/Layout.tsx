@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
 import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
@@ -12,7 +13,7 @@ const Layout = ({ children }: PropsWithChildren<{}>) => {
       <Header isLogoSmall={!sideBarExpanded} />
       <div className="content">
         <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
-        {children}
+        <Outlet />
       </div>
     </>
   );

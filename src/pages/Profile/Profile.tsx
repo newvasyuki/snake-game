@@ -24,6 +24,8 @@ const getUserData = () => Promise.resolve({
   login: 'ivanivanov',
 });
 
+const getFullUserName = (firstName: string, lastName: string): string => `${firstName} ${lastName}`;
+
 const Profile = () => {
   const navigate = useNavigate();
 
@@ -79,9 +81,7 @@ const Profile = () => {
       <div className="profile-page__content">
         <ProfileImage className="profile-page__image" />
         <span className="profile-page__name">
-          {userData.first_name}
-          {' '}
-          {userData.last_name}
+          {getFullUserName(userData.first_name, userData.last_name)}
         </span>
         <form className="profile-page__userdata-form" onSubmit={handleSubmit(onFormSubmission)}>
           <ProfileInput
