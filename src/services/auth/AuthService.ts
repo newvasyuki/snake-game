@@ -8,8 +8,8 @@ export class AuthService {
   // можно сохранить ссылку на стор чтобы диспатчить экшены
   protected store: null;
 
-  constructor(authApi: AuthApi) {
-    this.authApi = authApi;
+  constructor(authApiObj: AuthApi) {
+    this.authApi = authApiObj;
     this.store = null;
   }
 

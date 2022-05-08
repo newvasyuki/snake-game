@@ -23,7 +23,7 @@ export class AuthApi {
       .then((response) => response.json())
       .then((data: SignUpResponse) => data.id)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -36,7 +36,7 @@ export class AuthApi {
         'Content-Type': 'application/json',
       },
     }).catch((error: unknown) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -45,7 +45,7 @@ export class AuthApi {
       method: 'POST',
       credentials: 'include',
     }).catch((error: unknown) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -57,7 +57,7 @@ export class AuthApi {
       .then((response) => response.json())
       .then((userData: User) => userData)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Main from '../main';
 import { Game } from '../pages/Game';
+import { Profile } from '../pages/Profile';
 import { ROUTES } from '../constants';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
 
@@ -22,12 +23,7 @@ const App = () => {
         <Route path={ROUTES.game} element={<Game />} />
         <Route
           path={ROUTES.profile}
-          element={(
-            <>
-              <h1>Profile</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          )}
+          element={<Profile />}
         />
         <Route
           path={ROUTES.signIn}
