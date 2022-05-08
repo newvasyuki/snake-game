@@ -1,4 +1,4 @@
-import { SignUpData, SignInData, User } from "./types";
+import { SignUpData, SignInData, User } from './types';
 
 type SignUpResponse = {
   id: number;
@@ -13,53 +13,53 @@ export class AuthApi {
 
   signUp(userData: SignUpData) {
     return fetch(`${this.baseUrl}/auth/signup`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(userData),
-      credentials: "include",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
       .then((data: SignUpResponse) => data.id)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
   signIn(data: SignInData) {
     return fetch(`${this.baseUrl}/auth/signin`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(data),
-      credentials: "include",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     }).catch((error: unknown) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
   logout() {
     return fetch(`${this.baseUrl}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
     }).catch((error: unknown) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
   getUserInfo() {
     return fetch(`${this.baseUrl}/auth/user`, {
-      method: "GET",
-      credentials: "include",
+      method: 'GET',
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((userData: User) => userData)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
 
-export const authApi = new AuthApi("https://ya-praktikum.tech/api/v2");
+export const authApi = new AuthApi('https://ya-praktikum.tech/api/v2');

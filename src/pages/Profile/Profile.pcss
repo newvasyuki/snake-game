@@ -1,0 +1,105 @@
+.profile-page {
+  display: flex;
+  background-color: var(--floralWhite);
+  width: 100%;
+  height: 100%;
+
+  &__sidebar{
+    display: flex;
+    background-color: var(--springWood);
+    width: 5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__image {
+    width: 8.5rem;
+    height: 8.5rem;
+    cursor: pointer;
+  }
+
+  &__name {
+    font-family: var(--baseFont);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    margin: 2rem 0;
+  }
+
+  &__input-wrapper {
+    display: flex;
+  }
+
+  &__userdata-form {
+    width: 30rem;
+  }
+
+  &__change-data-btn {
+    color: var(--sandDune);
+    font-family: var(--baseFont);
+    font-style: normal;
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--brightGray);
+  }
+
+  &__change-data-btn:hover,  {
+    color: black;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+  }
+
+  &__buttons-wrapper {
+    margin: 3rem 0 0 0;
+  }
+
+  &__exit-btn {
+    color: red;
+    font-family: var(--baseFont);
+    font-style: normal;
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--brightGray);
+  }
+
+  &__exit-btn:hover {
+    cursor: pointer;
+    border-bottom: 1px solid black;
+  }
+
+  &__button-back {
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--sandDune);
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50px;
+    border: none;
+  
+    &:before {
+      content: url("../../../assets/backToPage.svg");
+      height: .9rem;
+      display: flex;
+    }
+  }
+}

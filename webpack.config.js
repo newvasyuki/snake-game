@@ -59,10 +59,7 @@ module.exports = (_, argv) => {
             }
           ]
         },
-        {
-          test: /\.svg$/,
-          use: ['@svgr/webpack'],
-        },
+        { test: /\.react.svg$/, use: ['@svgr/webpack'] },
       ],
     },
     plugins: [new HtmlWebpackPlugin(htmlPluginConfig)],
