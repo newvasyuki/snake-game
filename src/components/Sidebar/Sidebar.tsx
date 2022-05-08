@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './Sidebar.pcss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import MenuItemGame from '../../../assets/menuItemGame.react.svg';
 import MenuItemForum from '../../../assets/menuItemForum.react.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
 import MenuItemRules from '../../../assets/menuItemRules.react.svg';
 import CollapseIcon from './CollapseIcon.react.svg';
 import { ROUTES } from '../../constants';
-import { NavLink } from 'react-router-dom';
 
 const menuItems = {
   game: {
@@ -38,7 +37,6 @@ interface ChildProps {
 }
 
 const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
-
   const handleToggler = () => {
     if (isExpanded) {
       onChangeSidebar(false);
@@ -47,27 +45,27 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
     onChangeSidebar(true);
   };
 
-  let activeStyle = {
-    Position: "relative",
-    height: "3rem",
-    backgroundColor: "var(--bittersweet)",
-    borderRadius: "0 0.6rem 0.6rem 0",
-    color: "white",
-    display: "flex",
-    FlexDirection: "row",
-    alignItems: "center",
-    TextDecoration: "underline",
-    cursor: "pointer"
+  const activeStyle = {
+    Position: 'relative',
+    height: '3rem',
+    backgroundColor: 'var(--bittersweet)',
+    borderRadius: '0 0.6rem 0.6rem 0',
+    color: 'white',
+    display: 'flex',
+    FlexDirection: 'row',
+    alignItems: 'center',
+    TextDecoration: 'underline',
+    cursor: 'pointer',
   };
 
-  let defaultStyle = {
-    Position: "relative",
-    width: "17rem",
-    height: "3rem",
-    display: "flex",
-    FlexDirection: "row",
-    alignItems: "center",
-    cursor: "pointer"
+  const defaultStyle = {
+    Position: 'relative',
+    width: '17rem',
+    height: '3rem',
+    display: 'flex',
+    FlexDirection: 'row',
+    alignItems: 'center',
+    cursor: 'pointer',
   };
 
   return (
@@ -76,10 +74,9 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
         {Object.entries(menuItems).map((item) => {
           return (
             <li>
-              <NavLink to={item[1].route}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : defaultStyle
-                }
+              <NavLink
+                to={item[1].route}
+                style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
               >
                 <div className="sidebar__menu__item-icon">
                   {item[1].icon}

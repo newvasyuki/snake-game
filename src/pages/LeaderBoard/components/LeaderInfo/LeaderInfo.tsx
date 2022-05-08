@@ -6,8 +6,7 @@ type Props = {
   userName: string;
   login: string;
   snakeLength: number;
-  className?: string; //если нужно в родителе задать класс для стилизации
-}
+};
 
 const getLeaderInfo = (
   position: number,
@@ -15,14 +14,17 @@ const getLeaderInfo = (
   login: string,
 ): string => `${position}. ${name} (${login})`;
 
-const LeaderInfo: React.FC<Props> = ({ position, userName, login, snakeLength }) => {
+const LeaderInfo: React.FC<Props> = ({
+ position, userName, login, snakeLength,
+}) => {
   return (
     <div className="leader">
       <div className="leader__info">
         {getLeaderInfo(position, userName, login)}
       </div>
       <div className="leader__snake-length">{snakeLength}</div>
-    </div>)
-}
+    </div>
+);
+};
 
 export default LeaderInfo;

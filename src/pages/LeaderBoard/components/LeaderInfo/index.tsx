@@ -1,1 +1,1 @@
-export {default as LeaderInfo} from './LeaderInfo';
+export { default as LeaderInfo } from './LeaderInfo';

@@ -27,13 +27,11 @@ const leaders = [
     playerName: 'Alex',
     login: 'NoName',
     snakeLength: 8,
-    position: 4
+    position: 4,
   },
 ];
 
-
 const LeaderBoard = () => {
-
   return (
     <div className="leaderboard">
       <div className="leaderboard__tbl">
@@ -43,11 +41,11 @@ const LeaderBoard = () => {
         </div>
         {leaders.map((leader, i) => (
           <LeaderInfo
-            key={`${leader.login}${i+1}`}
-            position = {leader.position} 
-            userName= {leader.playerName}
-            login = {leader.login}
-            snakeLength = {leader.snakeLength}
+            key={`${leader.login}${i + 1}`}
+            position={leader.position}
+            userName={leader.playerName}
+            login={leader.login}
+            snakeLength={leader.snakeLength}
           />
         ))}
       </div>

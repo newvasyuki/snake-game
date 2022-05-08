@@ -18,7 +18,7 @@ const App = () => {
       <Routes>
         <Route path={ROUTES.home} element={<Layout />}>
           <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
-            {/* <Route path="top" element={'top'} />
+          {/* <Route path="top" element={'top'} />
             <Route path="latest" element={'latest'} /> */}
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
           <Route path={ROUTES.game} element={<Game />} />

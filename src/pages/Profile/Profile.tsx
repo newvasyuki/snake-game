@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, ChangeEvent,
+  useState, useEffect, ChangeEvent, FormEvent,
 } from 'react';
 import './Profile.pcss';
 import { useForm } from 'react-hook-form';
@@ -73,6 +73,11 @@ const Profile = () => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmitWrapper = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmit(onFormSubmission);
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-page__sidebar">
@@ -83,7 +88,7 @@ const Profile = () => {
         <span className="profile-page__name">
           {getFullUserName(userData.first_name, userData.last_name)}
         </span>
-        <form className="profile-page__userdata-form" onSubmit={handleSubmit(onFormSubmission)}>
+        <form className="profile-page__userdata-form" onSubmit={handleSubmitWrapper}>
           <ProfileInput
             id="profile-page__email"
             label="E-Mail"
