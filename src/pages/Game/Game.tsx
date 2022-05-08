@@ -4,11 +4,9 @@ import { Layout } from '../../components/Layout';
 
 const Game = () => {
   return (
-    <Layout>
-      <div className="game">
-        This is a game!
-      </div>
-    </Layout>
+    <div className="game">
+      This is a game!
+    </div>
   );
 };
 

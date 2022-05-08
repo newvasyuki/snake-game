@@ -28,31 +28,29 @@ const LeaderBoard = () => {
   ];
 
   return (
-    <Layout selectedRoute={ROUTES.leaderboard}>
-      <div className="leaderboard">
-        <div className="leaderboard__tbl">
-          <div className="leaderboard__raw_header">
-            <div className="leaderboard__cell_player">Игрок</div>
-            <div className="leaderboard__cell_snakelength">Длина змейки</div>
-          </div>
-          {leaders.map((leader, i) => {
-            return (
-              <div className="leaderboard__raw_content">
-                <div className="leaderboard__cell_player">
-                  {i + 1}
-                  {'. '}
-                  {leader.playerName}
+    <div className="leaderboard">
+      <div className="leaderboard__tbl">
+        <div className="leaderboard__raw_header">
+          <div className="leaderboard__cell_player">Игрок</div>
+          <div className="leaderboard__cell_snakelength">Длина змейки</div>
+        </div>
+        {leaders.map((leader, i) => {
+          return (
+            <div className="leaderboard__raw_content">
+              <div className="leaderboard__cell_player">
+                {i + 1}
+                {'. '}
+                {leader.playerName}
                   (
                   {leader.login}
                   )
                 </div>
-                <div className="leaderboard__cell_snakelength">{leader.snakeLength}</div>
-              </div>
-            );
-          })}
-        </div>
+              <div className="leaderboard__cell_snakelength">{leader.snakeLength}</div>
+            </div>
+          );
+        })}
       </div>
-    </Layout>
+    </div>
   );
 };
 

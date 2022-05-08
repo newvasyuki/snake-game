@@ -12,7 +12,10 @@ const Layout = () => {
     <>
       <Header isLogoSmall={!sideBarExpanded} />
       <div className="content">
-        <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
+        <Sidebar
+          isExpanded={sideBarExpanded}
+          onChangeSidebar={setSideBarExpanded}
+        />
         <Outlet />
       </div>
     </>
