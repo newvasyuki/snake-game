@@ -1,6 +1,5 @@
 import React from 'react';
 import './Game.pcss';
-import { Layout } from '../../components/Layout';
 
 const Game = () => {
   return (
