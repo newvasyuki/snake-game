@@ -6,8 +6,8 @@ import {
   Routes,
 } from 'react-router-dom';
 import Main from '../main';
-import Game from '../pages/Game';
-import Profile from '../pages/Profile';
+import { Game } from '../pages/Game';
+import { Profile } from '../pages/Profile';
 import { ROUTES } from '../constants';
 
 const App = () => {
