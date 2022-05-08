@@ -1,12 +1,11 @@
-import React, { ReactNode, PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
 import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
 import '../../constants/constants.pcss';
 
-interface Props {}
-
-const Layout = ({ children }: PropsWithChildren<Props>) => {
+const Layout = ({ children }: PropsWithChildren<{}>) => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
 
   return (
@@ -14,7 +13,7 @@ const Layout = ({ children }: PropsWithChildren<Props>) => {
       <Header isLogoSmall={!sideBarExpanded} />
       <div className="content">
         <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
-        {children}
+        <Outlet />
       </div>
     </>
   );
