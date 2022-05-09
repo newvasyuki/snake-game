@@ -6,31 +6,25 @@ import {
   Routes,
 } from 'react-router-dom';
 import { Game } from '../pages/Game';
-import { ROUTES } from '../constants';
+import { Profile } from '../pages/Profile';
 import { Layout } from '../components/Layout';
+import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
+import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.home} element={<Layout />}>
-          <Route path={ROUTES.leaderboard} element={<h1>LeaderBoard</h1>} />
-          <Route path={`${ROUTES.forum}/*`} element={<Forum />}>
-            {/* <Route path="top" element={'top'} />
-            <Route path="latest" element={'latest'} /> */}
-          </Route>
+            <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
+          <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
           <Route path={ROUTES.game} element={<Game />} />
         </Route>
         <Route
           path={ROUTES.profile}
-          element={(
-            <>
-              <h1>Profile</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          )}
+          element={<Profile />}
         />
         <Route
           path={ROUTES.signIn}

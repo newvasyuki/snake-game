@@ -1,0 +1,28 @@
+.progress {
+  margin-right: auto;
+
+  &__score,
+  &__record {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 40px;
+    line-height: 47px;
+    font-weight: 700;
+    color: #756A61;
+    margin-bottom: 50px;
+  }
+
+  &__score {
+    > span:first-child {
+      color: #F0B17B;
+    }
+  }
+  &__record {
+    > span:first-child {
+      color: #F57C5F;
+    }
+  }
+}

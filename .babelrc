@@ -8,5 +8,8 @@
         "targets": "defaults"
       }
     ]
+  ],
+  "plugins": [
+    ["@babel/transform-runtime"]
   ]
 }
