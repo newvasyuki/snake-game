@@ -5,14 +5,17 @@ import { Sidebar } from '../Sidebar';
 import './Layout.pcss';
 import '../../constants/constants.pcss';
 
-const Layout = ({ children }: PropsWithChildren<{}>) => {
+const Layout = () => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
 
   return (
     <>
       <Header isLogoSmall={!sideBarExpanded} />
       <div className="content">
-        <Sidebar isExpanded={sideBarExpanded} onChangeSidebar={setSideBarExpanded} />
+        <Sidebar
+          isExpanded={sideBarExpanded}
+          onChangeSidebar={setSideBarExpanded}
+        />
         <Outlet />
       </div>
     </>
