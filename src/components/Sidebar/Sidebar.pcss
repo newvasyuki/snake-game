@@ -1,7 +1,11 @@
 .sidebar {
-  background-color: #EEE4DA;
+  a {
+    all: unset;
+  }
+
+  background-color: var(--springWood);
   width: var(--sidebar-width);
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--baseFont);
   font-style: normal;
   font-weight: 500;
   display: flex;
@@ -23,9 +27,9 @@
   }
 
   &_collapsed {
-    background-color: #EEE4DA;
+    background-color: var(--springWood);
     width: var(--sidebar-width-collapsed);
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--baseFont);
     font-style: normal;
     font-weight: 500;
     display: flex;
@@ -69,36 +73,6 @@
       align-items: center;
       &:hover {
         cursor: pointer;
-      }
-    }
-  
-    &_selected {
-      position: relative;
-      height: 3rem;
-      background-color: #F59565;
-      border-radius: 0 0.6rem 0.6rem 0;
-      color: white;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-
-      &_collapsed {
-        position: relative;
-        width: var(--sidebar-width-collapsed);
-        height: 3rem;
-        background-color: #F59565;
-        border-radius: 0 0.6rem 0.6rem 0;
-        color: white;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        &:hover {
-          cursor: pointer;
-        }
       }
     }
   }

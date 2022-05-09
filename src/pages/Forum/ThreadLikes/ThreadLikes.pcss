@@ -1,0 +1,27 @@
+.likes {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+  align-items: center;
+  font-family: var(--baseFont);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  gap: 10px;
+  color: var(--bittersweet);
+
+  &__button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+
+    svg {
+      fill: var(--bittersweet);
+    }
+  }
+
+  &__icon {
+    display: flex;
+  }
+}

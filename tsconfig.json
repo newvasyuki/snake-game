@@ -2,10 +2,11 @@
   "compilerOptions": {
     "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "jsx": "react" /* Specify what JSX code is generated. */,
-    "module": "commonjs" /* Specify what module code is generated. */,
+    "module": "es6" /* Specify what module code is generated. */,
     "sourceMap": true /* Create source map files for emitted JavaScript files. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "esModuleInterop": true,
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
   "exclude": ["/node_modules"]
