@@ -1,6 +1,4 @@
-import {
- authApi, AuthApi, SignInData, SignUpData,
-} from '../../api';
+import { authApi, AuthApi, SignInData, SignUpData } from '../../api';
 
 export class AuthService {
   protected authApi: AuthApi;

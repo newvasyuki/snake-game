@@ -1,12 +1,12 @@
 import bemClassNameLite from 'bem-cn-lite';
 import React from 'react';
-import { User } from '../../../../api/auth/types';
 import { ThreadDate } from '../../ThreadDate';
+import { ForumUser } from '../../types';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
 
 type Props = {
-  user: Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+  user: ForumUser;
   date?: Date;
   message: string;
 };

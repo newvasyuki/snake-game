@@ -1,11 +1,11 @@
 import bemCn from 'bem-cn-lite';
 import React, { useMemo } from 'react';
-import { User } from '../../../api/auth/types';
+import { ForumUser } from '../types';
 import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
 type Props = {
-  user: Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+  user: ForumUser;
   className?: string;
 };
 

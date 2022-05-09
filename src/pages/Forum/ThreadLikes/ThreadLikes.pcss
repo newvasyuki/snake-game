@@ -3,25 +3,25 @@
   flex-direction: column;
   width: min-content;
   align-items: center;
-  font-family: "Roboto";
+  font-family: var(--baseFont);
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   gap: 10px;
-  color: #F57C5F;
-}
+  color: var(--bittersweet);
 
-.likes__button {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
+  &__button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
 
-  svg {
-    fill: #F57C5F;
+    svg {
+      fill: var(--bittersweet);
+    }
   }
-}
 
-.likes__icon {
-  display: flex;
+  &__icon {
+    display: flex;
+  }
 }

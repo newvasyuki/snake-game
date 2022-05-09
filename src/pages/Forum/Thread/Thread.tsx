@@ -7,19 +7,19 @@ import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
 import { AnswersList } from './AnswersList';
-import { User } from '../../../api/auth/types';
 import './Thread.pcss';
+import { ForumUser } from '../types';
 
 export type AnswerType = {
   id: string;
-  user: Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+  user: ForumUser;
   date: Date;
   message: string;
 };
 
 export type ThreadType = {
   id: string;
-  user: Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+  user: ForumUser;
   date: Date;
   likes: number;
   content: {
