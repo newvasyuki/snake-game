@@ -5,7 +5,7 @@ type SignUpResponse = {
 };
 
 export class AuthApi {
-  private baseUrl: string;
+  protected baseUrl: string;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;

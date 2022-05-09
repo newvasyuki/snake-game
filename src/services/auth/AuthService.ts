@@ -1,6 +1,4 @@
-import {
- authApi, AuthApi, SignInData, SignUpData,
-} from '../../api';
+import { authApi, AuthApi, SignInData, SignUpData } from '../../api';
 
 export class AuthService {
   protected authApi: AuthApi;
@@ -8,8 +6,8 @@ export class AuthService {
   // можно сохранить ссылку на стор чтобы диспатчить экшены
   protected store: null;
 
-  constructor(authApiObj: AuthApi) {
-    this.authApi = authApiObj;
+  constructor(api: AuthApi) {
+    this.authApi = api;
     this.store = null;
   }
 

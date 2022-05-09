@@ -4,14 +4,14 @@
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"]
   },
   "rules": {
+    "prettier/prettier": "error",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "react/destructuring-assignment": "off",
@@ -25,16 +25,19 @@
       2,
       {
         "namedComponents": "arrow-function",
-        "unnamedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
       }
     ]
   },
-  "plugins": [
-    "editorconfig"
-  ],
+  "plugins": ["editorconfig", "prettier"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"]
+      "files": ["*.ts", "*.tsx"],
+      "plugins": ["eslint-plugin-react"],
+      "rules": {
+        "react/prop-types": 0,
+        "react/require-default-props": 0
+      }
     }
   ]
 }

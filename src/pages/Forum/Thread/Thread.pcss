@@ -1,0 +1,43 @@
+.thread {
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  font-family: Roboto;
+  font-weight: 300;
+
+  &__topic {
+    display: grid;
+    grid-template-areas: "user user date"
+      "likes content content"
+      ". answers answers";
+    align-items: center;
+    row-gap: 10px;
+    column-gap: 10px;
+    padding: 12px 28px 18px 20px;
+    border: 1px dashed #CCBBAD;
+    border-radius: 15px;
+  }
+
+  &__user {
+    grid-area: user;
+  }
+
+  &__date {
+    grid-area: date;
+  }
+
+  &__likes {
+    grid-area: likes;
+    align-self: start;
+  }
+
+  &__content {
+    grid-area: content;
+  }
+
+  &__answers {
+    grid-area: answers;
+  }
+}
