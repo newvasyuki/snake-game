@@ -11,9 +11,12 @@
   position: relative;
 
   #snake {
-    width: 100%;
-    height: 100%;
+    /* width: 100%;
+    height: 100%; */
+    width: 300px;
+    height: 300px;
   }
+
   &__btn-start {
     border: 5px solid #F59565;
     background-color: #FBF8F1;
@@ -28,5 +31,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  &--active {
+    background: none;
   }
 }
