@@ -130,7 +130,7 @@ export class Game extends React.PureComponent<Props, State> {
         y: 20,
       },
     ];
-    this.food = new Food(10, 10, this.ctx);
+    this.food = new Food(10, 10, this.ctx, this.width, this.height);
     this.snake = new Snake(initSections, 10, 0, this.food, this.ctx);
     this.food.setSnake(this.snake);
   }

@@ -13,16 +13,22 @@ export class Food {
 
   context: CanvasRenderingContext2D;
 
+  canvasWidth: number;
+
+  canvasHeight: number;
+
   constructor(
     initialX: number | null,
     initialY: number | null,
-    // snakeRef: Snake,
     canvasContext: CanvasRenderingContext2D,
+    width: number,
+    height: number,
   ) {
     this.x = initialX;
     this.y = initialY;
-    // this.snake = snakeRef;
     this.context = canvasContext;
+    this.canvasHeight = height;
+    this.canvasWidth = width;
   }
 
   setSnake(snake: Snake) {
@@ -30,8 +36,8 @@ export class Food {
   }
 
   genFood() {
-    const x = createRandomFoodCoord(0, 300 - 10, 10); // canvas width
-    const y = createRandomFoodCoord(0, 300 - 10, 10); // canvas height
+    const x = createRandomFoodCoord(0, this.canvasWidth - 10, 10); // canvas width
+    const y = createRandomFoodCoord(0, this.canvasHeight - 10, 10); // canvas height
     this.x = x;
     this.y = y;
     this.checkSnakeCollision();
