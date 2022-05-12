@@ -1,0 +1,1 @@
+export { Snake } from './Snake';
