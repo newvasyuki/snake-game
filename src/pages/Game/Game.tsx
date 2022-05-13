@@ -1,12 +1,12 @@
 import React from 'react';
 import './Game.pcss';
-import { Screen } from './components/Screen';
+import { Game as GameMechanics } from '../../components/Game';
 import { Progress } from './components/Progress';
 
 const Game = () => {
   return (
-    <div className="game">
-      <Screen />
+    <div className="game-page">
+      <GameMechanics />
       <Progress />
     </div>
   );

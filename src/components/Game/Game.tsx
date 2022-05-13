@@ -1,13 +1,17 @@
+import bemCn from 'bem-cn-lite';
 import React, { RefObject } from 'react';
-import { StartButton } from '../components/StartButton';
-import { Food } from './Food';
-import { Snake } from './Snake';
+import { StartButton } from '../../pages/Game/components/StartButton';
+import { Food } from './mechanics/Food';
+import { Snake } from './mechanics/Snake';
+import './Game.pcss';
 
 type State = {
   isStarted: boolean;
 };
 
 type Props = Record<string, never>;
+
+const block = bemCn('game');
 
 export class Game extends React.PureComponent<Props, State> {
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -162,10 +166,7 @@ export class Game extends React.PureComponent<Props, State> {
     this.addEventListeners();
     return (
       <>
-        <div
-          className={this.state.isStarted ? 'screen screen--active' : 'screen'}
-          ref={this.canvasWrapperRef}
-        >
+        <div className={block(null, { active: this.state.isStarted })} ref={this.canvasWrapperRef}>
           <canvas id="snake" ref={this.canvasRef} width={this.width} height={this.height} />
           {this.state.isStarted ? null : (
             <StartButton
