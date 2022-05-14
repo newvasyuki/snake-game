@@ -1,6 +1,6 @@
 import bemCn from 'bem-cn-lite';
 import React from 'react';
-import AnswerIcon from '../../../../assets/answer-icon.svg';
+import AnswerIcon from '../../../../assets/answer-icon.react.svg';
 import './AnswersCount.pcss';
 
 type Props = {

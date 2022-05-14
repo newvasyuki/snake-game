@@ -1,6 +1,6 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
-import HeartIcon from '../../../../assets/heart-icon.svg';
+import HeartIcon from '../../../../assets/heart-icon.react.svg';
 import './ThreadLikes.pcss';
 
 type Props = {
