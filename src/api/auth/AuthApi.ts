@@ -1,4 +1,5 @@
-import { SignUpData, SignInData, User } from './types';
+import { SignUpData, SignInData } from './types';
+import { User } from '../user/types';
 
 type SignUpResponse = {
   id: number;

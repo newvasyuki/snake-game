@@ -1,4 +1,4 @@
-import { User } from '../index';
+import { User } from '../user/types';
 
 export type PasswordData = {
   oldPassword: string;
