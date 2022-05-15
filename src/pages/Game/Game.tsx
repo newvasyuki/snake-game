@@ -33,7 +33,10 @@ const Game = () => {
 
     setHeigth(calculatedHeight);
 
-    const newGame = new GameMechanics(canvasRef.current, calculatedWidth, calculatedHeight);
+    const newGame = new GameMechanics(canvasRef.current, calculatedWidth, calculatedHeight, {
+      x: 10,
+      y: 10,
+    });
 
     setGame(newGame);
 

@@ -30,13 +30,27 @@ export class Game {
 
   listeners: EventListeners;
 
-  constructor(canvas: HTMLCanvasElement, width: number, height: number) {
+  gridSize: {
+    x: number;
+    y: number;
+  };
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
+    gridSize: {
+      x: number;
+      y: number;
+    },
+  ) {
     this.isStarted = false;
     this.canvasRef = canvas;
     this.width = width;
     this.height = height;
     this.ctx = this.canvasRef.getContext('2d');
     this.listeners = {};
+    this.gridSize = gridSize;
     this.init();
     this.addEventListeners();
   }
@@ -83,12 +97,30 @@ export class Game {
     }
   };
 
+  drawBoard() {
+    let x = 0;
+    let y = 0;
+
+    while (x <= this.width && y <= this.height) {
+      this.ctx.strokeStyle = '#fff';
+      this.ctx.moveTo(x, 0);
+      this.ctx.lineTo(x, this.height);
+      this.ctx.stroke();
+      this.ctx.moveTo(0, y);
+      this.ctx.lineTo(this.width, y);
+      this.ctx.stroke();
+
+      x += this.width / this.gridSize.x;
+      y += this.height / this.gridSize.y;
+    }
+  }
+
   draw = () => {
     const { x, y } = this.snake.getHead();
 
     if (
-      x >= this.width - 10 ||
-      y >= this.height - 10 ||
+      x >= this.gridSize.x - 1 ||
+      y >= this.gridSize.y - 1 ||
       x <= 0 ||
       y <= 0 ||
       this.snake.checkCollision()
@@ -109,6 +141,7 @@ export class Game {
 
       this.ctx.fillStyle = '#000000';
       this.ctx.fillRect(0, 0, this.width, this.height);
+      this.drawBoard();
       this.snake.draw();
       this.food.draw();
     }
@@ -125,20 +158,28 @@ export class Game {
   init() {
     const initSections = [
       {
-        x: 40,
-        y: 20,
+        x: 4,
+        y: 2,
       },
       {
-        x: 30,
-        y: 20,
+        x: 3,
+        y: 2,
       },
       {
-        x: 20,
-        y: 20,
+        x: 2,
+        y: 2,
       },
     ];
-    this.food = new Food(10, 10, this.ctx, this.width, this.height);
-    this.snake = new Snake(initSections, 10, 0, this.food, this.ctx);
+    this.food = new Food(1, 1, this.ctx, this.width, this.height, { ...this.gridSize });
+    this.snake = new Snake(
+      initSections,
+      1,
+      0,
+      this.food,
+      this.ctx,
+      { ...this.gridSize },
+      { width: this.width, height: this.height },
+    );
     this.food.setSnake(this.snake);
   }
 

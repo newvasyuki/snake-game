@@ -16,18 +16,38 @@ export class Snake {
 
   ctx: CanvasRenderingContext2D;
 
+  gridSize: {
+    x: number;
+    y: number;
+  };
+
+  canvasSize: {
+    width: number;
+    height: number;
+  };
+
   constructor(
     initialSections: SnakeSection[],
     initialDx: number,
     initialDy: number,
     foodRef: Food,
     context: CanvasRenderingContext2D,
+    gridSize: {
+      x: number;
+      y: number;
+    },
+    canvasSize: {
+      width: number;
+      height: number;
+    },
   ) {
     this.dx = initialDx;
     this.dy = initialDy;
     this.sections = initialSections;
     this.food = foodRef;
     this.ctx = context;
+    this.gridSize = gridSize;
+    this.canvasSize = canvasSize;
   }
 
   checkCollision() {
@@ -38,31 +58,31 @@ export class Snake {
   changeDirection(direction) {
     switch (direction) {
       case 'down':
-        if (this.dy === -10) {
+        if (this.dy === -1) {
           break;
         }
-        this.dy = 10;
+        this.dy = 1;
         this.dx = 0;
         break;
       case 'left':
-        if (this.dx === 10) {
+        if (this.dx === 1) {
           break;
         }
-        this.dx = -10;
+        this.dx = -1;
         this.dy = 0;
         break;
       case 'right':
-        if (this.dx === -10) {
+        if (this.dx === -1) {
           break;
         }
-        this.dx = 10;
+        this.dx = 1;
         this.dy = 0;
         break;
       case 'up':
-        if (this.dy === 10) {
+        if (this.dy === 1) {
           break;
         }
-        this.dy = -10;
+        this.dy = -1;
         this.dx = 0;
         break;
       default:
@@ -87,6 +107,9 @@ export class Snake {
   }
 
   checkIsFoodEaten() {
+    if (!this.food) {
+      return false;
+    }
     const { x, y } = this.getHead();
     return this.food.x === x && this.food.y === y;
   }
@@ -105,11 +128,21 @@ export class Snake {
     }
   }
 
+  transformGridToCanvasCoords() {
+    return {
+      width: this.canvasSize.width / this.gridSize.x,
+      height: this.canvasSize.height / this.gridSize.y,
+    };
+  }
+
   draw() {
     this.move();
+    const { width, height } = this.transformGridToCanvasCoords();
     this.ctx.fillStyle = '#fff';
+    this.ctx.strokeStyle = '#000';
     this.sections.forEach((item) => {
-      this.ctx.fillRect(item.x, item.y, 10, 10);
+      this.ctx.fillRect(item.x * width, item.y * height, width, height);
+      this.ctx.strokeRect(item.x * width, item.y * height, width, height);
     });
   }
 }
