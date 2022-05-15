@@ -47,16 +47,8 @@ export class Food {
     if (!this.snake) {
       return;
     }
-    let isHaveCollision = false;
 
-    for (let i = 0; i < this.snake.sections.length; i++) {
-      const { x, y } = this.snake.sections[i];
-      if (x === this.x || y === this.y) {
-        isHaveCollision = true;
-        break;
-      }
-    }
-    if (isHaveCollision) {
+    if (this.snake.checkIsCoordsInsideSnake(this.x, this.y)) {
       this.genFood();
     }
   }

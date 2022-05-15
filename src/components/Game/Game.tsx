@@ -1,32 +1,24 @@
-import bemCn from 'bem-cn-lite';
-import React, { RefObject } from 'react';
-import { StartButton } from '../../pages/Game/components/StartButton';
 import { Food } from './mechanics/Food';
 import { Snake } from './mechanics/Snake';
-import './Game.pcss';
 
-type State = {
-  isStarted: boolean;
+type EventHandler<T = unknown> = (...args: T[]) => void;
+
+type EventListeners = {
+  [key: string]: EventHandler[];
 };
 
-type Props = Record<string, never>;
+export class Game {
+  canvasRef: HTMLCanvasElement | null;
 
-const block = bemCn('game');
-
-export class Game extends React.PureComponent<Props, State> {
-  canvasRef: RefObject<HTMLCanvasElement>;
-
-  canvasWrapperRef: RefObject<HTMLDivElement>;
-
-  ctx: CanvasRenderingContext2D;
+  ctx: CanvasRenderingContext2D | null;
 
   width: number;
 
   height: number;
 
-  snake: Snake;
+  snake: Snake | null;
 
-  food: Food;
+  food: Food | null;
 
   frame: number;
 
@@ -34,31 +26,42 @@ export class Game extends React.PureComponent<Props, State> {
 
   then: number;
 
-  constructor(props: Props) {
-    super(props);
+  isStarted: boolean;
 
-    this.state = {
-      isStarted: false,
-    };
+  listeners: EventListeners;
 
-    this.canvasRef = React.createRef<HTMLCanvasElement>();
-    this.canvasWrapperRef = React.createRef<HTMLDivElement>();
-  }
-
-  componentDidMount(): void {
-    const { width, height } = this.canvasWrapperRef.current.getBoundingClientRect();
-    const { border } = getComputedStyle(this.canvasWrapperRef.current);
-
-    this.width = Math.round(Math.floor(width) - 2 * parseFloat(border));
-    this.height = Math.round(Math.floor(height) - 2 * parseFloat(border));
-
-    this.ctx = this.canvasRef.current?.getContext('2d');
-
+  constructor(canvas: HTMLCanvasElement, width: number, height: number) {
+    this.isStarted = false;
+    this.canvasRef = canvas;
+    this.width = width;
+    this.height = height;
+    this.ctx = this.canvasRef.getContext('2d');
+    this.listeners = {};
     this.init();
+    this.addEventListeners();
   }
 
-  componentWillUnmount(): void {
+  subscribeEvent(eventName: 'start' | 'end', cb: () => void) {
+    if (!this.listeners[eventName]) {
+      this.listeners[eventName] = [];
+    }
+
+    this.listeners[eventName].push(cb);
+  }
+
+  emit(eventName: 'start' | 'end', ...args: unknown[]) {
+    if (!this.listeners[eventName]) {
+      return;
+    }
+
+    this.listeners[eventName].forEach((event) => event(...args));
+  }
+
+  destroy() {
     this.removeEventListeners();
+    this.canvasRef = null;
+    this.snake = null;
+    this.food = null;
   }
 
   // хотел прибиндидь, но что-то пошло не так
@@ -142,6 +145,8 @@ export class Game extends React.PureComponent<Props, State> {
   startGame() {
     // пока захардкожено, возможно будем увеличивать скорость игры, путем изменения значения
     // или есть какой-то другой способ сделать движения пошаговыми (по 10 пикселей)
+    this.isStarted = true;
+    this.emit('start');
     this.msInterval = 500;
     this.then = Date.now();
     this.draw();
@@ -149,40 +154,14 @@ export class Game extends React.PureComponent<Props, State> {
 
   pauseGame() {
     window.cancelAnimationFrame(this.frame);
-    this.setState({
-      isStarted: false,
-    });
+    this.isStarted = false;
+    this.emit('end');
   }
 
   resetGame() {
     window.cancelAnimationFrame(this.frame);
-    this.setState({
-      isStarted: false,
-    });
+    this.isStarted = false;
+    this.emit('end');
     this.init();
-  }
-
-  render() {
-    this.addEventListeners();
-    return (
-      <>
-        <div className={block(null, { active: this.state.isStarted })} ref={this.canvasWrapperRef}>
-          <canvas id="snake" ref={this.canvasRef} width={this.width} height={this.height} />
-          {this.state.isStarted ? null : (
-            <StartButton
-              onClick={() => {
-                this.setState({
-                  isStarted: true,
-                });
-                this.startGame();
-              }}
-            />
-          )}
-        </div>
-        <button type="button" onClick={() => this.pauseGame()}>
-          Pause
-        </button>
-      </>
-    );
   }
 }

@@ -73,6 +73,19 @@ export class Snake {
     return this.sections[0];
   }
 
+  checkIsCoordsInsideSnake(xCoord: number, yCoord: number) {
+    let isHaveCollision = false;
+
+    for (let i = 0; i < this.sections.length; i++) {
+      const { x, y } = this.sections[i];
+      if (x === xCoord || y === yCoord) {
+        isHaveCollision = true;
+        break;
+      }
+    }
+    return isHaveCollision;
+  }
+
   checkIsFoodEaten() {
     const { x, y } = this.getHead();
     return this.food.x === x && this.food.y === y;
