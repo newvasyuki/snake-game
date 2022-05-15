@@ -6,18 +6,19 @@ import { Layout } from '../components/Layout';
 import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
+import {Login} from "../pages/Login";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.home} element={<Layout />}>
-          <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
-          <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
-          <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
-          <Route path={ROUTES.game} element={<Game />} />
+        <Route path={ROUTES.home} element={<Login/>}>
+          <Route path={ROUTES.leaderboard} element={<LeaderBoard/>}/>
+          <Route path={`${ROUTES.forum}/*`} element={<Forum/>}/>
+          <Route path={ROUTES.rules} element={<h1>Rules</h1>}/>
+          <Route path={ROUTES.game} element={<Game/>}/>
         </Route>
-        <Route path={ROUTES.profile} element={<Profile />} />
+        <Route path={ROUTES.profile} element={<Profile/>}/>
         <Route
           path={ROUTES.signIn}
           element={
