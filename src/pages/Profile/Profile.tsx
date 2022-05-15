@@ -9,32 +9,25 @@ import ProfileImage from '../../../assets/noProfileImage.react.svg';
 import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
+import { useDispatch, useSelector } from "react-redux";
+import { UserInfoState } from '../../store/type';
 
 interface FormData {
   first_name: string,
-  last_name: string,
+  second_name: string,
   email: string,
   login: string
 }
-
-const getUserData = () => Promise.resolve({
-  first_name: 'Иван',
-  last_name: 'Иванов',
-  email: 'pochta@yandex.ru',
-  login: 'ivanivanov',
-});
 
 const getFullUserName = (firstName: string, lastName: string): string => `${firstName} ${lastName}`;
 
 const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [userData, setUserData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    login: '',
-  });
+  const [userData, setUserData] = useState(useSelector(
+    (state: UserInfoState) => state
+  ));
 
   const {
     handleSubmit, formState: { errors }, register, reset,
@@ -43,20 +36,19 @@ const Profile = () => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    // todo fetch data from the backend based on a cookie
-    const loadData = async () => {
-      const res = await getUserData();
-      reset(res);
-      setUserData(res);
-    };
-    loadData();
-  }, [reset]);
+  // useEffect(() => {
+  //   // todo fetch data from the backend based on a cookie
+  //   const loadData = async () => {
+  //     // const res = await getUserData();
+  //     // reset(res);
+  //     dispatch(updateUserInfo(res)) 
+  //     // setUserData(res);
+  //   };
+  //   loadData();
+  // }, [reset]);
 
-  const onFormSubmission = (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     console.log(data);
-    // todo: implemetn data submission
-    // await changeUserData(data);
   };
 
   const changePassword = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -73,10 +65,6 @@ const Profile = () => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitWrapper = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleSubmit(onFormSubmission);
-  };
 
   return (
     <div className="profile-page">
@@ -86,9 +74,9 @@ const Profile = () => {
       <div className="profile-page__content">
         <ProfileImage className="profile-page__image" />
         <span className="profile-page__name">
-          {getFullUserName(userData.first_name, userData.last_name)}
+          {getFullUserName(userData.first_name, userData.second_name)}
         </span>
-        <form className="profile-page__userdata-form" onSubmit={handleSubmitWrapper}>
+        <form className="profile-page__userdata-form" onSubmit={handleSubmit(onSubmit)}>
           <ProfileInput
             id="profile-page__email"
             label="E-Mail"
@@ -119,10 +107,10 @@ const Profile = () => {
           <ProfileInput
             id="profile-page__last-name"
             label="Фамилия"
-            value={userData.last_name}
+            value={userData.second_name}
             labelClassName="profile-page__last-name-label"
-            errorMsg={errors?.last_name?.message}
-            {...register('last_name')}
+            errorMsg={errors?.second_name?.message}
+            {...register('second_name')}
             onChange={changeInputField}
           />
           <div className="profile-page__buttons-wrapper">

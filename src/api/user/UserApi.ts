@@ -12,20 +12,34 @@ export class UserApi {
     this.baseUrl = baseUrl;
   }
 
-  changeProfile(userData: User) {
-    return fetch(`${this.baseUrl}/user/profile`, {
-      method: 'PUT',
-      body: JSON.stringify(userData),
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/auth/user`, {
+      method: 'GET',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
       .then((response) => response.json())
-      .then((data: User) => data)
+      .then((userData: User) => userData)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
+  }
+
+  changeProfile(userData: User) {
+    return dispatch => {
+      fetch(`${this.baseUrl}/user/profile`, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data: User) => data)
+        .catch((error: unknown) => {
+          console.log(error);
+        });
+    } 
   }
 
   changeAvatar(data: FormData) {

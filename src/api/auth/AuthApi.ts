@@ -49,18 +49,6 @@ export class AuthApi {
       console.error(error);
     });
   }
-
-  getUserInfo() {
-    return fetch(`${this.baseUrl}/auth/user`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((userData: User) => userData)
-      .catch((error: unknown) => {
-        console.error(error);
-      });
-  }
 }
 
 export const authApi = new AuthApi('https://ya-praktikum.tech/api/v2');
