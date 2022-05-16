@@ -1,5 +1,5 @@
-import { Size } from '../../types';
-import { transformGridToCanvasCoords } from '../../utils';
+import { Size } from '../types';
+import { transformGridToCanvasCoords } from '../utils';
 
 function createRandomFoodCoord(minCoord: number, maxCoord: number, gridSize: number) {
   return Math.round((Math.random() * (maxCoord - minCoord) + minCoord) / gridSize) * gridSize;

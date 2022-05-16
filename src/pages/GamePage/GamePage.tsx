@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import bemCn from 'bem-cn-lite';
-import { Game as GameMechanics } from '../../components/Game';
+import { Game } from '../../components/Game';
 import { Progress } from './components/Progress';
-import './Game.pcss';
 import { StartButton } from './components/StartButton';
+import './GamePage.pcss';
 
 const block = bemCn('game-page');
 
@@ -17,11 +17,11 @@ const calculateSize = (wrapper: HTMLElement) => {
   return { width, height };
 };
 
-const Game = () => {
+const GamePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const wrapperRef = useRef<HTMLDivElement>();
 
-  const [game, setGame] = useState<GameMechanics>();
+  const [game, setGame] = useState<Game>();
   const [width, setWidth] = useState<number>();
   const [height, setHeigth] = useState<number>();
   const [isStarted, setIsStarted] = useState(false);
@@ -37,7 +37,7 @@ const Game = () => {
 
     setHeigth(size.height);
 
-    const newGame = new GameMechanics(canvasRef.current, size, gridSize);
+    const newGame = new Game(canvasRef.current, size, gridSize);
 
     setGame(newGame);
 
@@ -74,4 +74,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default GamePage;

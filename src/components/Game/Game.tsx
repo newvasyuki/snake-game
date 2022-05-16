@@ -1,5 +1,5 @@
-import { Food } from './mechanics/Food';
-import { Snake } from './mechanics/Snake';
+import { Food } from './Food';
+import { Snake } from './Snake';
 import { Size } from './types';
 
 type EventHandler<T = unknown> = (...args: T[]) => void;
@@ -32,7 +32,7 @@ export class Game {
 
   msInterval: number;
 
-  then: number;
+  startTime: number;
 
   status: GameStatus;
 
@@ -117,12 +117,12 @@ export class Game {
   draw = () => {
     const now = performance.now();
 
-    const elapsed = now - this.then;
+    const elapsed = now - this.startTime;
 
     if (elapsed >= this.msInterval) {
       const { x, y } = this.snake.getHead();
       const { width, height } = this.canvasSize;
-      this.then = now;
+      this.startTime = now;
 
       this.ctx.fillStyle = '#000000';
       this.ctx.fillRect(0, 0, width, height);
@@ -143,7 +143,7 @@ export class Game {
         y >= this.gridSize.height ||
         x <= -1 ||
         y <= -1 ||
-        this.snake.checkCollision()
+        this.snake.isHeadCollisionWithBody()
       ) {
         // hit border stop the game
         this.resetGame();
@@ -188,7 +188,7 @@ export class Game {
     this.status = GAME_STATUS.PLAY;
     this.emit('start');
     this.msInterval = 500;
-    this.then = performance.now();
+    this.startTime = performance.now();
     this.draw();
   }
 

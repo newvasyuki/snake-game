@@ -1,5 +1,5 @@
-import { Size } from '../../types';
-import { transformGridToCanvasCoords } from '../../utils';
+import { Size } from '../types';
+import { transformGridToCanvasCoords } from '../utils';
 import { Food } from '../Food';
 
 type SnakeSection = {
@@ -43,7 +43,7 @@ export class Snake {
     this.canvasSize = canvasSize;
   }
 
-  checkCollision() {
+  isHeadCollisionWithBody() {
     const { x, y } = this.getHead();
     return this.sections.slice(1).some((elem) => elem.x === x && elem.y === y);
   }
