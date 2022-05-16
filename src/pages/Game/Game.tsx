@@ -27,16 +27,17 @@ const Game = () => {
   const [isStarted, setIsStarted] = useState(false);
 
   useEffect(() => {
-    const { width: calculatedWidth, height: calculatedHeight } = calculateSize(wrapperRef.current);
+    const size = calculateSize(wrapperRef.current);
+    const gridSize = {
+      width: 10,
+      height: 10,
+    };
 
-    setWidth(calculatedWidth);
+    setWidth(size.width);
 
-    setHeigth(calculatedHeight);
+    setHeigth(size.height);
 
-    const newGame = new GameMechanics(canvasRef.current, calculatedWidth, calculatedHeight, {
-      x: 10,
-      y: 10,
-    });
+    const newGame = new GameMechanics(canvasRef.current, size, gridSize);
 
     setGame(newGame);
 

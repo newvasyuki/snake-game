@@ -1,3 +1,5 @@
+import { Size } from '../../types';
+import { transformGridToCanvasCoords } from '../../utils';
 import { Food } from '../Food';
 
 type SnakeSection = {
@@ -16,10 +18,7 @@ export class Snake {
 
   ctx: CanvasRenderingContext2D;
 
-  gridSize: {
-    x: number;
-    y: number;
-  };
+  gridSize: Size;
 
   canvasSize: {
     width: number;
@@ -32,14 +31,8 @@ export class Snake {
     initialDy: number,
     foodRef: Food,
     context: CanvasRenderingContext2D,
-    gridSize: {
-      x: number;
-      y: number;
-    },
-    canvasSize: {
-      width: number;
-      height: number;
-    },
+    gridSize: Size,
+    canvasSize: Size,
   ) {
     this.dx = initialDx;
     this.dy = initialDy;
@@ -93,12 +86,12 @@ export class Snake {
     return this.sections[0];
   }
 
-  checkIsCoordsInsideSnake(xCoord: number, yCoord: number) {
+  isFoodCoordsInsideSnake(xCoord: number, yCoord: number) {
     let isHaveCollision = false;
 
     for (let i = 0; i < this.sections.length; i++) {
       const { x, y } = this.sections[i];
-      if (x === xCoord || y === yCoord) {
+      if (x === xCoord && y === yCoord) {
         isHaveCollision = true;
         break;
       }
@@ -106,7 +99,7 @@ export class Snake {
     return isHaveCollision;
   }
 
-  checkIsFoodEaten() {
+  isFoodEaten() {
     if (!this.food) {
       return false;
     }
@@ -120,7 +113,7 @@ export class Snake {
       y: this.getHead().y + this.dy,
     };
 
-    if (this.checkIsFoodEaten()) {
+    if (this.isFoodEaten()) {
       this.food.genFood();
       this.sections = [newHead, ...this.sections.slice(0, this.sections.length)];
     } else {
@@ -128,16 +121,11 @@ export class Snake {
     }
   }
 
-  transformGridToCanvasCoords() {
-    return {
-      width: this.canvasSize.width / this.gridSize.x,
-      height: this.canvasSize.height / this.gridSize.y,
-    };
-  }
-
   draw() {
-    this.move();
-    const { width, height } = this.transformGridToCanvasCoords();
+    const { width, height } = transformGridToCanvasCoords({
+      canvasSize: this.canvasSize,
+      gridSize: this.gridSize,
+    });
     this.ctx.fillStyle = '#fff';
     this.ctx.strokeStyle = '#000';
     this.sections.forEach((item) => {

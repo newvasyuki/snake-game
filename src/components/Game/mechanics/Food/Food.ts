@@ -1,4 +1,5 @@
-import { Snake } from '../Snake';
+import { Size } from '../../types';
+import { transformGridToCanvasCoords } from '../../utils';
 
 function createRandomFoodCoord(minCoord: number, maxCoord: number, gridSize: number) {
   return Math.round((Math.random() * (maxCoord - minCoord) + minCoord) / gridSize) * gridSize;
@@ -9,69 +10,38 @@ export class Food {
 
   y: number | null;
 
-  snake: Snake;
-
   context: CanvasRenderingContext2D;
 
-  canvasWidth: number;
+  canvasSize: Size;
 
-  canvasHeight: number;
-
-  gridSize: {
-    x: number;
-    y: number;
-  };
+  gridSize: Size;
 
   constructor(
     initialX: number | null,
     initialY: number | null,
     canvasContext: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-    gridSize: {
-      x: number;
-      y: number;
-    },
+    canvasSize: Size,
+    gridSize: Size,
   ) {
     this.x = initialX;
     this.y = initialY;
     this.context = canvasContext;
-    this.canvasHeight = height;
-    this.canvasWidth = width;
+    this.canvasSize = canvasSize;
     this.gridSize = gridSize;
   }
 
-  setSnake(snake: Snake) {
-    this.snake = snake;
-  }
-
   genFood() {
-    const x = createRandomFoodCoord(0, this.gridSize.x - 1, 1); // canvas width
-    const y = createRandomFoodCoord(0, this.gridSize.y - 1, 1); // canvas height
+    const x = createRandomFoodCoord(0, this.gridSize.width - 1, 1); // grid width
+    const y = createRandomFoodCoord(0, this.gridSize.height - 1, 1); // grid height
     this.x = x;
     this.y = y;
-    this.checkSnakeCollision();
-  }
-
-  checkSnakeCollision(): void {
-    if (!this.snake) {
-      return;
-    }
-
-    if (this.snake.checkIsCoordsInsideSnake(this.x, this.y)) {
-      this.genFood();
-    }
-  }
-
-  transformGridToCanvasCoords() {
-    return {
-      width: this.canvasWidth / this.gridSize.x,
-      height: this.canvasHeight / this.gridSize.y,
-    };
   }
 
   draw() {
-    const { width, height } = this.transformGridToCanvasCoords();
+    const { width, height } = transformGridToCanvasCoords({
+      canvasSize: this.canvasSize,
+      gridSize: this.gridSize,
+    });
     this.context.fillStyle = 'lightgreen';
     this.context.strokeStyle = 'darkgreen';
     this.context.fillRect(this.x * width, this.y * height, width, height);

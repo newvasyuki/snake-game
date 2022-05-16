@@ -1,5 +1,6 @@
 import { Food } from './mechanics/Food';
 import { Snake } from './mechanics/Snake';
+import { Size } from './types';
 
 type EventHandler<T = unknown> = (...args: T[]) => void;
 
@@ -7,14 +8,21 @@ type EventListeners = {
   [key: string]: EventHandler[];
 };
 
+const GAME_STATUS = {
+  INITIAL: 'INITIAL',
+  PLAY: 'PLAY',
+  PAUSED: 'PAUSED',
+  GAME_OVER: 'GAME_OVER',
+} as const;
+
+type GameStatus = keyof typeof GAME_STATUS;
+
 export class Game {
   canvasRef: HTMLCanvasElement | null;
 
   ctx: CanvasRenderingContext2D | null;
 
-  width: number;
-
-  height: number;
+  canvasSize: Size;
 
   snake: Snake | null;
 
@@ -26,28 +34,16 @@ export class Game {
 
   then: number;
 
-  isStarted: boolean;
+  status: GameStatus;
 
   listeners: EventListeners;
 
-  gridSize: {
-    x: number;
-    y: number;
-  };
+  gridSize: Size;
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    width: number,
-    height: number,
-    gridSize: {
-      x: number;
-      y: number;
-    },
-  ) {
-    this.isStarted = false;
+  constructor(canvas: HTMLCanvasElement, canvasSize: Size, gridSize: Size) {
+    this.status = GAME_STATUS.INITIAL;
     this.canvasRef = canvas;
-    this.width = width;
-    this.height = height;
+    this.canvasSize = canvasSize;
     this.ctx = this.canvasRef.getContext('2d');
     this.listeners = {};
     this.gridSize = gridSize;
@@ -101,50 +97,62 @@ export class Game {
     let x = 0;
     let y = 0;
 
-    while (x <= this.width && y <= this.height) {
+    const { width, height } = this.canvasSize;
+    const { width: gridWidth, height: gridHeight } = this.gridSize;
+
+    while (x <= width && y <= height) {
       this.ctx.strokeStyle = '#fff';
       this.ctx.moveTo(x, 0);
-      this.ctx.lineTo(x, this.height);
+      this.ctx.lineTo(x, height);
       this.ctx.stroke();
       this.ctx.moveTo(0, y);
-      this.ctx.lineTo(this.width, y);
+      this.ctx.lineTo(width, y);
       this.ctx.stroke();
 
-      x += this.width / this.gridSize.x;
-      y += this.height / this.gridSize.y;
+      x += width / gridWidth;
+      y += height / gridHeight;
     }
   }
 
   draw = () => {
-    const { x, y } = this.snake.getHead();
-
-    if (
-      x >= this.gridSize.x - 1 ||
-      y >= this.gridSize.y - 1 ||
-      x <= 0 ||
-      y <= 0 ||
-      this.snake.checkCollision()
-    ) {
-      // hit border stop the game
-      this.resetGame();
-      return;
-    }
-
-    this.frame = window.requestAnimationFrame(this.draw);
-
-    const now = Date.now();
+    const now = performance.now();
 
     const elapsed = now - this.then;
 
     if (elapsed >= this.msInterval) {
+      const { x, y } = this.snake.getHead();
+      const { width, height } = this.canvasSize;
       this.then = now;
 
       this.ctx.fillStyle = '#000000';
-      this.ctx.fillRect(0, 0, this.width, this.height);
+      this.ctx.fillRect(0, 0, width, height);
       this.drawBoard();
+      this.snake.move();
+
+      // тут нужно проверить что змейка не съела еду, но она попала на координаты змейки (сгенерировалась внутри)
+      if (
+        this.snake.isFoodCoordsInsideSnake(this.food.x, this.food.y) &&
+        !this.snake.isFoodEaten()
+      ) {
+        this.food.genFood();
+      }
+
+      // змейка утопает на 1 клетку, иначе не получилось
+      if (
+        x >= this.gridSize.width ||
+        y >= this.gridSize.height ||
+        x <= -1 ||
+        y <= -1 ||
+        this.snake.checkCollision()
+      ) {
+        // hit border stop the game
+        this.resetGame();
+        return;
+      }
       this.snake.draw();
       this.food.draw();
     }
+    this.frame = window.requestAnimationFrame(this.draw);
   };
 
   addEventListeners() {
@@ -170,39 +178,28 @@ export class Game {
         y: 2,
       },
     ];
-    this.food = new Food(1, 1, this.ctx, this.width, this.height, { ...this.gridSize });
-    this.snake = new Snake(
-      initSections,
-      1,
-      0,
-      this.food,
-      this.ctx,
-      { ...this.gridSize },
-      { width: this.width, height: this.height },
-    );
-    this.food.setSnake(this.snake);
+    this.food = new Food(1, 1, this.ctx, this.canvasSize, this.gridSize);
+    this.snake = new Snake(initSections, 1, 0, this.food, this.ctx, this.gridSize, this.canvasSize);
   }
 
   startGame() {
     // пока захардкожено, возможно будем увеличивать скорость игры, путем изменения значения
     // или есть какой-то другой способ сделать движения пошаговыми (по 10 пикселей)
-    this.isStarted = true;
+    this.status = GAME_STATUS.PLAY;
     this.emit('start');
     this.msInterval = 500;
-    this.then = Date.now();
+    this.then = performance.now();
     this.draw();
   }
 
   pauseGame() {
     window.cancelAnimationFrame(this.frame);
-    this.isStarted = false;
+    this.status = GAME_STATUS.PAUSED;
     this.emit('end');
   }
 
   resetGame() {
-    window.cancelAnimationFrame(this.frame);
-    this.isStarted = false;
-    this.emit('end');
+    this.pauseGame();
     this.init();
   }
 }
