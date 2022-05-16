@@ -7,6 +7,7 @@ import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
 import {Login} from "../pages/Login";
+import {Error404} from "../pages/Error404";
 
 const App = () => {
   return (
@@ -37,15 +38,7 @@ const App = () => {
             </>
           }
         />
-        <Route
-          path="*"
-          element={
-            <>
-              <h1>404</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          }
-        />
+        <Route path="*" element={<Error404/>}/>
       </Routes>
     </BrowserRouter>
   );

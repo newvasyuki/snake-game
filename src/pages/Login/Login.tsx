@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './Login.pcss';
 import {Header} from "../../components/Header";
+import {Input} from "../../components/Input";
 import {Sidebar} from "../../components/Sidebar";
 import {Outlet} from "react-router-dom";
 

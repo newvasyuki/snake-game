@@ -1,6 +1,24 @@
+#root {
+  background-color: var(--springWood);
+}
+
 .content {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   height: 100%
+}
+
+.test {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  width: 100%;
+  padding: 50px 150px;
+  box-sizing: border-box;
+  background-color: var(--floralWhite);
+
+  &__inner-page-container {
+    overflow: auto;
+  }
 }
