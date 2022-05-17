@@ -1,13 +1,16 @@
 import { authApi, AuthApi, SignInData, SignUpData } from '../../api';
+import { userApi, UserApi } from '../../api/user/index';
 
 export class AuthService {
   protected authApi: AuthApi;
+  protected userApi: UserApi;
 
   // можно сохранить ссылку на стор чтобы диспатчить экшены
   protected store: null;
 
-  constructor(api: AuthApi) {
-    this.authApi = api;
+  constructor(authApi: AuthApi, userApi: UserApi) {
+    this.authApi = authApi;
+    this.userApi = userApi;
     this.store = null;
   }
 
@@ -22,13 +25,13 @@ export class AuthService {
   }
 
   async signUp(data: SignUpData) {
-    try {
-      const userId = await this.authApi.signUp(data);
-      // делаем что-то с айдишником, если нужно
-      console.log(userId);
-    } catch (error) {
-      console.log(error);
+    const userId = await this.authApi.signUp(data);
+    // делаем что-то с айдишником, если нужно
+    // todo: for instance put it to store
+    if (!userId) {
+      throw new Error('UserId was not retrieved successfully');
     }
+    return userId;
   }
 
   async logout() {
@@ -39,16 +42,6 @@ export class AuthService {
       console.log(error);
     }
   }
-
-  async getUserInfo() {
-    try {
-      const userInfo = await this.authApi.getUserInfo();
-      // кладем в стор
-      console.log(userInfo);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
 
-export const authService = new AuthService(authApi);
+export const authService = new AuthService(authApi, userApi);
