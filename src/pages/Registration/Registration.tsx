@@ -6,26 +6,26 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './Registration.pcss';
 import Input from './components/Input/Input';
 import { Button } from '../../components/Button';
-import { registerUser } from '../../store/actionCreators';
-import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
+//import { registerUser } from '../../store/actionCreators';
+//import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
 import { ROUTES } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
 
-  const dispatch = useTypedDispatch();
-  const { isLoggedIn } = useTypedSelector(state => state.auth);
+  //const dispatch = useTypedDispatch();
+  //const { isLoggedIn } = useTypedSelector(state => state.auth);
 
   const onFormSubmission = async (data) => {
     console.log(data)
-    dispatch(registerUser(data));
+    //dispatch(registerUser(data));
     // dispatch(getUserInfo())
   }
 
-  if (isLoggedIn) {
-    const navigate = useNavigate()
-    navigate({pathname: ROUTES.game});
-  }
+  //if (isLoggedIn) {
+  //  const navigate = useNavigate()
+  //  navigate({pathname: ROUTES.game});
+  //}
 
   const schema = object({
     first_name: string().required('Укажите значение'),
