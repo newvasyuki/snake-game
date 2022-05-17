@@ -20,7 +20,7 @@ const schema = object({
     /^(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d]{8,40}$/,
     "Пароль от 8 до 40 симоволов, содержать число и одну большую букву"
   ),
-  phone: string().required('Укажите значение').matches(
+  phone: string().required('Укажите значени е').matches(
     /^\+?[\d]{10,15}$/,
     "Допустимый формат +79178383838"
   )
@@ -46,13 +46,12 @@ export default function Registration() {
   const onFormSubmission = async (data) => {
     console.log(data)
     dispatch(registerUser(data));
-    // dispatch(getUserInfo())
   }
 
   useEffect(() => {
     debugger
     if (isLoggedIn) {
-      navigate({pathname: ROUTES.game});
+      navigate({pathname: ROUTES.profile});
     }
   }, [isLoggedIn])
 
