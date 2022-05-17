@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, ChangeEvent, FormEvent,
+  useState, ChangeEvent, useEffect,
 } from 'react';
 import './Profile.pcss';
 import { useForm } from 'react-hook-form';
@@ -10,45 +10,53 @@ import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
 import { useDispatch, useSelector } from "react-redux";
-import { UserInfoState } from '../../store/type';
+import { userService } from '../../services/user/UserService';
+import { UserState } from '../../store/reducers/user';
+import { setUserInfo } from '../../store/actionCreators';
+import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
 
-interface FormData {
+export interface UserFormData {
   first_name: string,
   second_name: string,
+  display_name: string,
   email: string,
-  login: string
+  login: string,
+  phone: string,
 }
 
 const getFullUserName = (firstName: string, lastName: string): string => `${firstName} ${lastName}`;
 
 const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
 
   const [userData, setUserData] = useState(useSelector(
-    (state: UserInfoState) => state
+    (state: UserState) => state.user
   ));
+
+  useEffect(() => {
+    async function setUserInfoFromRedux () {
+      const userInfo = await userService.getUserInfo();
+      dispatch(setUserInfo(userInfo));
+      setUserData(userInfo);
+      reset(userInfo);
+    }
+    setUserInfoFromRedux();
+  }, [])
 
   const {
     handleSubmit, formState: { errors }, register, reset,
-  } = useForm<FormData>({
+  } = useForm<UserFormData>({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   // todo fetch data from the backend based on a cookie
-  //   const loadData = async () => {
-  //     // const res = await getUserData();
-  //     // reset(res);
-  //     dispatch(updateUserInfo(res)) 
-  //     // setUserData(res);
-  //   };
-  //   loadData();
-  // }, [reset]);
-
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: UserFormData) => {
+    const displayName = `${data.first_name} ${data.second_name}`;
+    const newUserInfo = await userService.updateUserInfo({...data, display_name: displayName});
+      if (newUserInfo) {
+        // dispatch(updateUser(newUserInfo));
+      }
   };
 
   const changePassword = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -111,6 +119,15 @@ const Profile = () => {
             labelClassName="profile-page__last-name-label"
             errorMsg={errors?.second_name?.message}
             {...register('second_name')}
+            onChange={changeInputField}
+          />
+          <ProfileInput
+            id="profile-page__phone"
+            label="Телефон"
+            value={userData.phone}
+            labelClassName="profile-page__phone-label"
+            errorMsg={errors?.phone?.message}
+            {...register('phone')}
             onChange={changeInputField}
           />
           <div className="profile-page__buttons-wrapper">
