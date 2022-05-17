@@ -5,6 +5,10 @@ type SignUpResponse = {
   id: number;
 };
 
+export function isError(x: any): x is Error {
+  return x instanceof Error;
+}
+
 export class AuthApi {
   protected baseUrl: string;
 
@@ -21,7 +25,12 @@ export class AuthApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Sign up failed');
+      })
       .then((data: SignUpResponse) => data.id)
       .catch((error: unknown) => {
         console.error(error);
