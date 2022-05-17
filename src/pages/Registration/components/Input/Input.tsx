@@ -1,12 +1,12 @@
 import React, {forwardRef, InputHTMLAttributes, RefObject} from 'react';
 import './Input.pcss';
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   errorMessage?: string;
 }
 
-const Input: React.FunctionComponent<IInputProps> = forwardRef((props, ref) => {
+const Input: React.FunctionComponent<InputProps> = forwardRef((props, ref) => {
   const {
     type,
     errorMessage,
