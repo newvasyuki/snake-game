@@ -31,7 +31,6 @@ module.exports = (_, argv) => {
         filename: 'sw.js',
       },
     },
-    entry: './src/index.tsx',
     output: getOutputConfig(mode),
     target: 'web',
     devServer: {
