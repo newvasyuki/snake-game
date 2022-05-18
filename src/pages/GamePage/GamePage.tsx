@@ -71,14 +71,12 @@ const GamePage = () => {
       </button>
       <button
         type="button"
-        onClick={(btn) => {
-          const canvas = document.querySelector(".game-page");
+        onClick={() => {
+          const gamePage = document.querySelector(".game-page");
           if (!document.fullscreenElement) {
-            canvas?.requestFullscreen();
+            gamePage?.requestFullscreen();
           } else {
-            if (document.exitFullscreen) {
               document?.exitFullscreen();
-            }
           }
         }}
       >
