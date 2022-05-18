@@ -1,5 +1,4 @@
 import { SignUpData, SignInData } from './types';
-import { User } from '../user/types';
 
 type SignUpResponse = {
   id: number;
@@ -47,7 +46,8 @@ export class AuthApi {
           return response.json();
         }
         throw new Error('Sign in failed');
-      }).catch((error: unknown) => {
+      })
+      .catch((error: unknown) => {
         console.error(error);
       });
   }
