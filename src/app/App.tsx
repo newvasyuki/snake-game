@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import { Game } from '../pages/Game';
+import { GamePage } from '../pages/GamePage';
 import { Profile } from '../pages/Profile';
 import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
@@ -16,7 +16,7 @@ const App = () => {
           <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
           <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
-          <Route path={ROUTES.game} element={<Game />} />
+          <Route path={ROUTES.game} element={<GamePage />} />
         </Route>
         <Route path={ROUTES.signUp} element={<Registration />} />
         <Route path={ROUTES.profile} element={<Profile />} />
