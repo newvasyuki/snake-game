@@ -4,7 +4,7 @@ import {Sidebar} from "../../components/Sidebar";
 import bemCn from 'bem-cn-lite';
 import './ErrorPage.pcss';
 
-const block = bemCn('block-error404');
+const block = bemCn('block-error');
 
 const ErrorPage = () => {
   const [sideBarExpanded, setSideBarExpanded] = useState(true);
