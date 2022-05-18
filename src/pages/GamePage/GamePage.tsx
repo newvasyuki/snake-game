@@ -69,6 +69,19 @@ const GamePage = () => {
       >
         Pause
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          const gamePage = document.querySelector(".game-page");
+          if (!document.fullscreenElement) {
+            gamePage?.requestFullscreen();
+          } else {
+              document?.exitFullscreen();
+          }
+        }}
+      >
+        Fullscreen
+      </button>
       <Progress />
     </div>
   );
