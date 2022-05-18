@@ -10,10 +10,10 @@ import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
 import { useSelector } from "react-redux";
-import { userService } from '../../services/user/UserService';
 import { UserState } from '../../store/reducers/user';
-import { getUserInfo, updateUserInfo } from '../../store/actionCreators';
+import { getUserInfo, updateUserInfo, logout } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
+import { ROUTES } from '../../constants';
 
 export interface UserFormData {
   first_name: string,
@@ -44,16 +44,16 @@ const Profile = () => {
 
   useEffect(() => {
     if (userData) {
+      // не понял почему, но при обновлении стора userData получает объект типа { user: User }
       reset({...(userData as unknown as UserState).user})
     }
   }, [userData]);
 
   const onSubmit = async (data: UserFormData) => {
-    const displayName = `${data.first_name} ${data.second_name}`;
-    const newUserInfo = await userService.updateUserInfo({ ...data, display_name: displayName });
-    if (newUserInfo) {
-      dispatch(updateUserInfo(newUserInfo));
-    }
+    dispatch(updateUserInfo({
+      ...data,
+      display_name: `${data.first_name} ${data.second_name}`
+    }));
   };
 
   const changePassword = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -63,7 +63,8 @@ const Profile = () => {
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    // todo: remove a cookie, send req to backend
+    dispatch(logout());
+    navigate({pathname: ROUTES.signIn});
   };
 
   return (

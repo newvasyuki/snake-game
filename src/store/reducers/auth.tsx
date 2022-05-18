@@ -1,9 +1,8 @@
 import {
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  LOGOUT
 } from '../actionTypes'
-import { SignUpData } from '../../api';
-import { UserInfo } from '../../pages/Forum/UserInfo';
 
 type AuthState = {
   isLoggedIn: boolean,
@@ -24,6 +23,10 @@ const authReducer = (state: AuthState = initialState, action: userRegisterAction
         isLoggedIn: true
       }
     case REGISTER_FAIL:
+      return {
+        isLoggedIn: false
+      }
+    case LOGOUT:
       return {
         isLoggedIn: false
       }

@@ -44,3 +44,17 @@ export const updateUserInfo = (userData: UserFormData) => async (dispatch) => {
   }
 }
 
+export const logout = () => async (dispatch) => {
+  try {
+    await authApi.logout();
+    dispatch({
+      type: actionTypes.UPDATE_USER,
+      payload: { user: null }
+    })
+    dispatch({
+      type: actionTypes.LOGOUT,
+    })
+  } catch (e) {
+    console.log(e);
+  }
+}
