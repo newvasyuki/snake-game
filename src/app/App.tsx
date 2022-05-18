@@ -7,6 +7,7 @@ import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
 import { Registration } from '../pages/Registration';
 import { Layout } from '../components/Layout';
+import { Login } from '../pages/Login';
 
 const App = () => {
   return (
@@ -19,25 +20,8 @@ const App = () => {
           <Route path={ROUTES.game} element={<Game />} />
         </Route>
         <Route path={ROUTES.signUp} element={<Registration />} />
+        <Route path={ROUTES.signIn} element={<Login />} />
         <Route path={ROUTES.profile} element={<Profile />} />
-        <Route
-          path={ROUTES.signIn}
-          element={
-            <>
-              <h1>SignIn</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          }
-        />
-        <Route
-          path={ROUTES.signUp}
-          element={
-            <>
-              <h1>SignUp</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          }
-        />
         <Route
           path="*"
           element={
