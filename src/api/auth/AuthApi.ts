@@ -5,10 +5,6 @@ type SignUpResponse = {
   id: number;
 };
 
-export function isError(x: any): x is Error {
-  return x instanceof Error;
-}
-
 export class AuthApi {
   protected baseUrl: string;
 
@@ -45,9 +41,15 @@ export class AuthApi {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).catch((error: unknown) => {
-      console.error(error);
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Sign in failed');
+      }).catch((error: unknown) => {
+        console.error(error);
+      });
   }
 
   logout() {

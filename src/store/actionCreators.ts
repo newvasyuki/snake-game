@@ -1,28 +1,46 @@
 import * as actionTypes from './actionTypes';
-import { authService, userService } from '../services';
-import { SignUpData } from '../api';
-import { User } from '../api/user/types';
+import { SignUpData, authApi, userApi } from '../api';
+import { UserFormData } from '../pages/Profile/Profile';
 
 export const registerUser = (userData: SignUpData) => async (dispatch) => {
   try {
-    await authService.signUp(userData);
-    dispatch({
-      type: actionTypes.REGISTER_SUCCESS,
-    })
+    const userId = await authApi.signUp(userData);
+    if (userId) {
+      dispatch({
+        type: actionTypes.REGISTER_SUCCESS,
+      })
+    } else {
+      throw new Error('UserId was not retrieved successfully');
+    }
   } catch (e) {
+    console.error(e);
     dispatch({
       type: actionTypes.REGISTER_FAIL
     })
   }
 }
 
-export const setUserInfo = (userInfo: User) => async (dispatch) => {
+export const getUserInfo = () => async (dispatch) => {
   try {
+    const userInfo = await userApi.getUserInfo();
     dispatch({
       type: actionTypes.SET_USER_INFO,
       payload: { user: userInfo }
     })
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
+
+export const updateUserInfo = (userData: UserFormData) => async (dispatch) => {
+  try {
+    const userInfo = await userApi.changeProfile(userData);
+    dispatch({
+      type: actionTypes.UPDATE_USER,
+      payload: { user: userInfo }
+    })
+  } catch (e) {
+    console.error(e);
+  }
+}
+

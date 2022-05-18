@@ -39,7 +39,12 @@ export class UserApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Change of the Profile failed');
+      })
       .then((data: User) => data)
       .catch((error: unknown) => {
         console.log(error);
