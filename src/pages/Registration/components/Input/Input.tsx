@@ -1,4 +1,4 @@
-import React, {forwardRef, InputHTMLAttributes, RefObject} from 'react';
+import React, { forwardRef, InputHTMLAttributes, RefObject } from 'react';
 import './Input.pcss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,23 +7,19 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FunctionComponent<InputProps> = forwardRef((props, ref) => {
-  const {
-    type,
-    errorMessage,
-    ...restProps
-  } = props;
+  const { type, errorMessage, ...restProps } = props;
 
   return (
-    <div className='input-container'>
+    <div className="input-container">
       <input
         ref={ref as RefObject<HTMLInputElement>}
-        className={'input'}
+        className="input"
         type={type || 'text'}
         {...restProps}
       />
-      <span className='input__error-message'>{errorMessage}</span>
+      <span className="input__error-message">{errorMessage}</span>
     </div>
-  )
+  );
 });
 
 export default Input;

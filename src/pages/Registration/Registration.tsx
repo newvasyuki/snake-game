@@ -5,12 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import './Registration.pcss';
 import { useNavigate } from 'react-router-dom';
-import Input from '../../components/Input/Input';
-import { Button } from '../../components/Button';
 import { registerUser } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { SignUpData } from '../../api';
+import Input from './components/Input/Input';
+import { Button } from '../../components/Button';
 
 const schema = object({
   first_name: string().required('Укажите значение'),
@@ -56,7 +56,7 @@ export const Registration = () => {
     if (isLoggedIn) {
       navigate({ pathname: ROUTES.profile });
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="registrationPage">
@@ -68,6 +68,7 @@ export const Registration = () => {
               Имя
             </label>
             <Input
+              id="first_name"
               type="text"
               className="registrationInputField"
               errorMessage={errors.first_name?.message}

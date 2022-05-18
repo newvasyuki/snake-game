@@ -5,7 +5,9 @@ import { Profile } from '../pages/Profile';
 import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
-import Error404 from "../pages/Error404";
+import Error404 from '../pages/Error404';
+import { Layout } from '../components/Layout';
+import { Registration } from '../pages/Registration';
 
 const App = () => {
   return (
@@ -16,7 +18,7 @@ const App = () => {
           <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
           <Route path={ROUTES.game} element={<GamePage />} />
-          <Route path="*" element={<Error404 />}/>
+          <Route path="*" element={<Error404 />} />
         </Route>
         <Route path={ROUTES.signUp} element={<Registration />} />
         <Route path={ROUTES.profile} element={<Profile />} />
