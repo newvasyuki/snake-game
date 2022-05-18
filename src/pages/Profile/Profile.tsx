@@ -10,7 +10,7 @@ import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
 import { getUserInfo, updateUserInfo, logout } from '../../store/actionCreators';
-import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
+import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
 
