@@ -1,4 +1,4 @@
-import { Provider, useDispatch, TypedUseSelectorHook, useSelector } from "react-redux"
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux"
 import { createStore, applyMiddleware, Store, AnyAction } from "redux"
 import rootReducer from '../store/reducers/index';
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';

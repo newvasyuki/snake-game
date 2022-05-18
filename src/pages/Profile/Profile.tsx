@@ -9,11 +9,10 @@ import ProfileImage from '../../../assets/noProfileImage.react.svg';
 import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
-import { useSelector } from "react-redux";
-import { UserState } from '../../store/reducers/user';
 import { getUserInfo, updateUserInfo, logout } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store/createStore';
 import { ROUTES } from '../../constants';
+import { selectUserData } from '../../store/selectors';
 
 export interface UserFormData {
   first_name: string,
@@ -28,8 +27,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
 
-  const userData = useSelector((state: UserState) => state.user);
-
+  const userData = useTypedSelector(selectUserData);
   const {
     handleSubmit, formState: { errors }, register, reset,
   } = useForm<UserFormData>({
@@ -44,8 +42,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (userData) {
-      // не понял почему, но при обновлении стора userData получает объект типа { user: User }
-      reset({...(userData as unknown as UserState).user})
+      reset(userData)
     }
   }, [userData]);
 
@@ -75,13 +72,12 @@ const Profile = () => {
       <div className="profile-page__content">
         <ProfileImage className="profile-page__image" />
         <span className="profile-page__name">
-          {userData.display_name}
+          {userData?.display_name}
         </span>
         <form className="profile-page__userdata-form" onSubmit={handleSubmit(onSubmit)}>
           <ProfileInput
             id="profile-page__email"
             label="E-Mail"
-            value={userData.email}
             labelClassName="profile-page__email-label"
             errorMsg={errors?.email?.message}
             {...register('email')}
@@ -89,7 +85,6 @@ const Profile = () => {
           <ProfileInput
             id="profile-page__login"
             label="Логин"
-            value={userData.login}
             labelClassName="profile-page__login-label"
             errorMsg={errors?.login?.message}
             {...register('login')}
@@ -97,7 +92,6 @@ const Profile = () => {
           <ProfileInput
             id="profile-page__first-name"
             label="Имя"
-            value={userData.first_name}
             labelClassName="profile-page__first-name-label"
             errorMsg={errors?.first_name?.message}
             {...register('first_name')}
@@ -105,7 +99,6 @@ const Profile = () => {
           <ProfileInput
             id="profile-page__last-name"
             label="Фамилия"
-            value={userData.second_name}
             labelClassName="profile-page__last-name-label"
             errorMsg={errors?.second_name?.message}
             {...register('second_name')}
@@ -113,7 +106,6 @@ const Profile = () => {
           <ProfileInput
             id="profile-page__phone"
             label="Телефон"
-            value={userData.phone}
             labelClassName="profile-page__phone-label"
             errorMsg={errors?.phone?.message}
             {...register('phone')}

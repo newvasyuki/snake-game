@@ -3,18 +3,15 @@ import {
 } from '../actionTypes'
 import { User } from '../../api/user/types';
 
-export type UserState = {
-  user: User
-}
 
 type setUserInfoAction = {
   type: string,
-  payload: { user: User }
+  payload: { user: User | null }
 }
 
 const initialState = { user: null };
 
-const userReducer = (state: UserState = initialState, action: setUserInfoAction) => {
+const userReducer = (state = initialState, action: setUserInfoAction) => {
   const { type, payload } = action;
   switch (type) {
     case SET_USER_INFO:

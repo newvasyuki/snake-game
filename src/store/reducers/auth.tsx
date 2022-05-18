@@ -4,7 +4,7 @@ import {
   LOGOUT
 } from '../actionTypes'
 
-type AuthState = {
+export type AuthState = {
   isLoggedIn: boolean,
 }
 

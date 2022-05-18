@@ -49,7 +49,6 @@ export default function Registration() {
   }
 
   useEffect(() => {
-    debugger
     if (isLoggedIn) {
       navigate({pathname: ROUTES.profile});
     }
