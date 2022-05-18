@@ -6,11 +6,7 @@ import { Layout } from '../components/Layout';
 import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
-import {ErrorPage} from "../pages/ErrorPage";
-
-const Error404 = () => {
-  return <ErrorPage title="Ошибка 404" description="Страница не найдена. Воспользуйтесь навигацией слева" />;
-}
+import Error404 from "../pages/Error404";
 
 const App = () => {
   return (
