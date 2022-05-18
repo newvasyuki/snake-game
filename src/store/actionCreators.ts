@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { SignUpData, authApi, userApi } from '../api';
+import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/Profile';
 
 export const registerUser = (userData: SignUpData) => async (dispatch) => {
@@ -8,53 +8,67 @@ export const registerUser = (userData: SignUpData) => async (dispatch) => {
     if (userId) {
       dispatch({
         type: actionTypes.REGISTER_SUCCESS,
-      })
+      });
     } else {
       throw new Error('UserId was not retrieved successfully');
     }
   } catch (e) {
     console.error(e);
     dispatch({
-      type: actionTypes.REGISTER_FAIL
-    })
+      type: actionTypes.REGISTER_FAIL,
+    });
   }
-}
+};
 
 export const getUserInfo = () => async (dispatch) => {
   try {
     const userInfo = await userApi.getUserInfo();
     dispatch({
       type: actionTypes.SET_USER_INFO,
-      payload: { user: userInfo }
-    })
+      payload: { user: userInfo },
+    });
   } catch (e) {
     console.error(e);
   }
-}
+};
 
 export const updateUserInfo = (userData: UserFormData) => async (dispatch) => {
   try {
     const userInfo = await userApi.changeProfile(userData);
     dispatch({
       type: actionTypes.UPDATE_USER,
-      payload: { user: userInfo }
-    })
+      payload: { user: userInfo },
+    });
   } catch (e) {
     console.error(e);
   }
-}
+};
+
+export const signInUser = (userData: SignInData) => async (dispatch) => {
+  try {
+    await authApi.signIn(userData);
+    dispatch({
+      type: actionTypes.LOGIN_SUCCESS,
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: actionTypes.LOGIN_FAIL,
+    });
+  }
+};
 
 export const logout = () => async (dispatch) => {
   try {
     await authApi.logout();
     dispatch({
       type: actionTypes.UPDATE_USER,
-      payload: { user: null }
-    })
+      payload: { user: null },
+    });
     dispatch({
       type: actionTypes.LOGOUT,
-    })
+    });
   } catch (e) {
     console.log(e);
   }
-}
+};
