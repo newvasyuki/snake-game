@@ -24,6 +24,13 @@ module.exports = (_, argv) => {
   const mode = argv.mode || MODE.DEV;
   return {
     mode,
+    entry: {
+      index: './src/index.tsx',
+      sw: {
+        import: './src/services/serviceWorker/sw.js',
+        filename: 'sw.js',
+      },
+    },
     entry: './src/index.tsx',
     output: getOutputConfig(mode),
     target: 'web',
