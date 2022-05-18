@@ -6,6 +6,7 @@ import { Layout } from '../components/Layout';
 import { ROUTES } from '../constants';
 import { Forum } from '../pages/Forum';
 import LeaderBoard from '../pages/LeaderBoard/LeaderBoard';
+import Error404 from "../pages/Error404";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
           <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
           <Route path={ROUTES.game} element={<GamePage />} />
+          <Route path="*" element={<Error404 />}/>
         </Route>
         <Route path={ROUTES.profile} element={<Profile />} />
         <Route
@@ -32,15 +34,6 @@ const App = () => {
           element={
             <>
               <h1>SignUp</h1>
-              <Link to={ROUTES.home}>Go to main</Link>
-            </>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <>
-              <h1>404</h1>
               <Link to={ROUTES.home}>Go to main</Link>
             </>
           }

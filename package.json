@@ -8,6 +8,7 @@
     "start": "node server.js",
     "build": "webpack --mode production",
     "lint": "stylelint ./src/**/*.pcss && eslint \"src/**/*.{ts,tsx}\"",
+    "eslint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint-fix": "stylelint --fix ./src/**/*.pcss && eslint --fix \"src/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
