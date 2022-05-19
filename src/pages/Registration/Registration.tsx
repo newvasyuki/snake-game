@@ -8,9 +8,9 @@ import { registerUser } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { SignUpData } from '../../api';
-import Input from './components/Input/Input';
 import { Button } from '../../components/Button';
 import { schema } from './RegistrationSchema';
+import { Input } from '../../components/Input';
 
 export const Registration = () => {
   const dispatch = useTypedDispatch();
