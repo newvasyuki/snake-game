@@ -1,10 +1,5 @@
-import { User } from '../user/types';
-import { UserFormData } from '../../pages/Profile/Profile';
-
-export type PasswordData = {
-  oldPassword: string;
-  newPassword: string;
-};
+import { UserFormData } from '../../pages/Profile/types';
+import { User, PasswordData } from './types';
 
 export class UserApi {
   private baseUrl: string;
@@ -47,7 +42,7 @@ export class UserApi {
       })
       .then((data: User) => data)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -63,24 +58,26 @@ export class UserApi {
       .then((response) => response.json())
       .then((user: User) => user)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
   changePassword(data: PasswordData) {
-    return fetch(`${this.baseUrl}/password`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      // todo: тут скорее всего нужно будет проверять статус ответа
-      .then((response) => response.json())
-      .catch((error: unknown) => {
-        console.log(error);
-      });
+    return (
+      fetch(`${this.baseUrl}/password`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        // todo: тут скорее всего нужно будет проверять статус ответа
+        .then((response) => response.json())
+        .catch((error: unknown) => {
+          console.error(error);
+        })
+    );
   }
 }
 

@@ -1,1 +1,1 @@
-export { userApi, UserApi, PasswordData } from './UserApi';
+export { userApi } from './UserApi';

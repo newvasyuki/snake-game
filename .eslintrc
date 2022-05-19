@@ -28,7 +28,21 @@
         "namedComponents": "arrow-function",
         "unnamedComponents": "arrow-function"
       }
-    ]
+    ],
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "labelAttributes": ["label"],
+      "controlComponents": ["Input"],
+      "depth": 3
+    }],
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "default-param-last": "off",
+    "@typescript-eslint/default-param-last": "off"
   },
   "plugins": ["editorconfig", "prettier"],
   "overrides": [

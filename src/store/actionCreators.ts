@@ -1,8 +1,9 @@
 import * as actionTypes from './actionTypes';
-import { SignUpData, authApi, userApi, SignInData } from '../api';
-import { UserFormData } from '../pages/Profile/Profile';
+import { SignUpData, authApi, userApi } from '../api';
+import { UserFormData } from '../pages/Profile/types';
+import { TypedDispatch } from '.';
 
-export const registerUser = (userData: SignUpData) => async (dispatch) => {
+export const registerUser = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
   try {
     const userId = await authApi.signUp(userData);
     if (userId) {
@@ -20,7 +21,7 @@ export const registerUser = (userData: SignUpData) => async (dispatch) => {
   }
 };
 
-export const getUserInfo = () => async (dispatch) => {
+export const getUserInfo = () => async (dispatch: TypedDispatch) => {
   try {
     const userInfo = await userApi.getUserInfo();
     dispatch({
@@ -32,7 +33,7 @@ export const getUserInfo = () => async (dispatch) => {
   }
 };
 
-export const updateUserInfo = (userData: UserFormData) => async (dispatch) => {
+export const updateUserInfo = (userData: UserFormData) => async (dispatch: TypedDispatch) => {
   try {
     const userInfo = await userApi.changeProfile(userData);
     dispatch({
@@ -44,21 +45,7 @@ export const updateUserInfo = (userData: UserFormData) => async (dispatch) => {
   }
 };
 
-export const signInUser = (userData: SignInData) => async (dispatch) => {
-  try {
-    await authApi.signIn(userData);
-    dispatch({
-      type: actionTypes.LOGIN_SUCCESS,
-    });
-  } catch (e) {
-    console.log(e);
-    dispatch({
-      type: actionTypes.LOGIN_FAIL,
-    });
-  }
-};
-
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: TypedDispatch) => {
   try {
     await authApi.logout();
     dispatch({
@@ -69,6 +56,6 @@ export const logout = () => async (dispatch) => {
       type: actionTypes.LOGOUT,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
