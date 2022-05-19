@@ -39,7 +39,10 @@
       {
         "checksVoidReturn": false
       }
-    ]
+    ],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "default-param-last": "off",
+    "@typescript-eslint/default-param-last": "off"
   },
   "plugins": ["editorconfig", "prettier"],
   "overrides": [

@@ -1,38 +1,34 @@
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGOUT
-} from '../actionTypes'
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT } from '../actionTypes';
 
 export type AuthState = {
-  isLoggedIn: boolean,
-}
+  isLoggedIn: boolean;
+};
 
-type userRegisterAction = {
-  type: string,
-}
+type UserRegisterAction = {
+  type: string;
+};
 
 const initialState = { isLoggedIn: false };
 
-const authReducer = (state: AuthState = initialState, action: userRegisterAction) => {
+const authReducer = (state: AuthState = initialState, action: UserRegisterAction) => {
   const { type } = action;
 
   switch (type) {
     case REGISTER_SUCCESS:
       return {
-        isLoggedIn: true
-      }
+        isLoggedIn: true,
+      };
     case REGISTER_FAIL:
       return {
-        isLoggedIn: false
-      }
+        isLoggedIn: false,
+      };
     case LOGOUT:
       return {
-        isLoggedIn: false
-      }
+        isLoggedIn: false,
+      };
     default:
       return state;
   }
-}
+};
 
 export default authReducer;
