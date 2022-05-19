@@ -15,11 +15,30 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: #EEE4DA;
+  background-color: var(--springWood);
+
+  &__header_modifier_first-line {
+    color: var(--bittersweet);
+    font-family: var(--baseFont);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 35px;
+    text-transform: uppercase;
+  }
+
+  &__header_modifier_second-line {
+    color: var(--softOrange);
+    font-family: var(--baseFont);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
 }
 
 .registration-form {
-  background-color: #FBF8F1;
+  background-color: var(--floralWhite);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
