@@ -28,7 +28,7 @@ export const Login = () => {
     },
   });
 
-  const onSubmit = async (data: SignInData) => {
+  const onFormSubmission = async (data: SignInData) => {
     await dispatch(signInUser(data));
   };
 
@@ -38,46 +38,49 @@ export const Login = () => {
     }
   }, [isLoggedIn, navigate]);
 
-  const block = bemCn('login');
+  const blockRegPage = bemCn('login');
+  const blockRegForm = bemCn('login-form');
 
   return (
-    <div className={block()}>
-      <form className={block('form')} onSubmit={handleSubmit(onSubmit)}>
-        <div className={block('container')}>
-          <p className={block('header')}>Войти</p>
-          <div className={block('inputContainer')}>
-            <label className={block('label')} htmlFor="login">
+    <div className={blockRegPage()}>
+      <span className={blockRegPage('header', { modifier: 'first-line' })}>Нью Васюки</span>
+      <span className={blockRegPage('header', { modifier: 'second-line' })}>Snake</span>
+      <form className={blockRegForm()} onSubmit={handleSubmit(onFormSubmission)}>
+        <div className={blockRegForm('container')}>
+          <p className={blockRegForm('header')}>Логин</p>
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="login">
               Логин
             </label>
             <Input
-              id="login"
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.login?.message}
               {...register('login')}
             />
           </div>
-
-          <div className={block('inputContainer')}>
-            <label className={block('label')} htmlFor="password">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="password">
               Пароль
             </label>
             <Input
-              id="password"
               type="password"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.password?.message}
               {...register('password')}
             />
           </div>
-          <div className={block('buttonsContainer')}>
-            <Button className={block('defaultButton-noColor')} type="submit">
+          <div className={blockRegForm('buttons-container')}>
+            <Button
+              className={blockRegForm('default-button', { modifier: 'colored' })}
+              type="submit"
+            >
               Войти
             </Button>
             <Button
-              className={block('defaultButton-colored')}
-              type="button"
+              className={blockRegForm('default-button', { modifier: 'no-color' })}
               onClick={() => navigate({ pathname: ROUTES.signUp })}
+              type="submit"
             >
               Зарегистрироваться
             </Button>
