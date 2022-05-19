@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { object, string } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Login.pcss';

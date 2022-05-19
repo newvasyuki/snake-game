@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { SignUpData, authApi, userApi } from '../api';
+import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 
@@ -42,6 +42,20 @@ export const updateUserInfo = (userData: UserFormData) => async (dispatch: Typed
     });
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
+  try {
+    await authApi.signIn(userData);
+    dispatch({
+      type: actionTypes.LOGIN_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+    dispatch({
+      type: actionTypes.LOGIN_FAIL,
+    });
   }
 };
 

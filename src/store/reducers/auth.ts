@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT } from '../actionTypes';
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS } from '../actionTypes';
 
 export type AuthState = {
   isLoggedIn: boolean;

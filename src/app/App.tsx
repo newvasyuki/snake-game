@@ -10,6 +10,7 @@ import { Layout } from '../components/Layout';
 import { Registration } from '../pages/Registration';
 import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
+import { Login } from '../pages/Login';
 
 const App = () => {
   return (
@@ -26,8 +27,9 @@ const App = () => {
           <Route path={ROUTES.profile} element={<Profile />} />
         </Route>
 
-        <Route path={ROUTES.signUp} element={<PublicRoutes />}>
+        <Route path={ROUTES.home} element={<PublicRoutes />}>
           <Route path={ROUTES.signUp} element={<Registration />} />
+          <Route path={ROUTES.signIn} element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>

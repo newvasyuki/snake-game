@@ -1,7 +1,7 @@
 import React, { forwardRef, InputHTMLAttributes, RefObject } from 'react';
 import './Input.pcss';
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   errorMessage?: string;
 }
