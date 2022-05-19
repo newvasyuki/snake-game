@@ -52,7 +52,7 @@ export const signInUser = (userData: SignInData) => async (dispatch: TypedDispat
       type: actionTypes.LOGIN_SUCCESS,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     dispatch({
       type: actionTypes.LOGIN_FAIL,
     });

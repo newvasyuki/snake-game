@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import './Registration.pcss';
 import { useNavigate } from 'react-router-dom';
+import bemCn from 'bem-cn-lite';
 import { registerUser } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
@@ -42,84 +43,88 @@ export const Registration = () => {
     }
   }, [isLoggedIn, navigate]);
 
+  const blockRegPage = bemCn('registration');
+  const blockRegForm = bemCn('registration-form');
   return (
-    <div className="registrationPage">
-      <form className="registrationForm" onSubmit={handleSubmit(onFormSubmission)}>
-        <div className="registrationForm__container">
-          <p className="registrationForm__header">Регистрация</p>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="first_name">
+    <div className={blockRegPage()}>
+      <form className={blockRegForm()} onSubmit={handleSubmit(onFormSubmission)}>
+        <div className={blockRegForm('container')}>
+          <p className={blockRegForm('header')}>Регистрация</p>
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="first_name">
               Имя
             </label>
             <Input
-              id="first_name"
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.first_name?.message}
               {...register('first_name')}
             />
           </div>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="second_name">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="second_name">
               Фамилия
             </label>
             <Input
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.second_name?.message}
               {...register('second_name')}
             />
           </div>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="login">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="login">
               Логин
             </label>
             <Input
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.login?.message}
               {...register('login')}
             />
           </div>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="email">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="email">
               Почта
             </label>
             <Input
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.email?.message}
               {...register('email')}
             />
           </div>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="password">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="password">
               Пароль
             </label>
             <Input
               type="password"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.password?.message}
               {...register('password')}
             />
           </div>
-          <div className="registrationForm__inputContainer">
-            <label className="registrationForm__label" htmlFor="phone">
+          <div className={blockRegForm('input-container')}>
+            <label className={blockRegForm('label')} htmlFor="phone">
               Телефон
             </label>
             <Input
               type="text"
-              className="registrationInputField"
+              className={blockRegForm('input-field')}
               errorMessage={errors.phone?.message}
               {...register('phone')}
             />
           </div>
-          <div className="registrationForm_ButtonsContainer">
-            <Button className="registrationForm__defaultButton-colored" type="submit">
+          <div className={blockRegForm('buttons-container')}>
+            <Button
+              className={blockRegForm('default-button', { modifier: 'colored' })}
+              type="submit"
+            >
               Зарегистрироваться
             </Button>
             <Button
-              className="registrationForm__defaultButton-noColor"
+              className={blockRegForm('default-button', { modifier: 'no-color' })}
               onClick={() => navigate({ pathname: ROUTES.signIn })}
               type="submit"
             >
