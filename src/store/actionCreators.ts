@@ -11,7 +11,7 @@ export const registerUser = (userData: SignUpData) => async (dispatch: TypedDisp
         type: actionTypes.REGISTER_SUCCESS,
       });
     } else {
-      throw new Error('UserId was not retrieved successfully');
+      throw new Error('userId was not retrieved successfully');
     }
   } catch (e) {
     console.error(e);
@@ -52,9 +52,8 @@ export const signInUser = (userData: SignInData) => async (dispatch: TypedDispat
       type: actionTypes.LOGIN_SUCCESS,
     });
   } catch (e) {
-    console.error(e);
     dispatch({
-      type: actionTypes.LOGIN_FAIL,
+      type: actionTypes.LOGIN_FAILED,
     });
   }
 };

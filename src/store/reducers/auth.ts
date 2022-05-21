@@ -1,14 +1,22 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT, LOGIN_SUCCESS, LOGIN_FAIL } from "../actionTypes";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGOUT,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+} from '../actionTypes';
 
 export type AuthState = {
   isLoggedIn: boolean;
+  isLoginFailed: boolean;
+  bla: boolean; // have to add this because otherwise TS doesn't see the isLoginFailed
 };
 
 type UserRegisterAction = {
   type: string;
 };
 
-const initialState = { isLoggedIn: false };
+const initialState = { isLoggedIn: false, isLoginFailed: false, bla: false };
 
 const authReducer = (state: AuthState = initialState, action: UserRegisterAction) => {
   const { type } = action;
@@ -17,10 +25,12 @@ const authReducer = (state: AuthState = initialState, action: UserRegisterAction
     case LOGIN_SUCCESS:
       return {
         isLoggedIn: true,
+        isLoginFailed: false,
       };
-    case LOGIN_FAIL:
+    case LOGIN_FAILED:
       return {
-        isLoggedIn: true,
+        isLoggedIn: false,
+        isLoginFailed: true,
       };
     case REGISTER_SUCCESS:
       return {

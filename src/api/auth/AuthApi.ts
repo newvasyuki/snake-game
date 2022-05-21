@@ -1,3 +1,4 @@
+import { isError } from '../../utils/types';
 import { SignUpData, SignInData } from './types';
 
 type SignUpResponse = {
@@ -32,10 +33,10 @@ export class AuthApi {
       });
   }
 
-  signIn(data: SignInData) {
+  signIn(signInData: SignInData) {
     return fetch(`${this.baseUrl}/auth/signin`, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(signInData),
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -43,12 +44,14 @@ export class AuthApi {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return;
         }
-        throw new Error('Sign in failed');
+        throw new Error('Sign in fetch request failed');
       })
       .catch((error: unknown) => {
-        console.error(error);
+        if (isError(error)) {
+          throw new Error(error.message);
+        }
       });
   }
 
