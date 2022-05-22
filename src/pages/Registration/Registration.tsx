@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -13,9 +13,12 @@ import { Button } from '../../components/Button';
 import { schema } from './RegistrationSchema';
 import { Input } from '../../components/Input';
 
+const isRegistrationFailedText = `Не удалось зарегестрирваться. Свяжитесь с службой поддержки. 
+${process.env.NODE_ENV === 'development' ? 'For devs: Почистите также cookie' : ''}`;
+
 export const Registration = () => {
   const dispatch = useTypedDispatch();
-  const { isLoggedIn } = useTypedSelector((state) => state.auth);
+  const { isRegistrationFailed } = useTypedSelector((state) => state.auth);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -36,12 +39,6 @@ export const Registration = () => {
   const onFormSubmission = async (data: SignUpData) => {
     await dispatch(registerUser(data));
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate({ pathname: ROUTES.game });
-    }
-  }, [isLoggedIn, navigate]);
 
   const blockRegPage = bemCn('registration');
   const blockRegForm = bemCn('registration-form');
@@ -119,6 +116,9 @@ export const Registration = () => {
             />
           </div>
           <div className={blockRegForm('buttons-container')}>
+            <span className={blockRegForm('error-message')}>
+              {isRegistrationFailed ? isRegistrationFailedText : null}
+            </span>
             <Button
               className={blockRegForm('default-button', { modifier: 'colored' })}
               type="submit"
