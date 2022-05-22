@@ -1,10 +1,4 @@
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGOUT,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-} from '../actionTypes';
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT, LOGIN_FAILED } from '../actionTypes';
 
 export type AuthState = {
   isLoggedIn: boolean;
@@ -22,14 +16,8 @@ const authReducer = (state: AuthState = initialState, action: UserRegisterAction
   const { type } = action;
 
   switch (type) {
-    case LOGIN_SUCCESS:
-      return {
-        isLoggedIn: true,
-        isLoginFailed: false,
-      };
     case LOGIN_FAILED:
       return {
-        isLoggedIn: false,
         isLoginFailed: true,
       };
     case REGISTER_SUCCESS:

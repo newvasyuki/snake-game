@@ -24,10 +24,14 @@ export const registerUser = (userData: SignUpData) => async (dispatch: TypedDisp
 export const getUserInfo = () => async (dispatch: TypedDispatch) => {
   try {
     const userInfo = await userApi.getUserInfo();
-    dispatch({
-      type: actionTypes.SET_USER_INFO,
-      payload: { user: userInfo },
-    });
+    if (userInfo) {
+      dispatch({
+        type: actionTypes.SET_USER_INFO,
+        payload: { user: userInfo },
+      });
+    } else {
+      throw new Error('userInfo was not retrieved successfully');
+    }
   } catch (e) {
     console.error(e);
   }
@@ -36,10 +40,14 @@ export const getUserInfo = () => async (dispatch: TypedDispatch) => {
 export const updateUserInfo = (userData: UserFormData) => async (dispatch: TypedDispatch) => {
   try {
     const userInfo = await userApi.changeProfile(userData);
-    dispatch({
-      type: actionTypes.UPDATE_USER,
-      payload: { user: userInfo },
-    });
+    if (userInfo) {
+      dispatch({
+        type: actionTypes.UPDATE_USER,
+        payload: { user: userInfo },
+      });
+    } else {
+      throw new Error('userInfo was not retrieved successfully');
+    }
   } catch (e) {
     console.error(e);
   }
@@ -48,9 +56,7 @@ export const updateUserInfo = (userData: UserFormData) => async (dispatch: Typed
 export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
   try {
     await authApi.signIn(userData);
-    dispatch({
-      type: actionTypes.LOGIN_SUCCESS,
-    });
+    dispatch(getUserInfo());
   } catch (e) {
     dispatch({
       type: actionTypes.LOGIN_FAILED,
