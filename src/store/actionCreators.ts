@@ -3,24 +3,6 @@ import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 
-export const registerUser = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
-  try {
-    const userId = await authApi.signUp(userData);
-    if (userId) {
-      dispatch({
-        type: actionTypes.REGISTER_SUCCESS,
-      });
-    } else {
-      throw new Error('userId was not retrieved successfully');
-    }
-  } catch (e) {
-    console.error(e);
-    dispatch({
-      type: actionTypes.REGISTER_FAIL,
-    });
-  }
-};
-
 export const getUserInfo = () => async (dispatch: TypedDispatch) => {
   try {
     const userInfo = await userApi.getUserInfo();
@@ -34,6 +16,22 @@ export const getUserInfo = () => async (dispatch: TypedDispatch) => {
     }
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const registerUser = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
+  try {
+    const userId = await authApi.signUp(userData);
+    if (userId) {
+      dispatch(getUserInfo());
+    } else {
+      throw new Error('userId was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+    dispatch({
+      type: actionTypes.REGISTER_FAIL,
+    });
   }
 };
 
