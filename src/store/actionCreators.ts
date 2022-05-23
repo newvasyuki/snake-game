@@ -76,3 +76,20 @@ export const logout = () => async (dispatch: TypedDispatch) => {
     console.error(e);
   }
 };
+
+export const updateAvatar = (fromData: FormData) => async (dispatch: TypedDispatch) => {
+  try {
+    await userApi.changeAvatar(fromData);
+    const userInfo = await userApi.getUserInfo();
+    if (userInfo) {
+      dispatch({
+        type: actionTypes.SET_USER_INFO,
+        payload: { user: userInfo },
+      });
+    } else {
+      throw new Error('userInfo was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};

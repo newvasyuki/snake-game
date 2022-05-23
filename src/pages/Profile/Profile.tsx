@@ -3,14 +3,13 @@ import './Profile.pcss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import ProfileImage from '../../../assets/noProfileImage.react.svg';
 import ProfileInput from './components/ProfileInput';
 import { Button } from '../../components/Button';
 import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { getUserInfo, updateUserInfo, logout } from '../../store/actionCreators';
+import { getUserInfo, updateUserInfo, logout, updateAvatar } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {
@@ -59,13 +58,23 @@ const Profile = () => {
     navigate({ pathname: ROUTES.signIn });
   };
 
+  const uploadAvatarLocally = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
+    const file = target.files[0];
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+    dispatch(updateAvatar(formData));
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-page__sidebar">
         <Button className="profile-page__button-back" onClick={() => navigate(-1)} />
       </div>
       <div className="profile-page__content">
-        <ProfileImage className="profile-page__image" />
+        <div className="profile-page__image" />
+        <input onChange={uploadAvatarLocally} type="file" name="image" accept="image/*" />
         <span className="profile-page__name">{userData?.display_name}</span>
         <form className="profile-page__userdata-form" onSubmit={handleSubmit(onSubmit)}>
           <ProfileInput
