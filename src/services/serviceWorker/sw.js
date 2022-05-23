@@ -1,9 +1,7 @@
 /* eslint-disable*/
 const CACHE_NAME = 'my-site-cache-v1';
 
-// import manifest from  './manifest.json';
-
-const URLS = ['/', '/index.html', '/index.js'];
+const URLS = ['/', '/index.html', '/sw.js'];
 
 self.addEventListener('install', (event) => {
   console.log('install');
@@ -38,20 +36,11 @@ self.addEventListener('fetch', (event) => {
 
         const responseToCache = response.clone();
 
-        cache.open(CACHE_NAME).then((cache) => {
+        caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseToCache);
         });
         return response;
       });
-    }),
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  console.log('activate');
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(cacheNames.map((name) => caches.delete(name)));
     }),
   );
 });

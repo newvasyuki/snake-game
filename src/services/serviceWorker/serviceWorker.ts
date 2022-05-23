@@ -1,6 +1,4 @@
 export function startServiceWorker() {
-  console.log(window.isSecureContext);
-
   if (navigator.serviceWorker) {
     navigator.serviceWorker
       .register('/sw.js')
