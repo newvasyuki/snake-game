@@ -9,7 +9,6 @@ self.addEventListener('install', (event) => {
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log('opened cache');
         return cache.addAll(URLS);
       })
       .catch((err) => {
@@ -20,10 +19,8 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('fetch');
   event.respondWith(
     caches.match(event.request).then((response) => {
-      console.log('fetch service worker');
       if (response) {
         return response;
       }
