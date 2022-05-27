@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
-    "start": "node server.js",
+    "compile": "tsc --project server/tsconfig.server.json",
+    "start": "npm run compile && node server/server.js",
     "build": "webpack --mode production",
     "lint": "stylelint ./src/**/*.pcss && eslint \"src/**/*.{ts,tsx}\"",
     "eslint": "eslint \"src/**/*.{ts,tsx}\"",
