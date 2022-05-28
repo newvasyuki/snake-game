@@ -22,11 +22,18 @@ const Profile = () => {
     handleSubmit,
     formState: { errors },
     register,
+    reset,
   } = useForm<UserFormData>({
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: userData,
   });
+
+  useEffect(() => {
+    if (userData) {
+      reset(userData);
+    }
+  }, [reset, userData]);
 
   const onSubmit = (data: UserFormData) => {
     dispatch(
