@@ -4,24 +4,24 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 
-type SetUser = {
+type SetUserType = {
   user?: User | null;
   loading?: boolean;
 };
 
-const setUserInfo = (data: SetUser) => {
+const setUserInfo = (data: SetUserType) => {
   return {
     type: actionTypes.SET_USER_INFO,
     payload: { ...data },
   };
 };
 
-type UpdateUserInfo = {
+type UpdateUserInfoType = {
   userInfo?: UserFormData | null;
   loading?: boolean;
 };
 
-const updateUser = (updateUserInfo: UpdateUserInfo) => {
+const updateUser = (updateUserInfo: UpdateUserInfoType) => {
   const { userInfo, loading } = updateUserInfo;
   return {
     type: actionTypes.UPDATE_USER,
@@ -91,7 +91,7 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
   }
 };
 
-export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
+export const signInUserAsync = (userData: SignInData) => async (dispatch: TypedDispatch) => {
   try {
     await authApi.signIn(userData);
     dispatch(getUserInfoAsync());
