@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { ROUTES } from '../../constants';
-import { useTypedSelector } from '../../store';
+import { useTypedDispatch, useTypedSelector } from '../../store';
+import { getUserInfo } from '../../store/actionCreators';
 
 const PublicRoutes = () => {
-  const userInfo = useTypedSelector((state) => state.user.user);
-  return userInfo ? <Navigate to={ROUTES.game} /> : <Outlet />;
+  const { user, isUserLoading } = useTypedSelector((state) => state.user);
+  const dispatch = useTypedDispatch();
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [dispatch]);
+
+  if (isUserLoading || isUserLoading === undefined || isUserLoading === null) {
+    return null;
+  }
+  return user ? <Navigate to={ROUTES.game} /> : <Outlet />;
 };
 
 export default PublicRoutes;

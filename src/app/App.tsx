@@ -11,16 +11,8 @@ import { Registration } from '../pages/Registration';
 import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
-import { useTypedDispatch } from '../store';
-import { getUserInfo } from '../store/actionCreators';
 
 const App = () => {
-  const dispatch = useTypedDispatch();
-
-  useEffect(() => {
-    dispatch(getUserInfo());
-  }, [dispatch]);
-
   return (
     <BrowserRouter>
       <Routes>
