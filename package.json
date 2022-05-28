@@ -61,7 +61,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
-    "@reduxjs/toolkit": "^1.8.1",
     "bem-cn-lite": "^4.1.0",
     "express": "^4.18.1",
     "express-history-api-fallback": "^2.2.1",

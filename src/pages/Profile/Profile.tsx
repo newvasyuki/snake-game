@@ -9,7 +9,7 @@ import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { getUserInfo, updateUserInfo, logout, updateAvatar } from '../../store/actionCreators';
+import { updateUserAsync, logoutAsync } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {
@@ -29,10 +29,6 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    dispatch(getUserInfo());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (userData) {
       reset(userData);
     }
@@ -40,7 +36,7 @@ const Profile = () => {
 
   const onSubmit = (data: UserFormData) => {
     dispatch(
-      updateUserInfo({
+      updateUserAsync({
         ...data,
         display_name: `${data.first_name} ${data.second_name}`,
       }),
@@ -54,7 +50,7 @@ const Profile = () => {
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(logout());
+    dispatch(logoutAsync());
     navigate({ pathname: ROUTES.signIn });
   };
 
@@ -64,7 +60,7 @@ const Profile = () => {
 
     const formData = new FormData();
     formData.append('avatar', file);
-    dispatch(updateAvatar(formData));
+    // dispatch(updateAvatar(formData));
   };
 
   return (
