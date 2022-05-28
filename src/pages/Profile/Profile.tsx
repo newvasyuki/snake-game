@@ -10,7 +10,7 @@ import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { getUserInfo, updateUserInfo, logout } from '../../store/actionCreators';
+import { updateUserInfo, logout } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {
@@ -22,22 +22,11 @@ const Profile = () => {
     handleSubmit,
     formState: { errors },
     register,
-    reset,
   } = useForm<UserFormData>({
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: userData,
   });
-
-  useEffect(() => {
-    dispatch(getUserInfo());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (userData) {
-      reset(userData);
-    }
-  }, [reset, userData]);
 
   const onSubmit = (data: UserFormData) => {
     dispatch(
@@ -55,8 +44,9 @@ const Profile = () => {
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(logout());
-    navigate({ pathname: ROUTES.signIn });
+    dispatch(logout()).then(() => {
+      navigate({ pathname: ROUTES.signIn });
+    });
   };
 
   return (
