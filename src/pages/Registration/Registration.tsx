@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './Registration.pcss';
 import { useNavigate } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
-import { registerUser } from '../../store/actionCreators';
+import { registerUserAsync } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { SignUpData } from '../../api';
@@ -34,7 +34,7 @@ export const Registration = () => {
   });
 
   const onFormSubmission = async (data: SignUpData) => {
-    await dispatch(registerUser(data));
+    await dispatch(registerUserAsync(data));
   };
 
   useEffect(() => {
