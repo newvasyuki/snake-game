@@ -3,7 +3,7 @@ import './Logo.pcss';
 import LogoSVG from './logo.react.svg';
 
 interface Props {
-  isSmall: boolean
+  isSmall: boolean;
 }
 
 const Logo = ({ isSmall = false }: Props) => {

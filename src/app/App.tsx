@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { GamePage } from '../pages/GamePage';
 import { Profile } from '../pages/Profile';

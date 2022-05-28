@@ -10,7 +10,7 @@ import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { getUserInfoAsync, updateUserAsync, logoutAsync } from '../../store/actionCreators';
+import { updateUserAsync, logoutAsync } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {

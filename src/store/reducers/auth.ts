@@ -1,4 +1,4 @@
-import { REGISTER_FAIL, LOGOUT, LOGIN_FAILED } from '../actionTypes';
+import { REGISTER_FAIL, LOGIN_FAILED } from '../actionTypes';
 
 export type AuthState = {
   isRegistrationFailed: boolean;

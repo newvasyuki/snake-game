@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { ROUTES } from '../../constants';
 import { useTypedDispatch, useTypedSelector } from '../../store';
-import { getUserInfoAsync } from '../../store/actionCreators';
+import { setUserInfoAsync } from '../../store/actionCreators';
 
 const PublicRoutes = () => {
   const { user, isUserLoading } = useTypedSelector((state) => state.user);
   const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    dispatch(getUserInfoAsync());
+    dispatch(setUserInfoAsync());
   }, [dispatch]);
 
   if (isUserLoading || isUserLoading === undefined || isUserLoading === null) {

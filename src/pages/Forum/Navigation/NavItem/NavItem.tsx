@@ -11,10 +11,7 @@ const block = bemCn('forum-nav-item');
 
 export const NavItem = ({ to, children }: Props) => {
   return (
-    <NavLink
-      className={({ isActive }) => (isActive ? block({ active: true }) : block())}
-      to={to}
-    >
+    <NavLink className={({ isActive }) => (isActive ? block({ active: true }) : block())} to={to}>
       {children}
     </NavLink>
   );

@@ -48,7 +48,7 @@ const loginWtihFailure = () => {
   };
 };
 
-export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
+export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
     dispatch(setUserInfo({ loading: true }));
     const user = await userApi.getUserInfo();
@@ -68,7 +68,7 @@ export const registerUserAsync = (userData: SignUpData) => async (dispatch: Type
   try {
     const userId = await authApi.signUp(userData);
     if (userId) {
-      dispatch(getUserInfoAsync());
+      dispatch(setUserInfoAsync());
     } else {
       throw new Error('Failed registration, reason: UserId was not retrieved successfully');
     }
@@ -94,7 +94,7 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
 export const signInUserAsync = (userData: SignInData) => async (dispatch: TypedDispatch) => {
   try {
     await authApi.signIn(userData);
-    dispatch(getUserInfoAsync());
+    dispatch(setUserInfoAsync());
   } catch (e) {
     dispatch(loginWtihFailure());
   }
