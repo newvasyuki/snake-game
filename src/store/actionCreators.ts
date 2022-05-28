@@ -18,12 +18,6 @@ const updateUser = (userInfo: UserFormData | null) => {
   };
 };
 
-const registerSuccessfully = () => {
-  return {
-    type: actionTypes.REGISTER_SUCCESS,
-  };
-};
-
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
@@ -36,30 +30,10 @@ const logout = () => {
   };
 };
 
-const loginSuccessfully = () => {
-  return {
-    type: actionTypes.LOGIN_SUCCESS,
-  };
-};
-
 const loginWtihFailure = () => {
   return {
     type: actionTypes.LOGIN_FAILED,
   };
-};
-
-export const registerUserAsync = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
-  try {
-    const userId = await authApi.signUp(userData);
-    if (userId) {
-      dispatch(registerSuccessfully());
-    } else {
-      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
-    }
-  } catch (e) {
-    console.error(e);
-    dispatch(registerWithFailure());
-  }
 };
 
 export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
@@ -72,6 +46,23 @@ export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
     }
   } catch (e) {
     console.error(e);
+    dispatch({
+      type: actionTypes.REGISTER_FAIL,
+    });
+  }
+};
+
+export const registerUserAsync = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
+  try {
+    const userId = await authApi.signUp(userData);
+    if (userId) {
+      dispatch(getUserInfoAsync());
+    } else {
+      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+    dispatch(registerWithFailure());
   }
 };
 
@@ -91,7 +82,7 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
 export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
   try {
     await authApi.signIn(userData);
-    dispatch(loginSuccessfully());
+    dispatch(getUserInfoAsync());
   } catch (e) {
     dispatch(loginWtihFailure());
   }
