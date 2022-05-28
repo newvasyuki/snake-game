@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -12,6 +12,7 @@ import { SignUpData } from '../../api';
 import { Button } from '../../components/Button';
 import { schema } from './RegistrationSchema';
 import { Input } from '../../components/Input';
+import { selectUserData } from '../../store/selectors';
 
 const isRegistrationFailedText = `Не удалось зарегестрирваться. Свяжитесь с службой поддержки. 
 ${process.env.NODE_ENV === 'development' ? 'For devs: Почистите также cookie' : ''}`;
@@ -20,6 +21,8 @@ export const Registration = () => {
   const dispatch = useTypedDispatch();
   const { isRegistrationFailed } = useTypedSelector((state) => state.auth);
   const navigate = useNavigate();
+  const user = useTypedSelector(selectUserData);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -39,6 +42,12 @@ export const Registration = () => {
   const onFormSubmission = async (data: SignUpData) => {
     await dispatch(registerUser(data));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(ROUTES.game);
+    }
+  }, [navigate, user]);
 
   const blockRegPage = bemCn('registration');
   const blockRegForm = bemCn('registration-form');

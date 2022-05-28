@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Login.pcss';
@@ -11,6 +11,7 @@ import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { SignInData } from '../../api';
 import { schema } from './LoginSchema';
+import { selectUserData } from '../../store/selectors';
 
 const isLoginFailedText = `Не удалось зайти в систему. Проверье логин/пароль. 
 ${process.env.NODE_ENV === 'development' ? 'For devs: Почистите также cookie' : ''}`;
@@ -19,6 +20,7 @@ export const Login = () => {
   const dispatch = useTypedDispatch();
   const { isLoginFailed } = useTypedSelector((state) => state.auth);
   const navigate = useNavigate();
+  const user = useTypedSelector(selectUserData);
   const {
     handleSubmit,
     formState: { errors },
@@ -30,6 +32,12 @@ export const Login = () => {
       password: '',
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      navigate(ROUTES.game);
+    }
+  }, [navigate, user]);
 
   const onFormSubmission = (data: SignInData) => {
     dispatch(signInUser(data));

@@ -42,6 +42,7 @@ export const registerUser = (userData: SignUpData) => async (dispatch: TypedDisp
     console.error(e);
     dispatch({
       type: actionTypes.REGISTER_FAIL,
+      loading: false,
     });
   }
 };
