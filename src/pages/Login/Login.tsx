@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Login.pcss';
@@ -17,7 +17,7 @@ ${process.env.NODE_ENV === 'development' ? 'For devs: Почистите так�
 
 export const Login = () => {
   const dispatch = useTypedDispatch();
-  const { isLoggedIn, isLoginFailed } = useTypedSelector((state) => state.auth);
+  const { isLoginFailed } = useTypedSelector((state) => state.auth);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -34,12 +34,6 @@ export const Login = () => {
   const onFormSubmission = (data: SignInData) => {
     dispatch(signInUser(data));
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate({ pathname: ROUTES.profile });
-    }
-  }, [isLoggedIn, navigate]);
 
   const blockRegPage = bemCn('login');
   const blockRegForm = bemCn('login-form');
