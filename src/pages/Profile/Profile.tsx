@@ -10,7 +10,7 @@ import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { updateUserInfo, logout } from '../../store/actionCreators';
+import { getUserInfoAsync, updateUserAsync, logoutAsync } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {
@@ -37,7 +37,7 @@ const Profile = () => {
 
   const onSubmit = (data: UserFormData) => {
     dispatch(
-      updateUserInfo({
+      updateUserAsync({
         ...data,
         display_name: `${data.first_name} ${data.second_name}`,
       }),
@@ -51,9 +51,8 @@ const Profile = () => {
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(logout()).then(() => {
-      navigate({ pathname: ROUTES.signIn });
-    });
+    dispatch(logoutAsync());
+    navigate({ pathname: ROUTES.signIn });
   };
 
   return (

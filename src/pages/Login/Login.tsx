@@ -48,8 +48,8 @@ export const Login = () => {
 
   return (
     <div className={blockRegPage()}>
-      <span className={blockRegPage('header', { modifier: 'first-line' })}>Нью Васюки</span>
-      <span className={blockRegPage('header', { modifier: 'second-line' })}>Snake</span>
+      <span className={blockRegPage('header', { 'first-line': true })}>Нью Васюки</span>
+      <span className={blockRegPage('header', { 'second-line': true })}>Snake</span>
       <form className={blockRegForm()} onSubmit={handleSubmit(onFormSubmission)}>
         <div className={blockRegForm('container')}>
           <p className={blockRegForm('header')}>Логин</p>

@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './Registration.pcss';
 import { useNavigate } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
-import { registerUser } from '../../store/actionCreators';
+import { registerUserAsync } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { SignUpData } from '../../api';
@@ -40,7 +40,7 @@ export const Registration = () => {
   });
 
   const onFormSubmission = async (data: SignUpData) => {
-    await dispatch(registerUser(data));
+    await dispatch(registerUserAsync(data));
   };
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export const Registration = () => {
   const blockRegForm = bemCn('registration-form');
   return (
     <div className={blockRegPage()}>
-      <span className={blockRegPage('header', { modifier: 'first-line' })}>Нью Васюки</span>
-      <span className={blockRegPage('header', { modifier: 'second-line' })}>Snake</span>
+      <span className={blockRegPage('header', { 'first-line': true })}>Нью Васюки</span>
+      <span className={blockRegPage('header', { 'second-line': true })}>Snake</span>
       <form className={blockRegForm()} onSubmit={handleSubmit(onFormSubmission)}>
         <div className={blockRegForm('container')}>
           <p className={blockRegForm('header')}>Регистрация</p>
