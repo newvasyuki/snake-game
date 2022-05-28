@@ -1,4 +1,15 @@
-.registration {
+.form__header {
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.loginForm__header {
+  margin: 2rem 0;
+}
+
+.login {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +37,7 @@
   }
 }
 
-.registration-form {
+.login-form {
   background-color: var(--floralWhite);
   display: flex;
   flex-direction: column;
@@ -93,6 +104,16 @@
     &:hover {
       opacity: 0.9;
     }
+  }
+
+  &__error-message {
+    font-family: var(--baseFont);
+    right: 0;
+    bottom: 0;
+    font-size: 10px;
+    color: red;
+    z-index: 2;
+    padding: 0 3rem;
   }
 
   &__default-button_modifier_no-color {

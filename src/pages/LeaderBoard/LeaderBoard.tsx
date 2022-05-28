@@ -1,7 +1,5 @@
 import React from 'react';
-import { Layout } from '../../components/Layout';
 import './LeaderBoard.pcss';
-import { ROUTES } from '../../constants';
 import { LeaderInfo } from './components/LeaderInfo';
 
 const leaders = [

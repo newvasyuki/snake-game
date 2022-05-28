@@ -3,17 +3,18 @@ import './Input.pcss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
+  className?: string;
   errorMessage?: string;
 }
 
 const Input: React.FunctionComponent<InputProps> = forwardRef((props, ref) => {
-  const { type, errorMessage, ...restProps } = props;
+  const { type, errorMessage, className, ...restProps } = props;
 
   return (
     <div className="input-container">
       <input
         ref={ref as RefObject<HTMLInputElement>}
-        className="input"
+        className={`input ${className}`}
         type={type || 'text'}
         {...restProps}
       />

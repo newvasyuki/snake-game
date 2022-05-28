@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { SignUpData, authApi, userApi } from '../api';
+import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
@@ -18,12 +18,6 @@ const updateUser = (userInfo: UserFormData | null) => {
   };
 };
 
-const registerSuccessfully = () => {
-  return {
-    type: actionTypes.REGISTER_SUCCESS,
-  };
-};
-
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
@@ -36,18 +30,10 @@ const logout = () => {
   };
 };
 
-export const registerUserAsync = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
-  try {
-    const userId = await authApi.signUp(userData);
-    if (userId) {
-      dispatch(registerSuccessfully());
-    } else {
-      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
-    }
-  } catch (e) {
-    console.error(e);
-    dispatch(registerWithFailure());
-  }
+const loginWtihFailure = () => {
+  return {
+    type: actionTypes.LOGIN_FAILED,
+  };
 };
 
 export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
@@ -60,6 +46,23 @@ export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
     }
   } catch (e) {
     console.error(e);
+    dispatch({
+      type: actionTypes.REGISTER_FAIL,
+    });
+  }
+};
+
+export const registerUserAsync = (userData: SignUpData) => async (dispatch: TypedDispatch) => {
+  try {
+    const userId = await authApi.signUp(userData);
+    if (userId) {
+      dispatch(getUserInfoAsync());
+    } else {
+      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+    dispatch(registerWithFailure());
   }
 };
 
@@ -73,6 +76,15 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
     }
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
+  try {
+    await authApi.signIn(userData);
+    dispatch(getUserInfoAsync());
+  } catch (e) {
+    dispatch(loginWtihFailure());
   }
 };
 
