@@ -24,10 +24,6 @@ const authReducer = (state: AuthState = initialState, action: UserRegisterAction
       return {
         isRegistrationFailed: false,
       };
-    case LOGOUT:
-      return {
-        isLoggedIn: false,
-      };
     default:
       return state;
   }
