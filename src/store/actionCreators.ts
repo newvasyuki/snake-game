@@ -110,15 +110,11 @@ export const logoutAsync = () => async (dispatch: TypedDispatch) => {
   }
 };
 
-export const updateAvatar = (fromData: FormData) => async (dispatch: TypedDispatch) => {
+export const updateAvatarAsync = (fromData: FormData) => async (dispatch: TypedDispatch) => {
   try {
-    await userApi.changeAvatar(fromData);
-    const userInfo = await userApi.getUserInfo();
-    if (userInfo) {
-      dispatch({
-        type: actionTypes.SET_USER_INFO,
-        payload: { user: userInfo },
-      });
+    const newUserInfo = await userApi.changeAvatar(fromData);
+    if (newUserInfo) {
+      dispatch(setUserInfo({ user: newUserInfo }));
     } else {
       throw new Error('userInfo was not retrieved successfully');
     }

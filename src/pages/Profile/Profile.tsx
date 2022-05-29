@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Profile.pcss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,12 +9,17 @@ import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
-import { updateUserAsync, logoutAsync } from '../../store/actionCreators';
+import { updateUserAsync, logoutAsync, updateAvatarAsync } from '../../store/actionCreators';
 import { UserFormData } from './types';
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
+  const [avatar, setAvatar] = useState({});
+  const [avatarDivStyle, setAvatarDivStyle] = useState({
+    content: '',
+    background: '',
+  });
 
   const userData = useTypedSelector(selectUserData);
   const {
@@ -57,10 +62,23 @@ const Profile = () => {
   const uploadAvatarLocally = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file = target.files[0];
-
+    const reader = new FileReader();
     const formData = new FormData();
     formData.append('avatar', file);
-    // dispatch(updateAvatar(formData));
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setAvatar(formData);
+      setAvatarDivStyle({
+        content: 'none',
+        background: `url(${reader.result}) center center/cover`,
+      });
+    };
+  };
+
+  const uploadAvatarToServer = () => {
+    if (avatar instanceof FormData) {
+      dispatch(updateAvatarAsync(avatar));
+    }
   };
 
   return (
@@ -69,8 +87,11 @@ const Profile = () => {
         <Button className="profile-page__button-back" onClick={() => navigate(-1)} />
       </div>
       <div className="profile-page__content">
-        <div className="profile-page__image" />
+        <div style={avatarDivStyle} className="profile-page__image" />
         <input onChange={uploadAvatarLocally} type="file" name="image" accept="image/*" />
+        <button onClick={uploadAvatarToServer} type="button">
+          Обновить аватар
+        </button>
         <span className="profile-page__name">{userData?.display_name}</span>
         <form className="profile-page__userdata-form" onSubmit={handleSubmit(onSubmit)}>
           <ProfileInput

@@ -54,6 +54,10 @@ export class UserApi {
       method: 'PUT',
       body: data,
       credentials: 'include',
+      headers: {
+        contentType: 'multipart/form-data',
+      },
+      cache: 'no-cache',
     })
       .then((response) => response.json())
       .then((user: User) => user)
