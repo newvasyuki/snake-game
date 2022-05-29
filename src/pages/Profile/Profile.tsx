@@ -11,6 +11,7 @@ import { ROUTES } from '../../constants';
 import { selectUserData } from '../../store/selectors';
 import { updateUserAsync, logoutAsync, updateAvatarAsync } from '../../store/actionCreators';
 import { UserFormData } from './types';
+import { RESOURCES_API } from '../../api/user/UserApi';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -36,6 +37,10 @@ const Profile = () => {
   useEffect(() => {
     if (userData) {
       reset(userData);
+      setAvatarDivStyle({
+        content: 'none',
+        background: `url(${RESOURCES_API}/${userData.avatar}) center center/cover`,
+      });
     }
   }, [reset, userData]);
 

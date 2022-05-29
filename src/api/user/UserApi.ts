@@ -1,6 +1,9 @@
 import { UserFormData } from '../../pages/Profile/types';
 import { User, PasswordData } from './types';
 
+export const MAIN_API = 'https://ya-praktikum.tech/api/v2';
+export const RESOURCES_API = `${MAIN_API}/resources`;
+
 export class UserApi {
   private baseUrl: string;
 
@@ -50,17 +53,23 @@ export class UserApi {
     if (!data.has('avatar')) {
       return undefined;
     }
-    return fetch(`${this.baseUrl}/profile/avatar`, {
+    return fetch(`${this.baseUrl}/user/profile/avatar`, {
       method: 'PUT',
       body: data,
       credentials: 'include',
       headers: {
-        contentType: 'multipart/form-data',
+        accept: 'application/json',
       },
-      cache: 'no-cache',
     })
-      .then((response) => response.json())
-      .then((user: User) => user)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Change of the Avatar failed');
+      })
+      .then((user: User) => {
+        return user;
+      })
       .catch((error: unknown) => {
         console.error(error);
       });
@@ -85,4 +94,4 @@ export class UserApi {
   }
 }
 
-export const userApi = new UserApi('https://ya-praktikum.tech/api/v2');
+export const userApi = new UserApi(MAIN_API);
