@@ -4,11 +4,13 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { MODE } from './constants';
 
 const config = (_, argv): Configuration => {
+  // eslint-disable-next-line
   const mode = argv.mode || MODE.DEV;
   return {
     name: 'server',
     target: 'node',
     node: { __dirname: false },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
       server: './src/server.ts',
@@ -35,8 +37,8 @@ const config = (_, argv): Configuration => {
           loader: 'null-loader',
         },
         {
-          //так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
-          //не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
+          // так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
+          // не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
           test: /\.(react.svg|svg)$/,
           use: ['@svgr/webpack'],
         },

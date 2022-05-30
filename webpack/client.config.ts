@@ -10,8 +10,10 @@ const config = (
 ): Configuration & {
   devServer: WebpackDevServerConfig;
 } => {
+  // eslint-disable-next-line
   const mode = argv.mode || MODE.DEV;
   return {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
       index: './src/index.tsx',
@@ -61,8 +63,8 @@ const config = (
           ],
         },
         {
-          //так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
-          //не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
+          // так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
+          // не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
           test: /\.(react.svg|svg)$/,
           use: ['@svgr/webpack'],
         },
