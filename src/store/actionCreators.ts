@@ -4,23 +4,35 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 
-const setUserInfo = (user: User) => {
+type SetUserType = {
+  user?: User | null;
+  loading?: boolean;
+};
+
+const setUserInfo = (data: SetUserType) => {
   return {
     type: actionTypes.SET_USER_INFO,
-    payload: { user },
+    payload: { ...data },
   };
 };
 
-const updateUser = (userInfo: UserFormData | null) => {
+type UpdateUserInfoType = {
+  userInfo?: UserFormData | null;
+  loading?: boolean;
+};
+
+const updateUser = (updateUserInfo: UpdateUserInfoType) => {
+  const { userInfo, loading } = updateUserInfo;
   return {
     type: actionTypes.UPDATE_USER,
-    payload: { user: userInfo },
+    payload: { user: userInfo, loading },
   };
 };
 
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
+    loading: false,
   };
 };
 
@@ -36,19 +48,19 @@ const loginWtihFailure = () => {
   };
 };
 
-export const getUserInfoAsync = () => async (dispatch: TypedDispatch) => {
+export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
-    const userInfo = await userApi.getUserInfo();
-    if (userInfo) {
-      dispatch(setUserInfo(userInfo));
+    dispatch(setUserInfo({ loading: true }));
+    const user = await userApi.getUserInfo();
+    if (user) {
+      dispatch(setUserInfo({ user, loading: false }));
     } else {
       throw new Error('User information was not retrieved successfully');
     }
   } catch (e) {
     console.error(e);
-    dispatch({
-      type: actionTypes.REGISTER_FAIL,
-    });
+    dispatch(setUserInfo({ loading: false }));
+    dispatch(registerWithFailure());
   }
 };
 
@@ -56,7 +68,7 @@ export const registerUserAsync = (userData: SignUpData) => async (dispatch: Type
   try {
     const userId = await authApi.signUp(userData);
     if (userId) {
-      dispatch(getUserInfoAsync());
+      dispatch(setUserInfoAsync());
     } else {
       throw new Error('Failed registration, reason: UserId was not retrieved successfully');
     }
@@ -70,7 +82,7 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
   try {
     const updatedUserInfo = await userApi.changeProfile(userData);
     if (updatedUserInfo) {
-      dispatch(updateUser(updatedUserInfo));
+      dispatch(updateUser({ userInfo: updatedUserInfo, loading: false }));
     } else {
       throw new Error('New user information after update was not retrieved successfully');
     }
@@ -79,10 +91,10 @@ export const updateUserAsync = (userData: UserFormData) => async (dispatch: Type
   }
 };
 
-export const signInUser = (userData: SignInData) => async (dispatch: TypedDispatch) => {
+export const signInUserAsync = (userData: SignInData) => async (dispatch: TypedDispatch) => {
   try {
     await authApi.signIn(userData);
-    dispatch(getUserInfoAsync());
+    dispatch(setUserInfoAsync());
   } catch (e) {
     dispatch(loginWtihFailure());
   }
@@ -91,7 +103,7 @@ export const signInUser = (userData: SignInData) => async (dispatch: TypedDispat
 export const logoutAsync = () => async (dispatch: TypedDispatch) => {
   try {
     await authApi.logout();
-    dispatch(updateUser(null));
+    dispatch(updateUser({ userInfo: null, loading: false }));
     dispatch(logout());
   } catch (e) {
     console.error(e);

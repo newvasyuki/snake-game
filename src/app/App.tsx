@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { GamePage } from '../pages/GamePage';
 import { Profile } from '../pages/Profile';
@@ -11,16 +11,8 @@ import { Registration } from '../pages/Registration';
 import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
-import { useTypedDispatch } from '../store';
-import { getUserInfoAsync } from '../store/actionCreators';
 
 const App = () => {
-  const dispatch = useTypedDispatch();
-
-  useEffect(() => {
-    dispatch(getUserInfoAsync());
-  }, [dispatch]);
-
   return (
     <BrowserRouter>
       <Routes>

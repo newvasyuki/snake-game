@@ -3,14 +3,15 @@ import { User } from '../../api/user/types';
 
 type UserInfoAction = {
   type: string;
-  payload: { user: User };
+  payload: { user: User; loading: boolean };
 };
 
 export type UserState = {
-  user: User;
+  user: User | null;
+  isUserLoading: boolean | null;
 };
 
-const initialState = { user: null };
+const initialState = { user: null, isUserLoading: null };
 
 const userReducer = (state: UserState = initialState, action: UserInfoAction) => {
   const { type, payload } = action;
@@ -19,11 +20,13 @@ const userReducer = (state: UserState = initialState, action: UserInfoAction) =>
       return {
         ...state,
         user: payload.user,
+        isUserLoading: payload.loading ?? false,
       };
     case UPDATE_USER:
       return {
         ...state,
         user: payload.user,
+        isUserLoading: payload.loading ?? false,
       };
     default:
       return state;

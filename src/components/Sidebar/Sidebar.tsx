@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Sidebar.pcss';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import MenuItemGame from '../../../assets/menuItemGame.react.svg';
 import MenuItemForum from '../../../assets/menuItemForum.react.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
@@ -32,8 +32,8 @@ const menuItems = {
 };
 
 interface ChildProps {
-  onChangeSidebar: (v: boolean) => void,
-  isExpanded: boolean,
+  onChangeSidebar: (v: boolean) => void;
+  isExpanded: boolean;
 }
 
 const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
@@ -78,14 +78,9 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
                 to={item[1].route}
                 style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
               >
-                <div className="sidebar__menu__item-icon">
-                  {item[1].icon}
-                </div>
-                <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>
-                  {item[1].label}
-                </div>
+                <div className="sidebar__menu__item-icon">{item[1].icon}</div>
+                <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>{item[1].label}</div>
               </NavLink>
-
             </li>
           );
         })}
