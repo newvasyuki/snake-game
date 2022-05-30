@@ -7,7 +7,8 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "lib": ["webworker", "es2015", "DOM"]
+    "lib": ["webworker", "es2015", "DOM"],
+    "baseUrl": "src"
   },
   "include": ["src/**/*"],
   "exclude": ["/node_modules"]

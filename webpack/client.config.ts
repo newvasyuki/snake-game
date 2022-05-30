@@ -1,26 +1,15 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { Configuration } from 'webpack';
+import { Configuration as WebpackDevServerConfig } from 'webpack-dev-server';
+import { MODE } from './constants';
 
-const htmlPluginConfig = {
-  filename: 'index.html',
-  title: 'Game',
-  template: 'src/template.html',
-  hash: true,
-  path: path.resolve(__dirname, 'build'),
-};
-
-const MODE = {
-  DEV: 'development',
-  PROD: 'production',
-};
-
-const getOutputConfig = (mode) => ({
-  filename: mode === MODE.DEV ? '[name].js' : '[name].[fullhash].js',
-  path: path.resolve(__dirname, 'build'),
-  publicPath: '/',
-});
-
-module.exports = (_, argv) => {
+const config = (
+  _,
+  argv,
+): Configuration & {
+  devServer: WebpackDevServerConfig;
+} => {
   const mode = argv.mode || MODE.DEV;
   return {
     mode,
@@ -31,7 +20,11 @@ module.exports = (_, argv) => {
         filename: 'sw.js',
       },
     },
-    output: getOutputConfig(mode),
+    output: {
+      filename: '[name].js',
+      path: path.join(__dirname, '../build'),
+      publicPath: '/',
+    },
     target: 'web',
     devServer: {
       open: false,
@@ -40,6 +33,7 @@ module.exports = (_, argv) => {
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
+      plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
     },
     module: {
       rules: [
@@ -82,7 +76,6 @@ module.exports = (_, argv) => {
         },
       ],
     },
-    plugins: [new HtmlWebpackPlugin(htmlPluginConfig)],
 
     devtool: mode === MODE.DEV ? 'source-map' : false,
 
@@ -91,3 +84,5 @@ module.exports = (_, argv) => {
     },
   };
 };
+
+export default config;
