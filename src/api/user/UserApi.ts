@@ -1,9 +1,5 @@
-import { User } from '../index';
-
-export type PasswordData = {
-  oldPassword: string;
-  newPassword: string;
-};
+import { UserFormData } from '../../pages/Profile/types';
+import { User, PasswordData } from './types';
 
 export class UserApi {
   private baseUrl: string;
@@ -12,7 +8,24 @@ export class UserApi {
     this.baseUrl = baseUrl;
   }
 
-  changeProfile(userData: User) {
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/auth/user`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Get user info failed');
+      })
+      .then((userData: User) => userData)
+      .catch((error: unknown) => {
+        console.error(error);
+      });
+  }
+
+  changeProfile(userData: UserFormData) {
     return fetch(`${this.baseUrl}/user/profile`, {
       method: 'PUT',
       body: JSON.stringify(userData),
@@ -21,10 +34,15 @@ export class UserApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Change of the Profile failed');
+      })
       .then((data: User) => data)
       .catch((error: unknown) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -37,27 +55,29 @@ export class UserApi {
       body: data,
       credentials: 'include',
     })
-    .then((response) => response.json())
-    .then((user: User) => user)
-    .catch((error: unknown) => {
-    console.log(error);
-    });
+      .then((response) => response.json())
+      .then((user: User) => user)
+      .catch((error: unknown) => {
+        console.error(error);
+      });
   }
 
   changePassword(data: PasswordData) {
-    return fetch(`${this.baseUrl}/password`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    // todo: тут скорее всего нужно будет проверять статус ответа
-    .then((response) => response.json())
-    .catch((error: unknown) => {
-    console.log(error);
-    });
+    return (
+      fetch(`${this.baseUrl}/password`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        // todo: тут скорее всего нужно будет проверять статус ответа
+        .then((response) => response.json())
+        .catch((error: unknown) => {
+          console.error(error);
+        })
+    );
   }
 }
 

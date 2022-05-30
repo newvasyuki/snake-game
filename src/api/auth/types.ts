@@ -3,17 +3,6 @@ export type SignInData = {
   password: string;
 };
 
-export type User = {
-  id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  email: string;
-  phone: number;
-  avatar: string;
-};
-
 export type SignUpData = {
   first_name: string;
   second_name: string;

@@ -1,0 +1,22 @@
+.input-container {
+  position: relative;
+}
+
+.input {
+  border: none;
+  border-bottom: 1px solid var(--beige);
+  font-size: 14px;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &__error-message {
+    font-family: var(--baseFont);
+    right: 0;
+    bottom: 0;
+    font-size: 10px;
+    color: red;
+    z-index: 2;
+  }
+}

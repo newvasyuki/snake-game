@@ -1,4 +1,5 @@
-import { SignUpData, SignInData, User } from './types';
+import { isError } from '../../utils/types';
+import { SignUpData, SignInData } from './types';
 
 type SignUpResponse = {
   id: number;
@@ -20,24 +21,38 @@ export class AuthApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Sign up failed');
+      })
       .then((data: SignUpResponse) => data.id)
       .catch((error: unknown) => {
         console.error(error);
       });
   }
 
-  signIn(data: SignInData) {
+  signIn(signInData: SignInData) {
     return fetch(`${this.baseUrl}/auth/signin`, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(signInData),
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-    }).catch((error: unknown) => {
-      console.error(error);
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          return;
+        }
+        throw new Error('Sign in fetch request failed');
+      })
+      .catch((error: unknown) => {
+        if (isError(error)) {
+          throw new Error(error.message);
+        }
+      });
   }
 
   logout() {
@@ -47,18 +62,6 @@ export class AuthApi {
     }).catch((error: unknown) => {
       console.error(error);
     });
-  }
-
-  getUserInfo() {
-    return fetch(`${this.baseUrl}/auth/user`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((userData: User) => userData)
-      .catch((error: unknown) => {
-        console.error(error);
-      });
   }
 }
 

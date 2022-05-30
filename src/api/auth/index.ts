@@ -1,2 +1,2 @@
 export { AuthApi, authApi } from './AuthApi';
-export { SignInData, SignUpData, User } from './types';
+export { SignInData, SignUpData } from './types';
