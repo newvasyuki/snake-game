@@ -4,6 +4,11 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 
+type FormDataChangePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 type SetUserType = {
   user?: User | null;
   loading?: boolean;
@@ -45,6 +50,18 @@ const logout = () => {
 const loginWtihFailure = () => {
   return {
     type: actionTypes.LOGIN_FAILED,
+  };
+};
+
+const changePassWithFailure = () => {
+  return {
+    type: actionTypes.CHANGE_PASSWORD_FAILED,
+  };
+};
+
+export const changePassWithSuccess = () => {
+  return {
+    type: actionTypes.CHANGE_PASSWORD_SUCCESS,
   };
 };
 
@@ -110,9 +127,9 @@ export const logoutAsync = () => async (dispatch: TypedDispatch) => {
   }
 };
 
-export const updateAvatarAsync = (fromData: FormData) => async (dispatch: TypedDispatch) => {
+export const updateAvatarAsync = (formData: FormData) => async (dispatch: TypedDispatch) => {
   try {
-    const newUserInfo = await userApi.changeAvatar(fromData);
+    const newUserInfo = await userApi.changeAvatar(formData);
     if (newUserInfo) {
       dispatch(setUserInfo({ user: newUserInfo }));
     } else {
@@ -122,3 +139,14 @@ export const updateAvatarAsync = (fromData: FormData) => async (dispatch: TypedD
     console.error(e);
   }
 };
+
+export const updatePasswordAsync =
+  (formData: FormDataChangePassword) => async (dispatch: TypedDispatch) => {
+    try {
+      await userApi.changePassword(formData);
+      dispatch(changePassWithSuccess());
+    } catch (e) {
+      console.error(e);
+      dispatch(changePassWithFailure());
+    }
+  };

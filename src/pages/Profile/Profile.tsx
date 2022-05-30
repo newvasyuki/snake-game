@@ -8,21 +8,33 @@ import { Button } from '../../components/Button';
 import { schema } from './formSchema';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
-import { selectUserData } from '../../store/selectors';
-import { updateUserAsync, logoutAsync, updateAvatarAsync } from '../../store/actionCreators';
+import { selectChangePassState, selectUserData } from '../../store/selectors';
+import {
+  updateUserAsync,
+  logoutAsync,
+  updateAvatarAsync,
+  updatePasswordAsync,
+} from '../../store/actionCreators';
 import { UserFormData } from './types';
 import { RESOURCES_API } from '../../api/user/UserApi';
+import { ChangePassword } from './components/ChangePassword';
+import { ChangePasswordData } from './components/ChangePassword/ChangePassword';
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
   const [avatar, setAvatar] = useState({});
+  const [isSuccessfullUpdate, setIsSuccessfullUpdate] = useState(false);
+  const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
+  const [showChangePasswordErrorText, setShowChangePasswordErrorText] = useState(false);
   const [avatarDivStyle, setAvatarDivStyle] = useState({
     content: '',
     background: '',
   });
 
   const userData = useTypedSelector(selectUserData);
+  const isPasswordChangeFailed = useTypedSelector(selectChangePassState);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -34,6 +46,13 @@ const Profile = () => {
     defaultValues: userData,
   });
 
+  const showSuccessState = () => {
+    setIsSuccessfullUpdate(true);
+    setTimeout(() => {
+      setIsSuccessfullUpdate(false);
+    }, 1000);
+  };
+
   useEffect(() => {
     if (userData) {
       reset(userData);
@@ -44,24 +63,49 @@ const Profile = () => {
     }
   }, [reset, userData]);
 
-  const onSubmit = (data: UserFormData) => {
+  useEffect(() => {
+    if (isPasswordChangeFailed === null) {
+      // initial state
+      return;
+    }
+    if (!isPasswordChangeFailed) {
+      setShowChangePasswordDialog(false);
+      setShowChangePasswordErrorText(false);
+      showSuccessState();
+    } else {
+      setShowChangePasswordErrorText(true);
+    }
+  }, [isPasswordChangeFailed]);
+
+  const onMainInfoSubmit = (data: UserFormData) => {
     dispatch(
       updateUserAsync({
         ...data,
         display_name: `${data.first_name} ${data.second_name}`,
       }),
-    );
+    ).then(() => {
+      showSuccessState();
+    });
   };
 
   const changePassword = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    // todo: open changePassword component;
+    setShowChangePasswordDialog(true);
   };
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     dispatch(logoutAsync());
     navigate({ pathname: ROUTES.signIn });
+  };
+
+  const onChangePassword = (data: ChangePasswordData) => {
+    dispatch(
+      updatePasswordAsync({
+        oldPassword: data.old_password,
+        newPassword: data.new_password,
+      }),
+    );
   };
 
   const uploadAvatarLocally = (event: React.ChangeEvent) => {
@@ -82,8 +126,15 @@ const Profile = () => {
 
   const uploadAvatarToServer = () => {
     if (avatar instanceof FormData) {
-      dispatch(updateAvatarAsync(avatar));
+      dispatch(updateAvatarAsync(avatar)).then(() => {
+        showSuccessState();
+      });
     }
+  };
+
+  const onChangePasswordCancel = () => {
+    setShowChangePasswordDialog(false);
+    setShowChangePasswordErrorText(false);
   };
 
   return (
@@ -92,13 +143,23 @@ const Profile = () => {
         <Button className="profile-page__button-back" onClick={() => navigate(-1)} />
       </div>
       <div className="profile-page__content">
+        {showChangePasswordDialog && (
+          <ChangePassword
+            showChangePasswordErrorText={showChangePasswordErrorText}
+            onCancelation={onChangePasswordCancel}
+            onChangePassword={onChangePassword}
+          />
+        )}
         <div style={avatarDivStyle} className="profile-page__image" />
         <input onChange={uploadAvatarLocally} type="file" name="image" accept="image/*" />
         <button onClick={uploadAvatarToServer} type="button">
           Обновить аватар
         </button>
         <span className="profile-page__name">{userData?.display_name}</span>
-        <form className="profile-page__userdata-form" onSubmit={handleSubmit(onSubmit)}>
+        {isSuccessfullUpdate && (
+          <span className="profile-page__change-status">Информация обновлена!</span>
+        )}
+        <form className="profile-page__userdata-form" onSubmit={handleSubmit(onMainInfoSubmit)}>
           <ProfileInput
             id="profile-page__email"
             label="E-Mail"

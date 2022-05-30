@@ -76,21 +76,25 @@ export class UserApi {
   }
 
   changePassword(data: PasswordData) {
-    return (
-      fetch(`${this.baseUrl}/password`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    return fetch(`${this.baseUrl}/user/password`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        }
+        return Promise.reject();
       })
-        // todo: тут скорее всего нужно будет проверять статус ответа
-        .then((response) => response.json())
-        .catch((error: unknown) => {
-          console.error(error);
-        })
-    );
+      .catch((error: unknown) => {
+        console.error(error);
+        // пробрасываем дальше для обработки в actionCreators
+        throw new Error('Change of password failed');
+      });
   }
 }
 
