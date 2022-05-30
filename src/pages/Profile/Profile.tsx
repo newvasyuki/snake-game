@@ -81,7 +81,6 @@ const Profile = () => {
     dispatch(
       updateUserAsync({
         ...data,
-        display_name: `${data.first_name} ${data.second_name}`,
       }),
     ).then(() => {
       showSuccessState();
@@ -155,7 +154,9 @@ const Profile = () => {
         <button onClick={uploadAvatarToServer} type="button">
           Обновить аватар
         </button>
-        <span className="profile-page__name">{userData?.display_name}</span>
+        <span className="profile-page__name">
+          {userData?.first_name} {userData?.second_name}
+        </span>
         {isSuccessfullUpdate && (
           <span className="profile-page__change-status">Информация обновлена!</span>
         )}

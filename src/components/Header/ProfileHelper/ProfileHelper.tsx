@@ -11,7 +11,9 @@ const ProfileHelper = () => {
     <div className="profile-helper">
       <div className="profile-helper__image" />
       <Link to="/profile">
-        <span className="profile-helper__name">{userData?.display_name}</span>
+        <span className="profile-helper__name">
+          {userData?.first_name} {userData?.second_name}
+        </span>
       </Link>
     </div>
   );
