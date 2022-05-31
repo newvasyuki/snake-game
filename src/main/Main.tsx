@@ -2,13 +2,7 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { ROUTES } from '../constants';
 
-const innerPagesUrl = [
-  ROUTES.game,
-  ROUTES.leaderboard,
-  ROUTES.forum,
-  ROUTES.rules,
-  ROUTES.profile,
-];
+const innerPagesUrl = [ROUTES.game, ROUTES.leaderboard, ROUTES.forum, ROUTES.rules, ROUTES.profile];
 
 const Main = () => {
   return (
