@@ -37,9 +37,7 @@ const config = (_, argv): Configuration => {
           loader: 'null-loader',
         },
         {
-          // так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
-          // не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
-          test: /\.(react.svg|svg)$/,
+          test: /\.(react.svg)$/,
           use: ['@svgr/webpack'],
         },
         {
