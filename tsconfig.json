@@ -10,6 +10,6 @@
     "lib": ["webworker", "es2015", "DOM"],
     "baseUrl": "src"
   },
-  "include": ["src/**/*", "webpack"],
+  "include": ["**/*", "webpack"],
   "exclude": ["/node_modules"]
 }

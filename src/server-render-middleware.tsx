@@ -2,9 +2,11 @@ import React from 'react';
 import { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
+import { configureStore } from 'store';
+import { Provider } from 'react-redux';
 import App from './app';
 
-function getHtml(reactHtml: string) {
+function getHtml(reactHtml: string, state = {}) {
   return `
       <!DOCTYPE html>
       <html lang="en">
@@ -16,21 +18,28 @@ function getHtml(reactHtml: string) {
       </head>
       <body>
           <div id="root">${reactHtml}</div>
-          <script src="/index.js"></script>
+          <script>
+            window.INITIAL_STATE = ${JSON.stringify(state)}
+          </script>
+          <script src="/client.js"></script>
       </body>
       </html>
   `;
 }
 
 export default (req: Request, res: Response) => {
+  const { store } = configureStore();
   const location = req.url;
+  const reduxState = store.getState();
 
   const jsx = (
-    <StaticRouter location={location}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={location}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
   const reactHtml = renderToString(jsx);
 
-  res.status(200).send(getHtml(reactHtml));
+  res.status(200).send(getHtml(reactHtml, reduxState));
 };

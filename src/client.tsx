@@ -5,7 +5,10 @@ import { Provider } from 'react-redux';
 import App from './app';
 // import { startServiceWorker } from './services/serviceWorker/serviceWorker';
 import './styles/global.pcss';
-import { store } from './store';
+import { configureStore } from './store';
+
+const initialState = window.INITIAL_STATE;
+const { store } = configureStore(initialState);
 
 ReactDOM.hydrate(
   <BrowserRouter>

@@ -16,7 +16,7 @@ const config = (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
-      index: './src/index.tsx',
+      client: './src/client.tsx',
       sw: {
         import: './src/services/serviceWorker/sw.js',
         filename: 'sw.js',
