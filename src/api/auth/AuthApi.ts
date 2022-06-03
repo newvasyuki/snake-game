@@ -5,6 +5,10 @@ type SignUpResponse = {
   id: number;
 };
 
+export type OauthData = {
+  code: string;
+  redirect_uri: string;
+};
 export class AuthApi {
   protected baseUrl: string;
 
@@ -50,6 +54,7 @@ export class AuthApi {
       })
       .catch((error: unknown) => {
         if (isError(error)) {
+          console.error(error);
           throw new Error(error.message);
         }
       });
@@ -62,6 +67,49 @@ export class AuthApi {
     }).catch((error: unknown) => {
       console.error(error);
     });
+  }
+
+  getAccessTokenOAuth(oauthData: OauthData) {
+    return fetch(`${this.baseUrl}/oauth/yandex`, {
+      method: 'POST',
+      body: JSON.stringify(oauthData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('OAuth data based signIn failed');
+      })
+      .then((data: string) => data)
+      .catch((error: unknown) => {
+        if (isError(error)) {
+          console.error(error);
+        }
+      });
+  }
+
+  getClientIdOAuth(redirectUri: string) {
+    const queryParams = new URLSearchParams({
+      service_id: redirectUri,
+    });
+    return fetch(`${this.baseUrl}/oauth/yandex/service-id?${queryParams}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Client Id cannot be fetched');
+      })
+      .then((data: { [key: string]: string }) => data.service_id)
+      .catch((error: unknown) => {
+        if (isError(error)) {
+          console.error(error);
+          throw new Error(error.message);
+        }
+      });
   }
 }
 
