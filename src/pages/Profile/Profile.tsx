@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Profile.pcss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,21 +16,17 @@ import {
   updatePasswordAsync,
 } from '../../store/actionCreators';
 import { UserFormData } from './types';
-import { RESOURCES_API } from '../../api/user/UserApi';
 import { ChangePassword } from './components/ChangePassword';
 import { ChangePasswordData } from './components/ChangePassword/ChangePassword';
+import { Avatar } from '../../components/Avatar';
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
-  const [avatar, setAvatar] = useState({});
   const [isSuccessfullUpdate, setIsSuccessfullUpdate] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
   const [showChangePasswordErrorText, setShowChangePasswordErrorText] = useState(false);
-  const [avatarDivStyle, setAvatarDivStyle] = useState({
-    content: '',
-    background: '',
-  });
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
 
   const userData = useTypedSelector(selectUserData);
   const isPasswordChangeFailed = useTypedSelector(selectChangePassState);
@@ -56,10 +52,6 @@ const Profile = () => {
   useEffect(() => {
     if (userData) {
       reset(userData);
-      setAvatarDivStyle({
-        content: 'none',
-        background: `url(${RESOURCES_API}/${userData.avatar}) center center/cover`,
-      });
     }
   }, [reset, userData]);
 
@@ -107,7 +99,7 @@ const Profile = () => {
     );
   };
 
-  const uploadAvatarLocally = (event: React.ChangeEvent) => {
+  const uploadAvatar = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file = target.files[0];
     const reader = new FileReader();
@@ -115,20 +107,14 @@ const Profile = () => {
     formData.append('avatar', file);
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setAvatar(formData);
-      setAvatarDivStyle({
-        content: 'none',
-        background: `url(${reader.result}) center center/cover`,
+      dispatch(updateAvatarAsync(formData)).then(() => {
+        showSuccessState();
       });
     };
   };
 
-  const uploadAvatarToServer = () => {
-    if (avatar instanceof FormData) {
-      dispatch(updateAvatarAsync(avatar)).then(() => {
-        showSuccessState();
-      });
-    }
+  const onBtnClick = () => {
+    inputFileRef.current.click();
   };
 
   const onChangePasswordCancel = () => {
@@ -145,13 +131,21 @@ const Profile = () => {
         {showChangePasswordDialog && (
           <ChangePassword
             showChangePasswordErrorText={showChangePasswordErrorText}
-            onCancelation={onChangePasswordCancel}
+            onCancel={onChangePasswordCancel}
             onChangePassword={onChangePassword}
           />
         )}
-        <div style={avatarDivStyle} className="profile-page__image" />
-        <input onChange={uploadAvatarLocally} type="file" name="image" accept="image/*" />
-        <button onClick={uploadAvatarToServer} type="button">
+        <Avatar />
+        <input
+          id="uploadAvatar"
+          onChange={uploadAvatar}
+          type="file"
+          name="image"
+          accept="image/*"
+          ref={inputFileRef}
+          className="profile-page__hidden"
+        />
+        <button onClick={onBtnClick} className="profile-page__upload-button" type="button">
           Обновить аватар
         </button>
         <span className="profile-page__name">

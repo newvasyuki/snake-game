@@ -21,7 +21,7 @@ const authReducer = (state: AuthState = initialState, action: UserRegisterAction
       };
     case REGISTER_FAIL:
       return {
-        isRegistrationFailed: false,
+        isRegistrationFailed: true,
       };
     default:
       return state;

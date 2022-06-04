@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constants';
 import { isError } from '../../utils/types';
 import { SignUpData, SignInData } from './types';
 
@@ -65,4 +66,4 @@ export class AuthApi {
   }
 }
 
-export const authApi = new AuthApi('https://ya-praktikum.tech/api/v2');
+export const authApi = new AuthApi(BASE_URL);

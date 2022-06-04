@@ -9,7 +9,7 @@ import { Button } from '../../../../components/Button';
 
 type Props = {
   onChangePassword: (data: ChangePasswordData) => void;
-  onCancelation: () => void;
+  onCancel: () => void;
   showChangePasswordErrorText: boolean;
 };
 
@@ -66,7 +66,7 @@ export const ChangePassword = (props: Props) => {
               {props.showChangePasswordErrorText ? isPasswordChangeFailedText : null}
             </span>
             <Button type="submit">Изменить пароль</Button>
-            <Button type="button" onClick={props.onCancelation}>
+            <Button type="button" onClick={props.onCancel}>
               Отменить
             </Button>
           </div>

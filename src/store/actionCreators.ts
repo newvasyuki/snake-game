@@ -37,7 +37,6 @@ const updateUser = (updateUserInfo: UpdateUserInfoType) => {
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
-    loading: false,
   };
 };
 
@@ -77,7 +76,6 @@ export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   } catch (e) {
     console.error(e);
     dispatch(setUserInfo({ loading: false }));
-    dispatch(registerWithFailure());
   }
 };
 
@@ -87,7 +85,7 @@ export const registerUserAsync = (userData: SignUpData) => async (dispatch: Type
     if (userId) {
       dispatch(setUserInfoAsync());
     } else {
-      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
+      throw new Error('Failed registration, userId was not retrieved successfully');
     }
   } catch (e) {
     console.error(e);

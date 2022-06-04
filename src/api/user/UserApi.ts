@@ -1,8 +1,6 @@
+import { BASE_URL } from '../../constants';
 import { UserFormData } from '../../pages/Profile/types';
 import { User, PasswordData } from './types';
-
-export const MAIN_API = 'https://ya-praktikum.tech/api/v2';
-export const RESOURCES_API = `${MAIN_API}/resources`;
 
 export class UserApi {
   private baseUrl: string;
@@ -98,4 +96,4 @@ export class UserApi {
   }
 }
 
-export const userApi = new UserApi(MAIN_API);
+export const userApi = new UserApi(BASE_URL);
