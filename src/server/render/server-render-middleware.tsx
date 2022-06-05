@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { configureStore } from 'store';
 import { Provider } from 'react-redux';
-import App from './app';
+import App from '../../app';
 
 function getHtml(reactHtml: string, state = {}) {
   return `
@@ -28,7 +28,14 @@ function getHtml(reactHtml: string, state = {}) {
 }
 
 export default (req: Request, res: Response) => {
+  console.log('rendermiddleware startnig');
+  console.log(res.locals);
   const { store } = configureStore();
+  // const { devMiddleware } = res.locals.webpack;
+  // const jsonWebpackStats = devMiddleware.stats.toJson();
+  // const { assetsByChunkName } = jsonWebpackStats;
+  // const script = assetsByChunkName
+  // console.log('assetsByChunkName', assetsByChunkName);
   const location = req.url;
   const reduxState = store.getState();
 

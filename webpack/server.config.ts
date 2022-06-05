@@ -13,7 +13,7 @@ const config = (_, argv): Configuration => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
-      server: './src/server.ts',
+      server: './src/server/server.ts',
     },
     output: {
       filename: '[name].js',
@@ -27,10 +27,44 @@ const config = (_, argv): Configuration => {
     },
     module: {
       rules: [
+        // {
+        //   test: /\.(js|jsx|ts|tsx)$/,
+        //   exclude: /node_modules/,
+        //   use: {
+        //     loader: 'babel-loader',
+        //     options: {
+        //       presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
+        //     },
+        //   },
+        // },
+        // {
+        //   test: /\.tsx?$/,
+        //   exclude: '/node_modules/',
+        //   use: ['babel-loader', 'ts-loader'],
+        // },
         {
           test: /\.tsx?$/,
           exclude: '/node_modules/',
-          use: ['babel-loader', 'ts-loader'],
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  '@babel/preset-react',
+                  '@babel/preset-typescript',
+                  [
+                    '@babel/preset-env',
+                    {
+                      targets: 'defaults',
+                    },
+                  ],
+                ],
+              },
+            },
+            {
+              loader: 'ts-loader',
+            },
+          ],
         },
         {
           test: /\.pcss$/,
