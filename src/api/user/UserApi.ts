@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constants';
 import { UserFormData } from '../../pages/Profile/types';
 import { User, PasswordData } from './types';
 
@@ -50,35 +51,49 @@ export class UserApi {
     if (!data.has('avatar')) {
       return undefined;
     }
-    return fetch(`${this.baseUrl}/profile/avatar`, {
+    return fetch(`${this.baseUrl}/user/profile/avatar`, {
       method: 'PUT',
       body: data,
       credentials: 'include',
+      headers: {
+        accept: 'application/json',
+      },
     })
-      .then((response) => response.json())
-      .then((user: User) => user)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Change of the Avatar failed');
+      })
+      .then((user: User) => {
+        return user;
+      })
       .catch((error: unknown) => {
         console.error(error);
       });
   }
 
   changePassword(data: PasswordData) {
-    return (
-      fetch(`${this.baseUrl}/password`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    return fetch(`${this.baseUrl}/user/password`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        }
+        return Promise.reject();
       })
-        // todo: тут скорее всего нужно будет проверять статус ответа
-        .then((response) => response.json())
-        .catch((error: unknown) => {
-          console.error(error);
-        })
-    );
+      .catch((error: unknown) => {
+        console.error(error);
+        // пробрасываем дальше для обработки в actionCreators
+        throw new Error('Change of password failed');
+      });
   }
 }
 
-export const userApi = new UserApi('https://ya-praktikum.tech/api/v2');
+export const userApi = new UserApi(BASE_URL);

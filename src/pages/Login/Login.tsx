@@ -9,9 +9,10 @@ import { Button } from '../../components/Button';
 import { signInUserAsync } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
-import { SignInData } from '../../api';
+import { authApi, SignInData } from '../../api';
 import { schema } from './LoginSchema';
 import { selectUserData } from '../../store/selectors';
+import YandexIcon from '../../../assets/yandexIcon.react.svg';
 
 const isLoginFailedText = `Не удалось зайти в систему. Проверье логин/пароль. 
 ${process.env.NODE_ENV === 'development' ? 'For devs: Почистите также cookie' : ''}`;
@@ -45,6 +46,14 @@ export const Login = () => {
 
   const blockRegPage = bemCn('login');
   const blockRegForm = bemCn('login-form');
+
+  const onYandexAuth = async () => {
+    const redirectUrl = `${window.location.origin}/`;
+    const clientId = await authApi.getClientIdOAuth(redirectUrl);
+    window.location.replace(
+      `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}`,
+    );
+  };
 
   return (
     <div className={blockRegPage()}>
@@ -92,6 +101,10 @@ export const Login = () => {
             >
               Зарегистрироваться
             </Button>
+            <div className={blockRegForm('oauth-login')}>
+              <span>Войти с помощью</span>
+              <YandexIcon className={blockRegForm('yandex-login')} onClick={onYandexAuth} />
+            </div>
           </div>
         </div>
       </form>

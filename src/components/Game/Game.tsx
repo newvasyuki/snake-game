@@ -40,6 +40,8 @@ export class Game {
 
   gridSize: Size;
 
+  count: number;
+
   constructor(canvas: HTMLCanvasElement, canvasSize: Size, gridSize: Size) {
     this.status = GAME_STATUS.INITIAL;
     this.canvasRef = canvas;
@@ -51,7 +53,7 @@ export class Game {
     this.addEventListeners();
   }
 
-  subscribeEvent(eventName: 'start' | 'end', cb: () => void) {
+  subscribeEvent(eventName: 'start' | 'end' | 'updateScore', cb: (...args) => void) {
     if (!this.listeners[eventName]) {
       this.listeners[eventName] = [];
     }
@@ -59,7 +61,7 @@ export class Game {
     this.listeners[eventName].push(cb);
   }
 
-  emit(eventName: 'start' | 'end', ...args: unknown[]) {
+  emit(eventName: 'start' | 'end' | 'updateScore', ...args: unknown[]) {
     if (!this.listeners[eventName]) {
       return;
     }
@@ -149,6 +151,7 @@ export class Game {
         this.resetGame();
         return;
       }
+      this.emit('updateScore', this.snake.getScore());
       this.snake.draw();
       this.food.draw();
     }
