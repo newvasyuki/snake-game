@@ -189,7 +189,6 @@ export class Game {
     // пока захардкожено, возможно будем увеличивать скорость игры, путем изменения значения
     // или есть какой-то другой способ сделать движения пошаговыми (по 10 пикселей)
     this.status = GAME_STATUS.PLAY;
-    this.snake.resetScore();
     this.emit('start');
     this.msInterval = 500;
     this.startTime = performance.now();

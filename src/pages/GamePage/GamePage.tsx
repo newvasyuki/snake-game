@@ -47,6 +47,7 @@ const GamePage = () => {
     setGame(newGame);
 
     newGame.subscribeEvent('start', () => {
+      setScore(0);
       setIsStarted(true);
     });
     newGame.subscribeEvent('end', () => {
