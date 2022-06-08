@@ -40,6 +40,8 @@ export class Game {
 
   gridSize: Size;
 
+  count: number;
+
   constructor(canvas: HTMLCanvasElement, canvasSize: Size, gridSize: Size) {
     this.status = GAME_STATUS.INITIAL;
     this.canvasRef = canvas;
@@ -51,7 +53,7 @@ export class Game {
     this.addEventListeners();
   }
 
-  subscribeEvent(eventName: 'start' | 'end', cb: () => void) {
+  subscribeEvent(eventName: 'start' | 'end' | 'updateScore', cb: (...args) => void) {
     if (!this.listeners[eventName]) {
       this.listeners[eventName] = [];
     }
@@ -59,7 +61,7 @@ export class Game {
     this.listeners[eventName].push(cb);
   }
 
-  emit(eventName: 'start' | 'end', ...args: unknown[]) {
+  emit(eventName: 'start' | 'end' | 'updateScore', ...args: unknown[]) {
     if (!this.listeners[eventName]) {
       return;
     }
@@ -149,6 +151,7 @@ export class Game {
         this.resetGame();
         return;
       }
+      this.emit('updateScore', this.snake.score);
       this.snake.draw();
       this.food.draw();
     }
@@ -186,6 +189,7 @@ export class Game {
     // пока захардкожено, возможно будем увеличивать скорость игры, путем изменения значения
     // или есть какой-то другой способ сделать движения пошаговыми (по 10 пикселей)
     this.status = GAME_STATUS.PLAY;
+    this.snake.resetScore();
     this.emit('start');
     this.msInterval = 500;
     this.startTime = performance.now();
