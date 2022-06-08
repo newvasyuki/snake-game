@@ -3,6 +3,7 @@ import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
+import { OauthData } from '../api/auth/AuthApi';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -148,3 +149,15 @@ export const updatePasswordAsync =
       dispatch(changePassWithFailure());
     }
   };
+
+export const setUserInfoOAuthAsync = (oauthData: OauthData) => async (dispatch: TypedDispatch) => {
+  try {
+    // in our case access token is simply an OK status
+    const accessToken = await authApi.getAccessTokenOAuth(oauthData);
+    if (accessToken === 'OK') {
+      dispatch(setUserInfoAsync());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};

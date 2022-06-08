@@ -29,7 +29,7 @@ module.exports = (_, argv) => {
     target: 'web',
     devServer: {
       open: false,
-      port: 3000,
+      port: 5000,
       historyApiFallback: true,
     },
     resolve: {
