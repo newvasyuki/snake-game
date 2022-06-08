@@ -6,7 +6,7 @@ import { configureStore } from 'store';
 import { Provider } from 'react-redux';
 import App from '../../app';
 
-function getHtml(reactHtml: string, state = {}) {
+function getHtml(reactHtml: string, state = {}, script: string) {
   return `
       <!DOCTYPE html>
       <html lang="en">
@@ -29,15 +29,18 @@ function getHtml(reactHtml: string, state = {}) {
 
 export default (req: Request, res: Response) => {
   console.log('rendermiddleware startnig');
-  console.log(res.locals);
+  // console.log(res.locals);
   const { store } = configureStore();
-  // const { devMiddleware } = res.locals.webpack;
-  // const jsonWebpackStats = devMiddleware.stats.toJson();
-  // const { assetsByChunkName } = jsonWebpackStats;
-  // const script = assetsByChunkName
+  const { devMiddleware } = res.locals.webpack;
+  const jsonWebpackStats = devMiddleware.stats.toJson();
+  // console.log(jsonWebpackStats);
+  const { assetsByChunkName } = jsonWebpackStats;
   // console.log('assetsByChunkName', assetsByChunkName);
+  const script = assetsByChunkName.client[0];
   const location = req.url;
   const reduxState = store.getState();
+
+  // const App = require('../../../build/client.js').default;
 
   const jsx = (
     <Provider store={store}>
@@ -48,5 +51,5 @@ export default (req: Request, res: Response) => {
   );
   const reactHtml = renderToString(jsx);
 
-  res.status(200).send(getHtml(reactHtml, reduxState));
+  res.status(200).send(getHtml(reactHtml, reduxState, script));
 };

@@ -7,7 +7,8 @@
     "dev": "webpack serve",
     "not-ssr-start": "npm run compile && node server/server.js",
     "start:webpack": "webpack --mode development --watch",
-    "start:server": "nodemon index.js --watch build/server.js",
+    "start:server": "npm run build:server && node index.js",
+    "build:server": "webpack --config ./webpack/server.config.ts",
     "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:*",
     "build": "webpack --mode production",
     "lint": "stylelint ./src/**/*.pcss && eslint \"src/**/*.{ts,tsx}\"",
@@ -31,7 +32,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@svgr/webpack": "^6.2.1",
     "@types/htmlescape": "^1.1.1",
     "@types/react": "^17.0.0",
@@ -71,6 +71,7 @@
   "dependencies": {
     "@babel/register": "^7.17.7",
     "@hookform/resolvers": "^2.8.8",
+    "@types/webpack-node-externals": "^2.5.3",
     "bem-cn-lite": "^4.1.0",
     "cross-env": "^7.0.3",
     "express": "^4.18.1",
@@ -91,6 +92,7 @@
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "webpack": "^5.72.0",
     "webpack-dev-server": "^4.8.1",
+    "webpack-node-externals": "^3.0.0",
     "yup": "^0.32.11"
   }
 }

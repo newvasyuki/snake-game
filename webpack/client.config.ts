@@ -88,7 +88,9 @@ const config: Configuration & {
                   },
                 ],
               ],
-              plugins: ['@babel/transform-runtime', isDev && 'react-refresh/babel'].filter(Boolean),
+              plugins: ['@babel/transform-runtime', isDev && 'react-hot-loader/babel'].filter(
+                Boolean,
+              ),
             },
           },
           {

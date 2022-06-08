@@ -14,7 +14,7 @@ const config = (_, argv): Configuration => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
-      server: './src/server/server.ts',
+      client: path.join(__dirname, '../src/client.tsx'),
     },
     output: {
       filename: '[name].js',
