@@ -35,7 +35,7 @@ module.exports = (_, argv) => {
     target: 'web',
     devServer: {
       open: false,
-      port: 3000,
+      port: 5000,
       historyApiFallback: true,
     },
     resolve: {
@@ -66,12 +66,6 @@ module.exports = (_, argv) => {
             },
           ],
         },
-        // {
-        //   //так как Рома не очень понял для чего нужно .react.svg, и те иконки, которые он добавлял
-        //   //не используют этот суффикс, решил объединить оба правила, хотя по факту достаточно было бы одного .svg$/
-        //   test: /\.(react.svg|svg)$/,
-        //   use: ['@svgr/webpack'],
-        // },
         { test: /\.react.svg$/, use: ['@svgr/webpack'] },
         {
           test: /\.(webp|png|jpe?g|gif)$/,

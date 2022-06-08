@@ -1,15 +1,22 @@
 import React from 'react';
 import './ProfileHelper.pcss';
 import { Link } from 'react-router-dom';
+import bemCn from 'bem-cn-lite';
+import { selectUserData } from '../../../store/selectors';
+import { useTypedSelector } from '../../../store';
+import { Avatar } from '../../Avatar';
 
 const ProfileHelper = () => {
+  const userData = useTypedSelector(selectUserData);
+  const profileHelperPage = bemCn('profile-helper');
+
   return (
-    <div className="profile-helper">
-      <div className="profile-helper__image" />
-      <Link to="/profile">
-        <span className="profile-helper__name">Иван</span>
-      </Link>
-    </div>
+    <Link className={profileHelperPage()} to="/profile">
+      <Avatar isSmall />
+      <span className={profileHelperPage('name')}>
+        {userData?.first_name} {userData?.second_name}
+      </span>
+    </Link>
   );
 };
 
