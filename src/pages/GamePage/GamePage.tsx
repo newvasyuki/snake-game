@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import bemCn from 'bem-cn-lite';
 import { Game } from '../../components/Game';
 import { Progress } from './components/Progress';
@@ -25,6 +25,11 @@ const GamePage = () => {
   const [width, setWidth] = useState<number>();
   const [height, setHeigth] = useState<number>();
   const [isStarted, setIsStarted] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const updateScore = useCallback((newScore: number) => {
+    setScore(newScore);
+  }, []);
 
   useEffect(() => {
     const size = calculateSize(wrapperRef.current);
@@ -41,13 +46,18 @@ const GamePage = () => {
 
     setGame(newGame);
 
-    newGame.subscribeEvent('start', () => setIsStarted(true));
-    newGame.subscribeEvent('end', () => setIsStarted(false));
+    newGame.subscribeEvent('start', () => {
+      setIsStarted(true);
+    });
+    newGame.subscribeEvent('end', () => {
+      setIsStarted(false);
+    });
+    newGame.subscribeEvent('updateScore', updateScore);
 
     return () => {
       newGame.destroy();
     };
-  }, []);
+  }, [updateScore]);
 
   return (
     <div className={block()}>
@@ -69,9 +79,9 @@ const GamePage = () => {
       >
         Pause
       </button>
-      <Progress />
+      <Progress score={score} />
     </div>
   );
 };
 
-export default GamePage;
+export default React.memo(GamePage);

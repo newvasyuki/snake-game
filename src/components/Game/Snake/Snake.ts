@@ -25,6 +25,8 @@ export class Snake {
     height: number;
   };
 
+  score: number;
+
   constructor(
     initialSections: SnakeSection[],
     initialDx: number,
@@ -41,6 +43,7 @@ export class Snake {
     this.ctx = context;
     this.gridSize = gridSize;
     this.canvasSize = canvasSize;
+    this.score = 0;
   }
 
   isHeadCollisionWithBody() {
@@ -107,6 +110,18 @@ export class Snake {
     return this.food.x === x && this.food.y === y;
   }
 
+  increaseScore() {
+    this.score += 1;
+  }
+
+  getScore() {
+    return this.score;
+  }
+
+  resetScore() {
+    this.score = 0;
+  }
+
   move() {
     const newHead = {
       x: this.getHead().x + this.dx,
@@ -115,6 +130,7 @@ export class Snake {
 
     if (this.isFoodEaten()) {
       this.food.genFood();
+      this.increaseScore();
       this.sections = [newHead, ...this.sections.slice(0, this.sections.length)];
     } else {
       this.sections = [newHead, ...this.sections.slice(0, this.sections.length - 1)];
