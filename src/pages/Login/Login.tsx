@@ -48,7 +48,7 @@ export const Login = () => {
   const blockRegForm = bemCn('login-form');
 
   const onYandexAuth = async () => {
-    const redirectUrl = `${window.location.href.split('/').slice(0, -1).join('/')}/`;
+    const redirectUrl = `${window.location.origin}/`;
     const clientId = await authApi.getClientIdOAuth(redirectUrl);
     window.location.replace(
       `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}`,
