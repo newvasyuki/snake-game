@@ -14,11 +14,11 @@ const ProtectedRoutes = () => {
   useEffect(() => {
     const code = searchParams.get('code');
     if (code) {
-      const redirectUrl = `${window.location.href.split('/').slice(0, -1).join('/')}/`;
+      const redirectUrl = `${window.location.origin}/`;
       dispatch(setUserInfoOAuthAsync({ code, redirect_uri: redirectUrl })).then(() => {
         navigate(ROUTES.game);
       });
-    } else {
+    } else if (!user) {
       dispatch(setUserInfoAsync());
     }
   }, [dispatch, navigate, searchParams]);

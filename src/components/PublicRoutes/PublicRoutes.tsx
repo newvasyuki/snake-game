@@ -15,7 +15,7 @@ const PublicRoutes = () => {
     if (code) {
       const redirectUrl = `${window.location.href.split('/').slice(0, -1).join('/')}/`;
       dispatch(setUserInfoOAuthAsync({ code, redirect_uri: redirectUrl }));
-    } else {
+    } else if (!user) {
       dispatch(setUserInfoAsync());
     }
   }, [dispatch, searchParams]);
