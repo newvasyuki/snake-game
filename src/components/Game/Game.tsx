@@ -151,7 +151,7 @@ export class Game {
         this.resetGame();
         return;
       }
-      this.emit('updateScore', this.snake.score);
+      this.emit('updateScore', this.snake.getScore());
       this.snake.draw();
       this.food.draw();
     }
