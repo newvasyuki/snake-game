@@ -21,7 +21,7 @@ function getHtml(reactHtml: string, state = {}, script: string) {
           <script>
             window.INITIAL_STATE = ${JSON.stringify(state)}
           </script>
-          <script src="/client.js"></script>
+          <script src="${script}"></script>
       </body>
       </html>
   `;
@@ -39,8 +39,8 @@ export default (req: Request, res: Response) => {
   const script = assetsByChunkName.client[0];
   const location = req.url;
   const reduxState = store.getState();
-
   // const App = require('../../../build/client.js').default;
+  // console.log(App);
 
   const jsx = (
     <Provider store={store}>

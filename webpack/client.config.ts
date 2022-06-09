@@ -16,9 +16,7 @@ const isDev = process.env.NODE_ENV === 'development';
   ].filter(Boolean),
 */
 
-const config: Configuration & {
-  devServer: WebpackDevServerConfig;
-} = {
+const config: Configuration = {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   mode: (process.env.NODE_ENV as AppEnv) || MODE.DEV,
   // entry: {
@@ -34,21 +32,21 @@ const config: Configuration & {
   // ].filter(Boolean),
   entry: {
     client: [
-      isDev && 'webpack-hot-middleware/client?path=/__webpack_hmr',
+      isDev && 'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
       path.join(__dirname, '../src/client.tsx'),
     ].filter(Boolean),
   },
   output: {
-    filename: '[name].js',
+    filename: 'client.js',
     path: path.join(__dirname, '../build'),
     publicPath: '/',
   },
   target: 'web',
-  devServer: {
-    open: false,
-    port: 3000,
-    historyApiFallback: true,
-  },
+  // devServer: {
+  //   open: false,
+  //   port: 3000,
+  //   historyApiFallback: true,
+  // },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],

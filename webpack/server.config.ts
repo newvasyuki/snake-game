@@ -17,7 +17,7 @@ const config = (_, argv): Configuration => {
       server: './src/server/server.ts',
     },
     output: {
-      filename: '[name].js',
+      filename: 'server.js',
       path: path.join(__dirname, '../build'),
       publicPath: '/',
       libraryTarget: 'commonjs2',
