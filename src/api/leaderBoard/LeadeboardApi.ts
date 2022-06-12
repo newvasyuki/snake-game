@@ -1,15 +1,5 @@
-import { isError } from "../../utils/types";
-
-type LeaderData = {
-  data: Record<string, string>, // need to be more precise,
-  ratingFieldName: string
-}
-
-type GetAllLeaderBoard = {
-  ratingFieldName: string,
-  cursor: number,
-  limit: number
-}
+import { isError } from '../../utils/types';
+import { LeaderData, GetAllLeaderBoard, LeadersResponse } from './types';
 
 export class LeaderboardApi {
   private baseUrl: string;
@@ -56,7 +46,12 @@ export class LeaderboardApi {
         }
         throw new Error('leaderboard all data cannot be retrieved');
       })
-      .then((data: string) => data)
+      .then((data: string) => {
+        if (data) {
+          return JSON.parse(data) as LeadersResponse;
+        }
+        return [];
+      })
       .catch((error: unknown) => {
         if (isError(error)) {
           console.error(error);
