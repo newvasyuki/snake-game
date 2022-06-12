@@ -92,7 +92,6 @@ const GamePage = () => {
         )}
       </div>
       <div>
-        <Progress />
         <button
           type="button"
           onClick={() => {
