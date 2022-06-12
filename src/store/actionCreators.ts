@@ -4,6 +4,8 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
+import { leaderboardApi } from '../api/leaderBoard';
+import { LeaderData } from '../api/leaderBoard/types';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -157,6 +159,14 @@ export const setUserInfoOAuthAsync = (oauthData: OauthData) => async (dispatch: 
     if (accessToken === 'OK') {
       dispatch(setUserInfoAsync());
     }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const addNewLeader = (leaderData: LeaderData) => async () => {
+  try {
+    await leaderboardApi.newLeader(leaderData);
   } catch (e) {
     console.error(e);
   }
