@@ -92,6 +92,7 @@ const GamePage = () => {
         )}
       </div>
       <div>
+        <Progress score={score} />
         <button
           type="button"
           onClick={() => {
@@ -100,7 +101,6 @@ const GamePage = () => {
         >
           Pause
         </button>
-        <Progress score={score} />
         <button type="button" className={block('btn-fullscreen')} onClick={buttonFullScreen}>
           Fullscreen
         </button>
