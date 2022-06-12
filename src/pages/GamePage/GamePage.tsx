@@ -20,6 +20,7 @@ const calculateSize = (wrapper: HTMLElement) => {
 const GamePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const wrapperRef = useRef<HTMLDivElement>();
+  const blockRef = useRef<HTMLDivElement>();
 
   const [game, setGame] = useState<Game>();
   const [width, setWidth] = useState<number>();
@@ -49,8 +50,16 @@ const GamePage = () => {
     };
   }, []);
 
+  const buttonFullScreen = () => {
+    if (!document.fullscreenElement) {
+      blockRef.current?.requestFullscreen();
+    } else {
+      document?.exitFullscreen();
+    }
+  }
+
   return (
-    <div className={block()}>
+    <div className={block()} ref={blockRef}>
       <div className={block('game-screen', { active: isStarted })} ref={wrapperRef}>
         <canvas id="snake" ref={canvasRef} width={width} height={height} />
         {isStarted ? null : (
@@ -61,6 +70,8 @@ const GamePage = () => {
           />
         )}
       </div>
+      <div>
+        <Progress />
       <button
         type="button"
         onClick={() => {
@@ -69,7 +80,14 @@ const GamePage = () => {
       >
         Pause
       </button>
-      <Progress />
+      <button
+        type="button"
+        className={block('btn-fullscreen')}
+        onClick={buttonFullScreen}
+      >
+        Fullscreen
+      </button>
+      </div>
     </div>
   );
 };
