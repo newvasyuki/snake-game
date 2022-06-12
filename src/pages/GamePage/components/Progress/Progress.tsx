@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchLeaders } from '../../../LeaderBoard/LeaderBoard';
 import './Progress.pcss';
 
 type Props = {
@@ -6,6 +7,12 @@ type Props = {
 };
 
 const Progress = ({ score }: Props) => {
+  const [record, setRecord] = useState<number>(null);
+
+  useEffect(() => {
+    fetchLeaders(1).then((collectedLeaders) => setRecord(collectedLeaders[0].snakeLength));
+  }, []);
+
   return (
     <div className="progress">
       <div className="progress__score">
@@ -14,7 +21,7 @@ const Progress = ({ score }: Props) => {
       </div>
       <div className="progress__record">
         <span>Рекорд</span>
-        <span>184</span>
+        <span>{record}</span>
       </div>
     </div>
   );

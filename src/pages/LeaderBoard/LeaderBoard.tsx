@@ -12,30 +12,31 @@ type Leader = {
 
 type Leaders = Leader[];
 
+export async function fetchLeaders(limit: number) {
+  const collectedLeaders: Leaders = [];
+  const newleaders = await leaderboardApi.getAllLeaderboard({
+    ratingFieldName: 'snakeScore',
+    cursor: 0,
+    limit,
+  });
+  if (newleaders && newleaders.length > 0) {
+    newleaders.forEach((leader, i) => {
+      collectedLeaders.push({
+        playerName: leader.data.firstName,
+        login: leader.data.login,
+        snakeLength: leader.data.snakeScore,
+        position: i + 1,
+      });
+    });
+  }
+  return collectedLeaders;
+}
+
 const LeaderBoard = () => {
   const [leaders, setLeaders] = useState<Leaders>([]);
 
   useEffect(() => {
-    const collectedLeaders = [];
-    async function fetchLeaders() {
-      const newleaders = await leaderboardApi.getAllLeaderboard({
-        ratingFieldName: 'snakeScore',
-        cursor: 0,
-        limit: 10,
-      });
-      if (newleaders && newleaders.length > 0) {
-        newleaders.forEach((leader, i) => {
-          collectedLeaders.push({
-            playerName: leader.data.firstName,
-            login: leader.data.login,
-            snakeLength: leader.data.snakeScore,
-            position: i + 1,
-          });
-        });
-      }
-      setLeaders(collectedLeaders);
-    }
-    fetchLeaders();
+    fetchLeaders(10).then((collectedLeaders) => setLeaders(collectedLeaders));
   }, []);
 
   return (
