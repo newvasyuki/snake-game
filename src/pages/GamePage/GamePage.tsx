@@ -36,11 +36,11 @@ const GamePage = () => {
     setIsStarted(false);
     dispatch(
       addNewLeader({
-        data: { userName: user.login, snakeScore: score },
+        data: { firstName: user.first_name, login: user.login, snakeScore: score },
         ratingFieldName: 'snakeScore',
       }),
     );
-  }, [dispatch, score, user.login]);
+  }, [dispatch, score, user.first_name, user.login]);
 
   useEffect(() => {
     if (game) {
