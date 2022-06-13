@@ -10,12 +10,7 @@ import { getScriptName, getHtml } from './utils';
 const isDev = process.env.NODE_ENV === 'development';
 
 export default (req: Request, res: Response) => {
-  console.log('rendermiddleware startnig');
-  console.log('NODE_ENV', process.env.NODE_ENV);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { devMiddleware } = res.locals.webpack;
-  const script = getScriptName(devMiddleware, 'client', isDev);
-  console.log('script', script);
+  const script = getScriptName(res.locals.webpack, 'client', isDev);
 
   if (isDev) {
     delete require.cache[require.resolve(path.resolve(__dirname, '../../../ssr.client.js'))];

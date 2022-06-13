@@ -1,7 +1,12 @@
-export const getScriptName = (dmw: any, chunkName: string, isDevelopment: boolean): string => {
+export const getScriptName = (
+  webpackLocals: any,
+  chunkName: string,
+  isDevelopment: boolean,
+): string => {
   /* eslint-disable */
-  if (isDevelopment && dmw) {
-    const jsonWebpackStats = dmw.stats.toJson();
+  if (isDevelopment && webpackLocals) {
+    const { devMiddleware } = webpackLocals;
+    const jsonWebpackStats = devMiddleware.stats.toJson();
     const { assetsByChunkName } = jsonWebpackStats;
     return assetsByChunkName[chunkName][0];
   }
@@ -24,7 +29,7 @@ export const getHtml = (reactHtml: string, state = {}, script: string) => {
           <script>
             window.INITIAL_STATE = ${JSON.stringify(state)}
           </script>
-          <script src="${script}"></script>
+          <script src="/${script}"></script>
       </body>
       </html>
   `;

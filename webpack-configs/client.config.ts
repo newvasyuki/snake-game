@@ -7,10 +7,9 @@ type AppEnv = 'development' | 'production';
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const hmrEntries = isDev && [
-  'react-hot-loader/patch',
-  'webpack-hot-middleware/client?path=/__webpack_hmr',
-];
+const hmrEntries = isDev
+  ? ['react-hot-loader/patch', 'webpack-hot-middleware/client?path=/__webpack_hmr']
+  : [];
 
 const entryPath = isDev
   ? path.join(__dirname, '../../../src/client.tsx')

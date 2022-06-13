@@ -1,7 +1,5 @@
-/* eslint-disable no-else-return */
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable*/
+
 export default () => {
   if (process.env.NODE_ENV === 'development') {
     return require('./hmr-middleware').default;
