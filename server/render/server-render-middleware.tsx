@@ -2,9 +2,11 @@ import React from 'react';
 import { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
-import { configureStore } from 'store';
+import { configureStore } from '../../src/store';
 import { Provider } from 'react-redux';
-import App from '../../app';
+import path from 'path';
+// import App from '../../src/app';
+// import App from '../../../build/ssr.client.js';
 
 function getHtml(reactHtml: string, state = {}, script: string) {
   return `
@@ -29,18 +31,24 @@ function getHtml(reactHtml: string, state = {}, script: string) {
 
 export default (req: Request, res: Response) => {
   console.log('rendermiddleware startnig');
-  // console.log(res.locals);
+  console.log('path', path.resolve(__dirname, '../../../ssr.client.js'));
+  console.log('NODE_ENV', process.env.NODE_ENV);
+  // console.log(App);
   const { store } = configureStore();
   const { devMiddleware } = res.locals.webpack;
   const jsonWebpackStats = devMiddleware.stats.toJson();
   // console.log(jsonWebpackStats);
   const { assetsByChunkName } = jsonWebpackStats;
-  // console.log('assetsByChunkName', assetsByChunkName);
   const script = assetsByChunkName.client[0];
+  // console.log('assetsByChunkName', assetsByChunkName);
+  console.log('script', script);
+
+  delete require.cache[require.resolve(path.resolve(__dirname, '../../../ssr.client.js'))];
+
+  const App = require(path.resolve(__dirname, '../../../ssr.client.js')).default;
+
   const location = req.url;
   const reduxState = store.getState();
-  // const App = require('../../../build/client.js').default;
-  // console.log(App);
 
   const jsx = (
     <Provider store={store}>

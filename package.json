@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "webpack serve",
     "not-ssr-start": "npm run compile && node server/server.js",
-    "start:webpack": "webpack --mode development --watch --config ./webpack/client.config.ts",
-    "start:server": "npm run build:server && node index.js",
+    "build:ssr": "webpack --config webpack/ssr.client.config.ts",
+    "build:client": "webpack --config webpack/client.config.ts",
+    "start:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel watch:ssr start:server",
+    "watch:ssr": "webpack --mode development --watch --config ./webpack/ssr.client.config.ts",
+    "start:server": "node index.js",
     "build:server": "webpack --config ./webpack/server.config.ts",
     "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:*",
     "build": "webpack --mode production",
@@ -71,6 +74,7 @@
   "dependencies": {
     "@babel/register": "^7.17.7",
     "@hookform/resolvers": "^2.8.8",
+    "@hot-loader/react-dom": "^17.0.2",
     "@types/webpack-node-externals": "^2.5.3",
     "bem-cn-lite": "^4.1.0",
     "cross-env": "^7.0.3",

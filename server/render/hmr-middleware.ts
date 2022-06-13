@@ -3,10 +3,10 @@ import devMiddleware from 'webpack-dev-middleware';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import hotMiddleware from 'webpack-hot-middleware';
 import { Configuration, webpack } from 'webpack';
-import { RequestHandler } from 'express';
+// import { RequestHandler } from 'express';
 import renderMiddleware from './server-render-middleware';
 
-import { clientConfig } from '../../../webpack';
+import { clientConfig } from '../../webpack';
 
 // export default function hmrMiddleware(config: Configuration): RequestHandler[] {
 // }

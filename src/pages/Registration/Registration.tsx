@@ -14,7 +14,7 @@ import { schema } from './RegistrationSchema';
 import { Input } from '../../components/Input';
 import { selectUserData } from '../../store/selectors';
 
-const isRegistrationFailedText = `Не удалось зарегестрирваться. Свяжитесь с службой поддержки. 
+const isRegistrationFailedText = `Не удалось зарегестрирваться. Свяжитесь с службой поддержки.
 ${process.env.NODE_ENV === 'development' ? 'For devs: Почистите также cookie' : ''}`;
 
 export const Registration = () => {

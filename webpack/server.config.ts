@@ -1,5 +1,5 @@
 import path from 'path';
-import { Configuration } from 'webpack';
+import { Configuration, IgnorePlugin } from 'webpack';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import webpackNodeExternals from 'webpack-node-externals';
 import { MODE } from './constants';
@@ -14,7 +14,7 @@ const config = (_, argv): Configuration => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
-      server: './src/server/server.ts',
+      server: './server/server.ts',
     },
     output: {
       filename: 'server.js',
@@ -45,22 +45,22 @@ const config = (_, argv): Configuration => {
         // },
         {
           test: /\.tsx?$/,
-          exclude: '/node_modules/',
+          exclude: ['/node_modules/'],
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-react',
-                  '@babel/preset-typescript',
-                  [
-                    '@babel/preset-env',
-                    {
-                      targets: 'defaults',
-                    },
-                  ],
-                ],
-              },
+              // options: {
+              //   presets: [
+              //     '@babel/preset-react',
+              //     '@babel/preset-typescript',
+              //     [
+              //       '@babel/preset-env',
+              //       {
+              //         targets: 'defaults',
+              //       },
+              //     ],
+              //   ],
+              // },
             },
             {
               loader: 'ts-loader',
@@ -92,6 +92,11 @@ const config = (_, argv): Configuration => {
       minimize: mode === MODE.PROD,
       nodeEnv: false,
     },
+    plugins: [
+      new IgnorePlugin({
+        resourceRegExp: /ssr.client/,
+      }),
+    ],
     externals: [webpackNodeExternals()],
   };
 };

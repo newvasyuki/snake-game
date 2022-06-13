@@ -32,8 +32,9 @@ const config: Configuration = {
   // ].filter(Boolean),
   entry: {
     client: [
-      isDev && 'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-      path.join(__dirname, '../src/client.tsx'),
+      isDev && 'react-hot-loader/patch',
+      isDev && 'webpack-hot-middleware/client?path=/__webpack_hmr',
+      path.join(__dirname, '../../../src/client.tsx'),
     ].filter(Boolean),
   },
   output: {
@@ -50,6 +51,9 @@ const config: Configuration = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
   module: {
     rules: [
@@ -75,21 +79,21 @@ const config: Configuration = {
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: [
-                '@babel/preset-react',
-                '@babel/preset-typescript',
-                [
-                  '@babel/preset-env',
-                  {
-                    targets: 'defaults',
-                  },
-                ],
-              ],
-              plugins: ['@babel/transform-runtime', isDev && 'react-hot-loader/babel'].filter(
-                Boolean,
-              ),
-            },
+            // options: {
+            //   presets: [
+            //     '@babel/preset-react',
+            //     '@babel/preset-typescript',
+            //     [
+            //       '@babel/preset-env',
+            //       {
+            //         targets: 'defaults',
+            //       },
+            //     ],
+            //   ],
+            //   plugins: ['@babel/transform-runtime', isDev && 'react-hot-loader/babel'].filter(
+            //     Boolean,
+            //   ),
+            // },
           },
           {
             loader: 'ts-loader',

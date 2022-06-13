@@ -4,20 +4,22 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import webpackNodeExternals from 'webpack-node-externals';
 import { MODE } from './constants';
 
+// console.log(path.join(__dirname, '../src/server/*'));
+
 const config = (_, argv): Configuration => {
   // eslint-disable-next-line
   const mode = argv.mode || MODE.DEV;
   return {
-    name: 'server',
+    name: 'ssr-client',
     target: 'node',
     node: { __dirname: false },
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mode,
     entry: {
-      client: path.join(__dirname, '../src/client.tsx'),
+      client: path.join(__dirname, '../src/app/ssr.tsx'),
     },
     output: {
-      filename: '[name].js',
+      filename: 'ssr.client.js',
       path: path.join(__dirname, '../build'),
       publicPath: '/',
       libraryTarget: 'commonjs2',
@@ -25,6 +27,9 @@ const config = (_, argv): Configuration => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
       plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
+      alias: {
+        'react-dom': '@hot-loader/react-dom',
+      },
     },
     module: {
       rules: [
@@ -45,22 +50,22 @@ const config = (_, argv): Configuration => {
         // },
         {
           test: /\.tsx?$/,
-          exclude: '/node_modules/',
+          exclude: ['/node_modules/'],
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-react',
-                  '@babel/preset-typescript',
-                  [
-                    '@babel/preset-env',
-                    {
-                      targets: 'defaults',
-                    },
-                  ],
-                ],
-              },
+              // options: {
+              //   presets: [
+              //     '@babel/preset-react',
+              //     '@babel/preset-typescript',
+              //     [
+              //       '@babel/preset-env',
+              //       {
+              //         targets: 'defaults',
+              //       },
+              //     ],
+              //   ],
+              // },
             },
             {
               loader: 'ts-loader',
