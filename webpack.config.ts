@@ -1,3 +1,3 @@
-import { clientConfig, serverConfig } from './webpack';
+import { clientConfig, ssrConfig } from './webpack-configs';
 
-module.exports = [clientConfig, serverConfig];
+export default [clientConfig, ssrConfig];

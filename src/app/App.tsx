@@ -1,6 +1,6 @@
+import { hot } from 'react-hot-loader';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
 import { GamePage } from '../pages/GamePage';
 import { Profile } from '../pages/Profile';
 import { ROUTES } from '../constants';
