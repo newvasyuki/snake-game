@@ -12,6 +12,7 @@ import { Registration } from '../pages/Registration';
 import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
+import { Rules } from '../pages/Rules';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         <Route path={ROUTES.home} element={<Layout />}>
           <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
           <Route path={ROUTES.forum} element={<Forum />} />
-          <Route path={ROUTES.rules} element={<h1>Rules</h1>} />
+          <Route path={ROUTES.rules} element={<Rules />} />
           <Route path={ROUTES.game} element={<GamePage />} />
           <Route path="*" element={<Error404 />} />
         </Route>

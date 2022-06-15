@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import bemCn from 'bem-cn-lite';
 import { Game } from '../../components/Game';
 import { Progress } from './components/Progress';
@@ -20,11 +20,17 @@ const calculateSize = (wrapper: HTMLElement) => {
 const GamePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const wrapperRef = useRef<HTMLDivElement>();
+  const blockRef = useRef<HTMLDivElement>();
 
   const [game, setGame] = useState<Game>();
   const [width, setWidth] = useState<number>();
   const [height, setHeigth] = useState<number>();
   const [isStarted, setIsStarted] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const updateScore = useCallback((newScore: number) => {
+    setScore(newScore);
+  }, []);
 
   useEffect(() => {
     const size = calculateSize(wrapperRef.current);
@@ -41,16 +47,30 @@ const GamePage = () => {
 
     setGame(newGame);
 
-    newGame.subscribeEvent('start', () => setIsStarted(true));
-    newGame.subscribeEvent('end', () => setIsStarted(false));
+    newGame.subscribeEvent('start', () => {
+      setScore(0);
+      setIsStarted(true);
+    });
+    newGame.subscribeEvent('end', () => {
+      setIsStarted(false);
+    });
+    newGame.subscribeEvent('updateScore', updateScore);
 
     return () => {
       newGame.destroy();
     };
-  }, []);
+  }, [updateScore]);
+
+  const buttonFullScreen = () => {
+    if (!document.fullscreenElement) {
+      blockRef.current?.requestFullscreen();
+    } else {
+      document?.exitFullscreen();
+    }
+  };
 
   return (
-    <div className={block()}>
+    <div className={block()} ref={blockRef}>
       <div className={block('game-screen', { active: isStarted })} ref={wrapperRef}>
         <canvas id="snake" ref={canvasRef} width={width} height={height} />
         {isStarted ? null : (
@@ -61,17 +81,22 @@ const GamePage = () => {
           />
         )}
       </div>
-      <button
-        type="button"
-        onClick={() => {
-          game?.pauseGame();
-        }}
-      >
-        Pause
-      </button>
-      <Progress />
+      <div>
+        <Progress score={score} />
+        <button
+          type="button"
+          onClick={() => {
+            game?.pauseGame();
+          }}
+        >
+          Pause
+        </button>
+        <button type="button" className={block('btn-fullscreen')} onClick={buttonFullScreen}>
+          Fullscreen
+        </button>
+      </div>
     </div>
   );
 };
 
-export default GamePage;
+export default React.memo(GamePage);

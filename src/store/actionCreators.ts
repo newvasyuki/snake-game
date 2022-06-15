@@ -3,6 +3,12 @@ import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
+import { OauthData } from '../api/auth/AuthApi';
+
+type FormDataChangePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
 
 type SetUserType = {
   user?: User | null;
@@ -32,7 +38,6 @@ const updateUser = (updateUserInfo: UpdateUserInfoType) => {
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
-    loading: false,
   };
 };
 
@@ -48,6 +53,18 @@ const loginWtihFailure = () => {
   };
 };
 
+const changePassWithFailure = () => {
+  return {
+    type: actionTypes.CHANGE_PASSWORD_FAILED,
+  };
+};
+
+export const changePassWithSuccess = () => {
+  return {
+    type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+  };
+};
+
 export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
     dispatch(setUserInfo({ loading: true }));
@@ -60,7 +77,6 @@ export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   } catch (e) {
     console.error(e);
     dispatch(setUserInfo({ loading: false }));
-    dispatch(registerWithFailure());
   }
 };
 
@@ -70,7 +86,7 @@ export const registerUserAsync = (userData: SignUpData) => async (dispatch: Type
     if (userId) {
       dispatch(setUserInfoAsync());
     } else {
-      throw new Error('Failed registration, reason: UserId was not retrieved successfully');
+      throw new Error('Failed registration, userId was not retrieved successfully');
     }
   } catch (e) {
     console.error(e);
@@ -105,6 +121,42 @@ export const logoutAsync = () => async (dispatch: TypedDispatch) => {
     await authApi.logout();
     dispatch(updateUser({ userInfo: null, loading: false }));
     dispatch(logout());
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updateAvatarAsync = (formData: FormData) => async (dispatch: TypedDispatch) => {
+  try {
+    const newUserInfo = await userApi.changeAvatar(formData);
+    if (newUserInfo) {
+      dispatch(setUserInfo({ user: newUserInfo }));
+    } else {
+      throw new Error('userInfo was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updatePasswordAsync =
+  (formData: FormDataChangePassword) => async (dispatch: TypedDispatch) => {
+    try {
+      await userApi.changePassword(formData);
+      dispatch(changePassWithSuccess());
+    } catch (e) {
+      console.error(e);
+      dispatch(changePassWithFailure());
+    }
+  };
+
+export const setUserInfoOAuthAsync = (oauthData: OauthData) => async (dispatch: TypedDispatch) => {
+  try {
+    // in our case access token is simply an OK status
+    const accessToken = await authApi.getAccessTokenOAuth(oauthData);
+    if (accessToken === 'OK') {
+      dispatch(setUserInfoAsync());
+    }
   } catch (e) {
     console.error(e);
   }

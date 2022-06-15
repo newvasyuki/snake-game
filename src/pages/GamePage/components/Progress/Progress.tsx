@@ -1,12 +1,16 @@
 import React from 'react';
 import './Progress.pcss';
 
-const Progress = () => {
+type Props = {
+  score?: number;
+};
+
+const Progress = ({ score }: Props) => {
   return (
     <div className="progress">
       <div className="progress__score">
         <span>Счет</span>
-        <span>184</span>
+        <span>{score}</span>
       </div>
       <div className="progress__record">
         <span>Рекорд</span>

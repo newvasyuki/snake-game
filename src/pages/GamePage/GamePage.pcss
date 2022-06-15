@@ -4,22 +4,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-.game-page__game-screen {
-  box-sizing: border-box;
-  width: 50%;
-  max-width: 500px;
-  height: 100%;
-  max-height: 500px;
-  border: 15px solid #F59565;
-  background-color: #BBADA0;
-  margin-left: 20%;
-  margin-right: 8%;
+  &__game-screen {
+    box-sizing: border-box;
+    width: 50%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;
+    border: 15px solid #F59565;
+    background-color: #BBADA0;
+    margin-left: 20%;
+    margin-right: 8%;
 
-  position: relative;
+    position: relative;
 
-  &--active {
-    background: none;
+    &--active {
+      background: none;
+    }
+  }
+
+  &__btn-fullscreen {
+    margin-left: 5px;
   }
 }

@@ -11,6 +11,7 @@
     "project": ["./tsconfig.json"]
   },
   "rules": {
+    "@typescript-eslint/restrict-template-expressions": "off",
     "no-plusplus": "off",
     "prettier/prettier": "error",
     "react/require-default-props": "off",
