@@ -11,7 +11,7 @@ import { Registration } from '../pages/Registration';
 import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
-import {Rules} from "../pages/Rules";
+import { Rules } from '../pages/Rules';
 
 const App = () => {
   return (
