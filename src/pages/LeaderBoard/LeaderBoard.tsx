@@ -1,43 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './LeaderBoard.pcss';
 import { LeaderInfo } from './components/LeaderInfo';
-import { leaderboardApi } from '../../api/leaderBoard';
-
-type Leader = {
-  playerName: string;
-  login: string;
-  snakeLength: number;
-  position: number;
-};
-
-type Leaders = Leader[];
-
-export async function fetchLeaders(limit: number) {
-  const collectedLeaders: Leaders = [];
-  const newleaders = await leaderboardApi.getAllLeaderboard({
-    ratingFieldName: 'snakeScore',
-    cursor: 0,
-    limit,
-  });
-  if (newleaders && newleaders.length > 0) {
-    newleaders.forEach((leader, i) => {
-      collectedLeaders.push({
-        playerName: leader.data.firstName,
-        login: leader.data.login,
-        snakeLength: leader.data.snakeScore,
-        position: i + 1,
-      });
-    });
-  }
-  return collectedLeaders;
-}
+import { selectLeaders } from '../../store/selectors';
+import { useTypedDispatch, useTypedSelector } from '../../store';
+import { setLeaders } from '../../store/actionCreators';
 
 const LeaderBoard = () => {
-  const [leaders, setLeaders] = useState<Leaders>([]);
+  const leaders = useTypedSelector(selectLeaders);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    fetchLeaders(10).then((collectedLeaders) => setLeaders(collectedLeaders));
-  }, []);
+    dispatch(setLeaders());
+  }, [dispatch]);
 
   return (
     <div className="leaderboard">

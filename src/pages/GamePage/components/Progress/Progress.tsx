@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { fetchLeaders } from '../../../LeaderBoard/LeaderBoard';
+import { useTypedDispatch, useTypedSelector } from '../../../../store';
+import { setLeaders } from '../../../../store/actionCreators';
+import { selectLeaders } from '../../../../store/selectors';
 import './Progress.pcss';
 
 type Props = {
@@ -9,9 +11,16 @@ type Props = {
 const Progress = ({ score }: Props) => {
   const [record, setRecord] = useState<number>(null);
 
+  const leaders = useTypedSelector(selectLeaders);
+  const dispatch = useTypedDispatch();
+
   useEffect(() => {
-    fetchLeaders(1).then((collectedLeaders) => setRecord(collectedLeaders[0].snakeLength));
-  }, []);
+    dispatch(setLeaders());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setRecord(leaders[0]?.snakeLength);
+  }, [leaders]);
 
   return (
     <div className="progress">

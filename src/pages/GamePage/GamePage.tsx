@@ -34,12 +34,7 @@ const GamePage = () => {
 
   const onGameEnd = useCallback(() => {
     setIsStarted(false);
-    dispatch(
-      addNewLeader({
-        data: { firstName: user.first_name, login: user.login, snakeScore: score },
-        ratingFieldName: 'snakeScore',
-      }),
-    );
+    dispatch(addNewLeader(user.first_name, user.login, score));
   }, [dispatch, score, user.first_name, user.login]);
 
   useEffect(() => {
