@@ -4,7 +4,7 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
-import { leaderboardApi } from '../api/leaderBoard';
+import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
 
 type FormDataChangePassword = {
@@ -173,7 +173,7 @@ export const setUserInfoOAuthAsync = (oauthData: OauthData) => async (dispatch: 
 
 export const addNewLeader = (firstName: string, login: string, snakeScore: number) => async () => {
   try {
-    await leaderboardApi.newLeader({
+    await newLeader({
       data: { firstName, login, snakeScore },
       ratingFieldName: 'snakeScore',
     });
@@ -186,7 +186,7 @@ export const setLeaders =
   (limit = 10) =>
   async (dispatch: TypedDispatch) => {
     const collectedLeaders: Leaders = [];
-    const newleaders = await leaderboardApi.getAllLeaderboard({
+    const newleaders = await getAllLeaderboard({
       ratingFieldName: 'snakeScore',
       cursor: 0,
       limit,

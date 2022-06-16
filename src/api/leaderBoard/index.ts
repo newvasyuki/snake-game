@@ -1,1 +1,1 @@
-export { leaderboardApi } from './LeadeboardApi';
+export * from './LeadeboardApi';

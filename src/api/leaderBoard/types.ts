@@ -1,9 +1,11 @@
-export type LeaderData = {
-  data: {
-    firstName: string;
-    login: string;
-    snakeScore: number;
-  };
+type LeaderData = {
+  firstName: string;
+  login: string;
+  snakeScore: number;
+};
+
+export type LeaderDataWithRatingField = {
+  data: LeaderData;
   ratingFieldName: string;
 };
 
@@ -14,11 +16,7 @@ export type GetAllLeaderBoard = {
 };
 
 type LeaderResponse = {
-  data: {
-    login: string;
-    firstName: string;
-    snakeScore: number;
-  };
+  data: LeaderData;
 };
 
 export type LeadersResponse = LeaderResponse[];
