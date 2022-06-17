@@ -69,7 +69,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
   };
 
   return (
-    <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'}>
+    <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'} data-testid="sidebar">
       <ul className="sidebar__menu">
         {Object.entries(menuItems).map((item) => {
           return (
@@ -88,6 +88,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
       <div className="sidebar__collapse-icon">
         <CollapseIcon
           onClick={handleToggler}
+          data-testid="sidebar-collapse-btn"
           className={isExpanded ? '' : 'sidebar__collapse-icon_collapsed'}
         />
       </div>
