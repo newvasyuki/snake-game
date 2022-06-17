@@ -61,6 +61,10 @@ export class Game {
     this.listeners[eventName].push(cb);
   }
 
+  unsubscribeEvents() {
+    this.listeners = {};
+  }
+
   emit(eventName: 'start' | 'end' | 'updateScore', ...args: unknown[]) {
     if (!this.listeners[eventName]) {
       return;

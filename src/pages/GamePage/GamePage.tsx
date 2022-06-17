@@ -4,6 +4,8 @@ import { Game } from '../../components/Game';
 import { Progress } from './components/Progress';
 import { StartButton } from './components/StartButton';
 import './GamePage.pcss';
+import { addNewLeader } from '../../store/actionCreators';
+import { useTypedDispatch, useTypedSelector } from '../../store';
 
 const block = bemCn('game-page');
 
@@ -26,11 +28,27 @@ const GamePage = () => {
   const [width, setWidth] = useState<number>();
   const [height, setHeigth] = useState<number>();
   const [isStarted, setIsStarted] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState<number>(0);
+  const dispatch = useTypedDispatch();
+  const { user } = useTypedSelector((state) => state.user);
 
-  const updateScore = useCallback((newScore: number) => {
-    setScore(newScore);
-  }, []);
+  const onGameEnd = useCallback(() => {
+    setIsStarted(false);
+    dispatch(addNewLeader(user.first_name, user.login, score));
+  }, [dispatch, score, user.first_name, user.login]);
+
+  useEffect(() => {
+    if (game) {
+      game.unsubscribeEvents();
+      game.subscribeEvent('start', () => {
+        setIsStarted(true);
+      });
+      game.subscribeEvent('end', onGameEnd);
+      game.subscribeEvent('updateScore', (newScore: number) => {
+        setScore(newScore);
+      });
+    }
+  }, [game, onGameEnd]);
 
   useEffect(() => {
     const size = calculateSize(wrapperRef.current);
@@ -46,20 +64,7 @@ const GamePage = () => {
     const newGame = new Game(canvasRef.current, size, gridSize);
 
     setGame(newGame);
-
-    newGame.subscribeEvent('start', () => {
-      setScore(0);
-      setIsStarted(true);
-    });
-    newGame.subscribeEvent('end', () => {
-      setIsStarted(false);
-    });
-    newGame.subscribeEvent('updateScore', updateScore);
-
-    return () => {
-      newGame.destroy();
-    };
-  }, [updateScore]);
+  }, []);
 
   const buttonFullScreen = () => {
     if (!document.fullscreenElement) {
