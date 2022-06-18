@@ -22,20 +22,23 @@ const user = {
   },
 };
 
+const history = createMemoryHistory();
+
+const prepareScreen = () =>
+  render(
+    <Router location={history.location} navigator={history}>
+      <ProfileHelper />
+    </Router>,
+    {
+      preloadedState: {
+        user,
+      },
+    },
+  );
+
 describe('Тестирование компонента ProfileHelper', () => {
   test('Проверяет отрисовку компонента', () => {
-    const history = createMemoryHistory();
-
-    render(
-      <Router location={history.location} navigator={history}>
-        <ProfileHelper />
-      </Router>,
-      {
-        preloadedState: {
-          user,
-        },
-      },
-    );
+    prepareScreen();
 
     const rendered = screen.getByTestId('profile-helper');
 
@@ -43,18 +46,7 @@ describe('Тестирование компонента ProfileHelper', () => {
   });
 
   test('Проверяет наличие имени пользователя', () => {
-    const history = createMemoryHistory();
-
-    render(
-      <Router location={history.location} navigator={history}>
-        <ProfileHelper />
-      </Router>,
-      {
-        preloadedState: {
-          user,
-        },
-      },
-    );
+    prepareScreen();
 
     const rendered = screen.getByTestId('profile-helper');
 
