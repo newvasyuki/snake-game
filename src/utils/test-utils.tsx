@@ -29,3 +29,4 @@ const render = (
 export * from '@testing-library/react';
 
 export { render };
+export { rtlRender };
