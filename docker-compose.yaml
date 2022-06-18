@@ -1,0 +1,21 @@
+version: "3"
+services:
+  server-app:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+  postgres:
+    build:
+        context: ./db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    restart: always
