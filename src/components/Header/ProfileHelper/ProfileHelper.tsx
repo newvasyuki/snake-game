@@ -11,7 +11,7 @@ const ProfileHelper = () => {
   const profileHelperPage = bemCn('profile-helper');
 
   return (
-    <Link className={profileHelperPage()} to="/profile">
+    <Link className={profileHelperPage()} to="/profile" data-testId="profile-helper">
       <Avatar isSmall />
       <span className={profileHelperPage('name')}>
         {userData?.first_name} {userData?.second_name}
