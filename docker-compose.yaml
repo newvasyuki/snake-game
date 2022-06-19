@@ -9,7 +9,7 @@ services:
       - postgres
   postgres:
     build:
-        context: ./db
+        context: ./server/db
     ports:
       - "5432:5432"
     volumes:
