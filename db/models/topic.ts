@@ -42,6 +42,10 @@ export class Topic extends Model<Topic> {
   comments: Comment[];
 
   @AllowNull(false)
+  @Column(DataType.DATE)
+  date: string;
+
+  @AllowNull(false)
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, field: 'user_id' })
   userId: number;

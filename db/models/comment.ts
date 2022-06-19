@@ -36,6 +36,11 @@ export class Comment extends Model<Comment> {
   @AllowNull(false)
   @Length({ max: 400, min: 10 })
   @Column(DataType.STRING)
+  test: string;
+
+  @AllowNull(false)
+  @Length({ max: 400, min: 10 })
+  @Column(DataType.STRING)
   content: string;
 
   @AllowNull(false)
