@@ -2,7 +2,13 @@ import { SequelizeOptions } from 'sequelize-typescript';
 import * as dotenv from 'dotenv';
 import { resolve } from 'path';
 
-dotenv.config({ path: resolve(__dirname, '../../../../../.env') });
+// Для локального девелопмента подягиваем переменные из .env
+// В продакшене эти переменные напрмяую прокидываются из docker-compoese
+
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: resolve(__filename, '../../../../../.env') });
+}
+
 // eslint-disable-next-line no-console
 export const sequelizeOptions: SequelizeOptions = {
   host: process.env.DB_HOSTNAME || 'localhost',
