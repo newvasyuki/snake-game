@@ -2,7 +2,7 @@ import { SequelizeOptions } from 'sequelize-typescript';
 import * as dotenv from 'dotenv';
 import { resolve } from 'path';
 
-// Для локального девелопмента подягиваем переменные из .env
+// Для локального девелопмента без докера подягиваем переменные из .env
 // В продакшене эти переменные напрмяую прокидываются из docker-compoese
 
 if (process.env.NODE_ENV === 'development') {
