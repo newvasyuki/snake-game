@@ -4,6 +4,8 @@ import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
 import { User } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
+import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
+import { Leaders } from '../pages/LeaderBoard/types';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -62,6 +64,13 @@ const changePassWithFailure = () => {
 export const changePassWithSuccess = () => {
   return {
     type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+  };
+};
+
+const setLeadersAction = (leaders: Leaders) => {
+  return {
+    type: actionTypes.SET_LEADERS,
+    payload: { leaders },
   };
 };
 
@@ -161,3 +170,36 @@ export const setUserInfoOAuthAsync = (oauthData: OauthData) => async (dispatch: 
     console.error(e);
   }
 };
+
+export const addNewLeader = (firstName: string, login: string, snakeScore: number) => async () => {
+  try {
+    await newLeader({
+      data: { firstName, login, snakeScore },
+      ratingFieldName: 'snakeScore',
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const setLeaders =
+  (limit = 10) =>
+  async (dispatch: TypedDispatch) => {
+    const collectedLeaders: Leaders = [];
+    const newleaders = await getAllLeaderboard({
+      ratingFieldName: 'snakeScore',
+      cursor: 0,
+      limit,
+    });
+    if (newleaders && newleaders.length > 0) {
+      newleaders.forEach((leader, i) => {
+        collectedLeaders.push({
+          playerName: leader.data.firstName,
+          login: leader.data.login,
+          snakeLength: leader.data.snakeScore,
+          position: i + 1,
+        });
+      });
+    }
+    dispatch(setLeadersAction(collectedLeaders));
+  };

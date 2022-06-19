@@ -118,10 +118,6 @@ export class Snake {
     return this.score;
   }
 
-  resetScore() {
-    this.score = 0;
-  }
-
   move() {
     const newHead = {
       x: this.getHead().x + this.dx,
