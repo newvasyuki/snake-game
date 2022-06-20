@@ -32,10 +32,4 @@ export class User extends Model<User> {
   @AllowNull(false)
   @Column({ type: DataType.STRING, field: 'second_name' })
   secondName: string;
-
-  @HasMany(() => Topic)
-  topic: Topic[];
-
-  @HasMany(() => Comment)
-  comments: Comment[];
 }

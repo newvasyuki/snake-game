@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: resolve(__filename, '../../../../../.env') });
 }
 
-// eslint-disable-next-line no-console
 export const sequelizeOptions: SequelizeOptions = {
   host: process.env.DB_HOSTNAME || 'localhost',
   port: 5432,
