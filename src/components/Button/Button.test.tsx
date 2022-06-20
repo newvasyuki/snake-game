@@ -3,9 +3,8 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import Button from './Button';
 
-afterEach(cleanup);
-
 describe('Тестирование компонента Button', () => {
+  afterEach(cleanup);
   test('Проверяет отрисовку кнопки с переданным текстом', () => {
     const text = 'Test text';
 
@@ -22,8 +21,6 @@ describe('Тестирование компонента Button', () => {
     render(<Button onClick={onButtonClick}>{text}</Button>);
 
     const renderedButton = screen.getByText('Test text');
-
-    expect(renderedButton).toBeInTheDocument();
 
     fireEvent.click(renderedButton);
 

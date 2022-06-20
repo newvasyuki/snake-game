@@ -5,40 +5,29 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
-afterEach(cleanup);
+const changeSidebarHandler = jest.fn();
+
+const history = createMemoryHistory();
+
+const prepareScreen = () =>
+  render(
+    <Router location={history.location} navigator={history}>
+      <Sidebar isExpanded onChangeSidebar={changeSidebarHandler} />
+    </Router>,
+  );
 
 describe('Тестирование компонента Sidebar', () => {
+  beforeEach(prepareScreen);
+
+  afterEach(cleanup);
+
   test('Проверяет отрисовку компонента', () => {
-    const changeSidebarHandler = jest.fn();
-
-    const history = createMemoryHistory();
-
-    render(
-      <Router location={history.location} navigator={history}>
-        <Sidebar isExpanded onChangeSidebar={changeSidebarHandler} />
-      </Router>,
-    );
-
     const rendered = screen.getByTestId('sidebar');
 
     expect(rendered).toBeInTheDocument();
   });
 
   test('Проверяет срабатывание колбэка', () => {
-    const changeSidebarHandler = jest.fn();
-
-    const history = createMemoryHistory();
-
-    render(
-      <Router location={history.location} navigator={history}>
-        <Sidebar isExpanded onChangeSidebar={changeSidebarHandler} />
-      </Router>,
-    );
-
-    const rendered = screen.getByTestId('sidebar');
-
-    expect(rendered).toBeInTheDocument();
-
     const btn = screen.getByTestId('sidebar-collapse-btn');
 
     fireEvent.click(btn);

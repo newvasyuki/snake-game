@@ -3,9 +3,8 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
-afterEach(cleanup);
-
 describe('Тестирование компонента Input', () => {
+  afterEach(cleanup);
   test('Проверяет отрисовку инпута', () => {
     render(<Input />);
 
@@ -19,7 +18,6 @@ describe('Тестирование компонента Input', () => {
 
     const inputField = screen.getByTestId('input-control');
 
-    expect(inputField).toBeInTheDocument();
     expect((inputField as HTMLInputElement).type).toBe('text');
   });
 
@@ -29,7 +27,6 @@ describe('Тестирование компонента Input', () => {
     const inputField = screen.getByTestId('input-control');
 
     fireEvent.change(inputField, { target: { value: 'test test' } });
-    expect(inputField).toBeInTheDocument();
     expect((inputField as HTMLInputElement).value).toBe('test test');
   });
 

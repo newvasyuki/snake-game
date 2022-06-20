@@ -5,8 +5,6 @@ import { Router } from 'react-router-dom';
 import { render, cleanup, screen } from '../../utils/test-utils';
 import Header from './Header';
 
-afterEach(cleanup);
-
 const user = {
   isUserLoading: false,
   isPasswordChangeFailed: false,
@@ -37,33 +35,21 @@ const prepareScreen = () =>
   );
 
 describe('Тестирование компонента Header', () => {
+  beforeEach(prepareScreen);
+  afterEach(cleanup);
   test('Проверяет отрисовку компонента', () => {
-    prepareScreen();
-
     const rendered = screen.getByTestId('header');
 
     expect(rendered).toBeInTheDocument();
   });
 
   test('Проверяет наличие имени пользователя', () => {
-    prepareScreen();
-
-    const rendered = screen.getByTestId('header');
-
-    expect(rendered).toBeInTheDocument();
-
     const userRenderedName = screen.getByText(`${user.user.first_name} ${user.user.second_name}`);
 
     expect(userRenderedName).toBeInTheDocument();
   });
 
   test('Проверяет наличие лого', () => {
-    prepareScreen();
-
-    const rendered = screen.getByTestId('header');
-
-    expect(rendered).toBeInTheDocument();
-
     const logo = screen.getByTestId('logo');
 
     expect(logo).toBeInTheDocument();

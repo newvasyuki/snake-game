@@ -5,8 +5,6 @@ import { Router } from 'react-router-dom';
 import { render, cleanup, screen } from '../../../utils/test-utils';
 import ProfileHelper from './ProfileHelper';
 
-afterEach(cleanup);
-
 const user = {
   isUserLoading: false,
   isPasswordChangeFailed: false,
@@ -37,21 +35,15 @@ const prepareScreen = () =>
   );
 
 describe('Тестирование компонента ProfileHelper', () => {
+  beforeEach(prepareScreen);
+  afterEach(cleanup);
   test('Проверяет отрисовку компонента', () => {
-    prepareScreen();
-
     const rendered = screen.getByTestId('profile-helper');
 
     expect(rendered).toBeInTheDocument();
   });
 
   test('Проверяет наличие имени пользователя', () => {
-    prepareScreen();
-
-    const rendered = screen.getByTestId('profile-helper');
-
-    expect(rendered).toBeInTheDocument();
-
     const userRenderedName = screen.getByText(`${user.user.first_name} ${user.user.second_name}`);
 
     expect(userRenderedName).toBeInTheDocument();

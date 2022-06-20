@@ -11,13 +11,4 @@ describe('Тестирует компонент Logo', () => {
 
     expect(logo).toBeInTheDocument();
   });
-
-  test('Проверяет наличие класса для пропа isSmall', () => {
-    render(<Logo isSmall />);
-
-    const logo = screen.getByTestId('logo');
-
-    expect(logo).toBeInTheDocument();
-    expect(logo).toHaveClass('logo-wrapper_collapsed');
-  });
 });

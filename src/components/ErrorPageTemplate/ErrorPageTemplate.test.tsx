@@ -3,21 +3,29 @@ import React from 'react';
 import { render, cleanup, screen } from '@testing-library/react';
 import ErrorTemplate from './ErrorPageTemplate';
 
-afterEach(cleanup);
+const title = 'Test error title';
+const description = 'Test error description';
+
+const prepareScreen = () => render(<ErrorTemplate title={title} description={description} />);
 
 describe('Тестирование компонента ErrorPageTemplate', () => {
-  test('Проверка отрисовки компонента с переданными заголовком и описанием', () => {
-    const title = 'Test error title';
-    const description = 'Test error description';
-
-    render(<ErrorTemplate title={title} description={description} />);
-
+  beforeEach(prepareScreen);
+  afterEach(cleanup);
+  test('Проверка отрисовки компонента', () => {
     const renderedError = screen.getByTestId('error');
-    const renderedErrorTitle = screen.getByText(title);
-    const renderedErrorDescription = screen.getByText(description);
 
     expect(renderedError).toBeInTheDocument();
+  });
+  test('Проверка отрисовки компонента c переданным заголовком', () => {
+    const renderedError = screen.getByTestId('error');
+    const renderedErrorTitle = screen.getByText(title);
+
     expect(renderedError).toContainElement(renderedErrorTitle);
+  });
+  test('Проверка отрисовки компонента с переданным описанием', () => {
+    const renderedError = screen.getByTestId('error');
+    const renderedErrorDescription = screen.getByText(description);
+
     expect(renderedError).toContainElement(renderedErrorDescription);
   });
 });
