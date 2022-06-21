@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './app';
-// import { startServiceWorker } from './services/serviceWorker/serviceWorker';
+import { startServiceWorker } from './services/serviceWorker/serviceWorker';
 import './styles/global.pcss';
 import { configureStore } from './store';
 
@@ -19,4 +19,4 @@ ReactDOM.hydrate(
   document.getElementById('root'),
 );
 
-// startServiceWorker();
+startServiceWorker();
