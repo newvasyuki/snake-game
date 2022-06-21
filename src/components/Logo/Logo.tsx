@@ -8,7 +8,7 @@ interface Props {
 
 const Logo = ({ isSmall = false }: Props) => {
   return (
-    <div className={isSmall ? 'logo-wrapper_collapsed' : 'logo-wrapper'}>
+    <div className={isSmall ? 'logo-wrapper_collapsed' : 'logo-wrapper'} data-testid="logo">
       <LogoSVG />
     </div>
   );

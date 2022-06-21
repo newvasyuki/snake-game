@@ -9,7 +9,7 @@ type Props = {
   isSmall?: boolean;
 };
 
-export const Avatar = (props: Props) => {
+const Avatar = (props: Props) => {
   const userData = useTypedSelector(selectUserData);
   const [avatarDivStyle, setAvatarDivStyle] = useState({});
   const { isSmall } = props;
@@ -28,8 +28,9 @@ export const Avatar = (props: Props) => {
 
   return (
     <div
+      data-testid="avatar"
       style={avatarDivStyle}
-      className={isSmall ? avatarComponent('small') : avatarComponent()}
+      className={avatarComponent({ small: isSmall })}
     />
   );
 };
