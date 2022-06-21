@@ -1,0 +1,39 @@
+version: "3"
+services:
+  server-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    networks:
+      - awesome
+    environment:
+      - DB_HOSTNAME=postgres
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./db:/usr/src/app/db
+      - ./server:/usr/src/app/server
+      - ./webpack-configs:/usr/src/app/webpack-configs
+      - ./assets:/usr/src/app/assets
+  postgres:
+    build:
+        context: ./db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - DB_HOSTNAME=postgres
+    restart: always
+    networks:
+      - awesome
+networks:
+    awesome:
+        driver: bridge 
