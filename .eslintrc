@@ -30,11 +30,14 @@
         "unnamedComponents": "arrow-function"
       }
     ],
-    "jsx-a11y/label-has-associated-control": [ 2, {
-      "labelAttributes": ["label"],
-      "controlComponents": ["Input"],
-      "depth": 3
-    }],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelAttributes": ["label"],
+        "controlComponents": ["Input"],
+        "depth": 3
+      }
+    ],
     "@typescript-eslint/no-misused-promises": [
       "error",
       {
@@ -52,7 +55,8 @@
       "plugins": ["eslint-plugin-react"],
       "rules": {
         "react/prop-types": 0,
-        "react/require-default-props": 0
+        "react/require-default-props": 0,
+        "import/no-extraneous-dependencies": 0
       }
     }
   ]

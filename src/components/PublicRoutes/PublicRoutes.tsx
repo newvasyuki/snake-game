@@ -18,7 +18,7 @@ const PublicRoutes = () => {
     } else if (!user) {
       dispatch(setUserInfoAsync());
     }
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, user]);
   if (isUserLoading || isUserLoading === undefined || isUserLoading === null) {
     return null;
   }

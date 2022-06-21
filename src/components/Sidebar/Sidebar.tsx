@@ -13,21 +13,25 @@ const menuItems = {
     icon: <MenuItemGame />,
     route: ROUTES.game.replace('/', ''),
     label: 'Игра',
+    uniqueId: 0,
   },
   leaders: {
     icon: <MenuItemLeaders />,
     route: ROUTES.leaderboard.replace('/', ''),
     label: 'Лидеры',
+    uniqueId: 1,
   },
   forum: {
     icon: <MenuItemForum />,
     route: ROUTES.forum.replace('/', ''),
     label: 'Форум',
+    uniqueId: 2,
   },
   rules: {
     icon: <MenuItemRules />,
     route: ROUTES.rules.replace('/', ''),
     label: 'Правила',
+    uniqueId: 3,
   },
 };
 
@@ -73,7 +77,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
       <ul className="sidebar__menu">
         {Object.entries(menuItems).map((item) => {
           return (
-            <li>
+            <li key={item[1].uniqueId}>
               <NavLink
                 to={item[1].route}
                 style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}

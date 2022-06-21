@@ -21,7 +21,7 @@ const ProtectedRoutes = () => {
     } else if (!user) {
       dispatch(setUserInfoAsync());
     }
-  }, [dispatch, navigate, searchParams]);
+  }, [dispatch, navigate, searchParams, user]);
 
   if (isUserLoading || isUserLoading === undefined || isUserLoading === null) {
     return null;
