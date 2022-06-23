@@ -17,7 +17,7 @@ export async function dbConnect() {
     await sequelize.authenticate();
     await sequelize.createSchema('snakedb', { logging: process.env.NODE_ENV === 'development' });
     // Синхронизация базы данных, каждый раз дропает таблицы - не подходит для продакшена
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     // eslint-disable-next-line no-console
     console.log('Connection has been established successfully.');
   } catch (error) {
