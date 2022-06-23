@@ -1,9 +1,12 @@
 import { NextFunction, Response, Request } from 'express';
+import { loadTopics } from './service';
 
-export async function getTopic(req: Request, res: Response, next: NextFunction) {
+export const getTopics = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const topic = await loadTopic(req.params.topicId);
+    const topics = await loadTopics();
+    res.status(200).send(topics);
+    next();
   } catch (err) {
     next(err);
   }
-}
+};
