@@ -2,6 +2,9 @@
   "name": "game",
   "version": "1.0.0",
   "description": "Game project by New Vasuyki team",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start:server": "node ./build/server-build/server/index.js",
     "watch:server": "nodemon --watch build ./build/server-build/server/index.js",
@@ -57,7 +60,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "html-webpack-plugin": "^5.5.0",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.18",
     "null-loader": "^4.0.1",
     "postcss-loader": "^6.2.1",
     "postcss-nested": "^5.0.6",
