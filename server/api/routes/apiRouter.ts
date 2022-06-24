@@ -10,8 +10,8 @@ export function configureApiRouter() {
   const router: Router = Router();
 
   router.get(`${API_V1}/forum/topics`, getTopics);
-  router.get(`${API_V1}/forum/topics/:id(\\d+)/comments`, getComments);
   router.post(`${API_V1}/forum/topics`, postTopic);
+  router.get(`${API_V1}/forum/topics/:id(\\d+)/comments`, getComments);
   router.post(`${API_V1}/forum/topics/:id(\\d+)/comments`, postComment);
 
   return router;

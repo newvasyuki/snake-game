@@ -5,11 +5,11 @@ export const loadComments = async (topicId: number) => {
   return Comment.findAll({ where: { topicId } });
 };
 
-export const postCommentToDb = async (comment: CommentInput) => {
+export const postCommentToDb = async (comment: CommentInput, userId: number, id: number) => {
   return Comment.create({
-    topicId: comment.topicId,
+    topicId: id,
     content: comment.content,
     date: new Date().getTime(),
-    userId: comment.userId, // should come from params
+    userId,
   });
 };
