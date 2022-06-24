@@ -11,8 +11,9 @@ const Input: React.FunctionComponent<InputProps> = forwardRef((props, ref) => {
   const { type, errorMessage, className, ...restProps } = props;
 
   return (
-    <div className="input-container">
+    <div className="input-container" data-testid="input">
       <input
+        data-testid="input-control"
         ref={ref as RefObject<HTMLInputElement>}
         className={`input ${className}`}
         type={type || 'text'}
