@@ -12,6 +12,7 @@ const app = express();
 })();
 
 app.use(express.static(path.resolve(__dirname, '../../')));
+app.use(express.json());
 app.use(configureApiRouter(), []); // todo: create safety net for 404, or 500
 app.use(render());
 

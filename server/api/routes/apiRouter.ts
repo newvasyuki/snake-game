@@ -1,4 +1,5 @@
 import { Router, Response, Request } from 'express';
+import { postComment } from '../collections/comments/post';
 import { getTopics } from '../collections/topics/get';
 import { postTopic } from '../collections/topics/post';
 
@@ -16,6 +17,7 @@ export function configureApiRouter() {
   router.get(`${API_V1}`, getApiDocumentation);
   router.get(`${API_V1}/forum/topics`, getTopics);
   router.post(`${API_V1}/forum/topics`, postTopic);
+  router.post(`${API_V1}/forum/topics/:id(\\d+)/comments`, postComment);
 
   return router;
 }
