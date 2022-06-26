@@ -9,8 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:5000/",
-  "basePath": "api/v1",
+  "host": "snake.ya-praktikum.tech:5000",
+  "basePath": "/api/v1",
   "paths": {
     "/forum/topics": {
       "get": {
@@ -30,13 +30,6 @@
         "tags": ["Topics"],
         "summary": "Post topic to the forum",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "User Id",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -85,13 +78,6 @@
             "name": "id",
             "in": "path",
             "description": "Topic Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "User Id",
             "required": true,
             "type": "string"
           },
@@ -194,7 +180,7 @@
       "name": "Comments"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["https"],
   "consumes": ["application/json"],
   "produces": ["application/json"]
 }
