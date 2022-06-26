@@ -6,6 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { configureStore } from '../../src/store';
 import { getScriptName, getHtml } from './utils';
+import { StatusCodes } from '../utils/shared/constants';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -32,5 +33,5 @@ export default (req: Request, res: Response) => {
   );
   const reactHtml = renderToString(jsx);
 
-  res.status(200).send(getHtml(reactHtml, reduxState, script));
+  res.status(StatusCodes.SUCCESS).send(getHtml(reactHtml, reduxState, script));
 };

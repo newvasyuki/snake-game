@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
+import { StatusCodes } from '../../../utils/shared/constants';
 import { postTopicToDb } from './service';
 import { TopicInput } from './types';
 
@@ -12,10 +13,10 @@ export async function postTopic(
   next: NextFunction,
 ) {
   const topic = req.body as TopicInput;
-  const userId = Number.parseInt(req.query.userId, 10);
+  const { userId } = req.session;
   try {
     await postTopicToDb(topic, userId);
-    res.status(200).send();
+    res.status(StatusCodes.SUCCESS).send();
   } catch (err) {
     next(err);
   }

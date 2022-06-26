@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
+import { StatusCodes } from '../../../utils/shared/constants';
 import { postCommentToDb } from './service';
 
 import { CommentInput } from './types';
@@ -17,11 +18,11 @@ export async function postComment(
   next: NextFunction,
 ) {
   const comment = req.body as CommentInput;
-  const userId = Number.parseInt(req.query.userId, 10);
+  const { userId } = req.session;
   const { id } = req.params as Params;
   try {
     await postCommentToDb(comment, userId, id);
-    res.status(200).send();
+    res.status(StatusCodes.SUCCESS).send();
   } catch (err) {
     next(err);
   }
