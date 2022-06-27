@@ -17,7 +17,7 @@ export async function authorizeUser(req: Request, res: Response, next: NextFunct
     const opts = {
       headers: {
         Accept: 'application/json',
-        cookie: req.headers.cookie, // пробрасываем куку яндекса (authCookie)
+        cookie: 'req.headers.cookie', // пробрасываем куку яндекса (authCookie)
       },
     };
     const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
