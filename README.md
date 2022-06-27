@@ -23,7 +23,45 @@
 - `npm run dev` — запуск дев сервера,
 - `npm start` — сборка клиента, сервера и запуск проекта на локальном Express-сервере,
 - `npm run build` — сборка клиента и сервера.
-  Остальные команды описаны в разделе scripts package.json.
+  Остальные команды описаны в разделе scripts packa
+
+## Запуск в докере и подключение к базе данных
+For production:
+
+`docker-compose -f docker-compose.yaml up`
+
+For developers: 
+Способ 1.
+Для режима разработки рекомендуется запустить базу данных в контейнере 
+
+Комманда для запуска
+`docker-compose -f docker-compose.dev.yaml up postgres`
+В отдельном терминале запустить приложение
+`npm run dev`
+
+Способ 2.
+Для режима разработки также можно запустить все приложения в контейнерах при помощи:
+`docker-compose -f docker-compose.dev.yaml up`
+
+В обоих случаях подключатся к базе данных при необходимости можно машины хоста, например при помощи [DBeaver](https://dbeaver.io).
+
+## Работа с форумом в режиме разработки
+
+1. Добавить алиас в файл hosts: 
+`127.0.0.1 snake.ya-praktikum.tech`
+
+2. Сгенерировать self-certificate для доступа по https 
+[Как сгенерировать self-seigned сертификат](https://stackoverflow.com/questions/21397809/create-a-trusted-self-signed-ssl-cert-for-localhost-for-use-with-express-node)
+
+`openssl req -x509 -newkey rsa:2048 -keyout keytmp.pem -out cert.pem -days 365`
+`openssl rsa -in keytmp.pem -out key.pem`
+
+3. Создать в корне репозитория папку ssl и Положить туда сгенерированные ключи
+
+[Как использовать сгенерированный сертификат](https://blog.postman.com/using-self-signed-certificates-with-postman/)
+
+4. Запустить дев среду с форумом
+`npm run dev:forum`
 
 ## О команде
 
