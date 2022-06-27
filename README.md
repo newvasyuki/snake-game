@@ -14,7 +14,7 @@
 
 ## Стек
 
-В проекте используются Typescript, Stylelint, Eslint, Prettier, PostCss, SSR, Express, Docker. Сборка клиента - Webpack, сборка сервера - tsc.
+В проекте используются Typescript, Stylelint, Eslint, Prettier, PostCss, SSR, Express, Docker, Swagger. Сборка клиента - Webpack, сборка сервера - tsc.
 Тесты - Jest + react-testing-library.
 
 ## Установка и запуск
@@ -69,6 +69,8 @@ For developers:
 
 4. Запустить дев среду с форумом
 `npm run dev:forum`
+
+5. [Swagger](https://snake.ya-praktikum.tech:5000/api-docs) доступен для тестирования эндпоинтов
 
 ## О команде
 
