@@ -11,6 +11,6 @@ export type User = {
 
 declare module 'express-session' {
   interface SessionData {
-    userId: number;
+    user: User;
   }
 }

@@ -3,10 +3,9 @@ import axios from 'axios';
 import { User } from '../../utils/shared/types';
 import { BASE_URL } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
-import { errorHandler } from '../../utils/error/errorHandler';
 
 export async function authorizeUser(req: Request, res: Response, next: NextFunction) {
-  if (req.session.userId) {
+  if (req.session.user) {
     next();
   }
   if (!req.headers.cookie) {
@@ -21,7 +20,7 @@ export async function authorizeUser(req: Request, res: Response, next: NextFunct
       },
     };
     const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
-    req.session.userId = data.id;
+    req.session.user = data;
     next();
   } catch (err) {
     if (axios.isAxiosError(err)) {
