@@ -14,7 +14,7 @@
 
 ## Стек
 
-В проекте используются Typescript, Stylelint, Eslint, Prettier, PostCss, SSR, Express. Сборка клиента - Webpack, сборка сервера - tsc.
+В проекте используются Typescript, Stylelint, Eslint, Prettier, PostCss, SSR, Express, Docker. Сборка клиента - Webpack, сборка сервера - tsc.
 Тесты - Jest + react-testing-library.
 
 ## Установка и запуск
@@ -30,20 +30,25 @@ For production:
 
 `docker-compose -f docker-compose.yaml up`
 
-For developers: 
-Способ 1.
+For developers:
+
+*Способ 1:*
 Для режима разработки рекомендуется запустить базу данных в контейнере 
 
-Комманда для запуска
+Комманда для запуска:
+
 `docker-compose -f docker-compose.dev.yaml up postgres`
-В отдельном терминале запустить приложение
+
+После этого в отдельном терминале нужно запустить приложение:
+
 `npm run dev`
 
-Способ 2.
+*Способ 2:*
 Для режима разработки также можно запустить все приложения в контейнерах при помощи:
+
 `docker-compose -f docker-compose.dev.yaml up`
 
-В обоих случаях подключатся к базе данных при необходимости можно машины хоста, например при помощи [DBeaver](https://dbeaver.io).
+В обоих случаях подключатся к базе данных можно с машины хоста, например при помощи [DBeaver](https://dbeaver.io) или любого другого клиента.
 
 ## Работа с форумом в режиме разработки
 
@@ -51,9 +56,11 @@ For developers:
 `127.0.0.1 snake.ya-praktikum.tech`
 
 2. Сгенерировать self-certificate для доступа по https 
+
 [Как сгенерировать self-seigned сертификат](https://stackoverflow.com/questions/21397809/create-a-trusted-self-signed-ssl-cert-for-localhost-for-use-with-express-node)
 
 `openssl req -x509 -newkey rsa:2048 -keyout keytmp.pem -out cert.pem -days 365`
+
 `openssl rsa -in keytmp.pem -out key.pem`
 
 3. Создать в корне репозитория папку ssl и Положить туда сгенерированные ключи
