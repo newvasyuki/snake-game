@@ -34,4 +34,5 @@ export const authorizeUser = async (req: Request, res: Response, next: NextFunct
       next(err);
     }
   }
+  return false;
 };
