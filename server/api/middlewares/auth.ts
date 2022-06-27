@@ -3,24 +3,21 @@ import axios from 'axios';
 import { User } from '../../utils/shared/types';
 import { BASE_URL } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
+import { errorHandler } from '../../utils/error/errorHandler';
 
-function forbiddenError() {
-  return new ForbiddenError('User cannot be authorized');
-}
-
-export const authorizeUser = async (req: Request, res: Response, next: NextFunction) => {
+export async function authorizeUser(req: Request, res: Response, next: NextFunction) {
   if (req.session.userId) {
-    return next();
+    next();
   }
   if (!req.headers.cookie) {
-    return next(forbiddenError());
+    return next(new ForbiddenError('User cannot be authorized'));
   }
   // Просим яндекс провeрить юзера по куке
   try {
     const opts = {
       headers: {
         Accept: 'application/json',
-        cookie: req.headers.cookie, // пробрасываем куку яндекса (authCookie)
+        cookie: 'req.headers.cookie', // пробрасываем куку яндекса (authCookie)
       },
     };
     const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
@@ -28,11 +25,9 @@ export const authorizeUser = async (req: Request, res: Response, next: NextFunct
     next();
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      next(forbiddenError());
-    } else {
-      console.error('unexpected error: ', err);
-      next(err);
+      return next(new ForbiddenError('User cannot be authorized'));
     }
+    return next(err);
   }
   return false;
-};
+}

@@ -30,11 +30,10 @@ if (app.get('env') === 'production') {
 })();
 
 app.use(session(sess));
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc as JsonObject));
 app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());
-app.use(configureApiRouter());
-app.use(render(), [errorHandler]);
+app.use(configureApiRouter(), [errorHandler]);
+app.use(render());
 
 export { app };
