@@ -1,38 +1,37 @@
 import { NextFunction, Response, Request } from 'express';
 import axios from 'axios';
 import { User } from '../../utils/shared/types';
-import { BASE_URL, StatusCodes } from '../../utils/shared/constants';
+import { BASE_URL } from '../../utils/shared/constants';
+import { ForbiddenError } from '../../utils/error/ForbiddenError';
+
+function forbiddenError() {
+  return new ForbiddenError('User cannot be authorized');
+}
 
 export const authorizeUser = async (req: Request, res: Response, next: NextFunction) => {
   if (req.session.userId) {
+    return next();
+  }
+  if (!req.headers.cookie) {
+    return next(forbiddenError());
+  }
+  // Просим яндекс провeрить юзера по куке
+  try {
+    const opts = {
+      headers: {
+        Accept: 'application/json',
+        cookie: req.headers.cookie, // пробрасываем куку яндекса (authCookie)
+      },
+    };
+    const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
+    req.session.userId = data.id;
     next();
-  } else {
-    if (!req.headers.cookie) {
-      throw new Error('No yandex cookie!'); // todo : use a special class
-    }
-    // Просим яндекс провeрить юзера по куке
-    try {
-      const opts = {
-        headers: {
-          Accept: 'application/json',
-          cookie: req.headers.cookie, // пробрасываем куку яндекса (authCookie)
-        },
-      };
-      const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
-      req.session.userId = data.id;
-      next();
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.error('error message: ', err.message);
-        if (parseInt(err.status, 10) === StatusCodes.UNAUTHORIZED) {
-          res.status(StatusCodes.FORBIDDEN).send({
-            message: err.message,
-          });
-        }
-      } else {
-        console.error('unexpected error: ', err);
-        next(err);
-      }
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      next(forbiddenError());
+    } else {
+      console.error('unexpected error: ', err);
+      next(err);
     }
   }
 };
