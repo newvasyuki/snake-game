@@ -6,7 +6,6 @@ import render from './render';
 import { dbConnect } from '../db/init';
 import { configureApiRouter } from './api/routes/apiRouter';
 import swaggerDoc from '../swagger.json';
-import { errorHandler, resourceNotFound } from './utils/error/errorHandler';
 
 const app = express();
 
@@ -34,7 +33,7 @@ app.use(session(sess));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc as JsonObject));
 app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());
-app.use(configureApiRouter(), [resourceNotFound, errorHandler]);
+app.use(configureApiRouter(), []); // todo: add safety net with resourceNotFound, errorHandler
 app.use(render());
 
 export { app };

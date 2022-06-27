@@ -15,6 +15,7 @@
     "build:ssr": "webpack --config webpack-configs/ssr.client.config.ts",
     "watch:ssr": "webpack --mode development --watch --config ./webpack-configs/ssr.client.config.ts",
     "dev": "cross-env NODE_ENV=development npm-run-all --print-label clean build:server -p watch:build watch:ssr watch:server",
+    "dev:forum": "cross-env NODE_ENV=development FORUM=DEV_MODE npm-run-all --print-label clean build:server -p watch:build watch:ssr watch:server",
     "eslint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint": "stylelint ./src/**/*.pcss && eslint \"src/**/*.{ts,tsx}\"",
     "lint-fix": "stylelint --fix ./src/**/*.pcss && eslint --fix \"src/**/*.{ts,tsx}\"",

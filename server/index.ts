@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'fs';
 import https from 'https';
 import path from 'path';
@@ -15,7 +16,12 @@ if (app.get('env') === 'development') {
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
-https.createServer(httpsOptions, app).listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Application is started on port: ${port}`);
-});
+if (process.env.FORUM === 'DEV_MODE') {
+  https.createServer(httpsOptions, app).listen(port, () => {
+    console.log(`Application is started on port: ${port}`);
+  });
+} else {
+  app.listen(port, () => {
+    console.log('Application is started on port:', port);
+  });
+}
