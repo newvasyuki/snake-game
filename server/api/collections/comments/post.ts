@@ -18,10 +18,10 @@ export async function postComment(
   next: NextFunction,
 ) {
   const comment = req.body as CommentInput;
-  const { userId } = req.session;
+  const { user } = req.session;
   const { id } = req.params as Params;
   try {
-    await postCommentToDb(comment, userId, id);
+    await postCommentToDb(comment, user.id, id);
     res.status(StatusCodes.SUCCESS).send();
   } catch (err) {
     next(err);

@@ -13,9 +13,9 @@ export async function postTopic(
   next: NextFunction,
 ) {
   const topic = req.body as TopicInput;
-  const { userId } = req.session;
+  const { user } = req.session;
   try {
-    await postTopicToDb(topic, userId);
+    await postTopicToDb(topic, user.id);
     res.status(StatusCodes.SUCCESS).send();
   } catch (err) {
     next(err);
