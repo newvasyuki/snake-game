@@ -15,7 +15,28 @@ export function postForumTopic(topicData: TopicData) {
       if (response.ok) {
         return response.text();
       }
-      throw new Error('leaderboard all data cannot be retrieved');
+      throw new Error('Forum topic cannot be created');
+    })
+    .catch((error: unknown) => {
+      if (isError(error)) {
+        console.error(error);
+      }
+    });
+}
+
+export function logoutForum() {
+  return fetch(`${FORUM_URL}/forum/logout`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.text();
+      }
+      throw new Error('Logout from forum faile');
     })
     .catch((error: unknown) => {
       if (isError(error)) {
