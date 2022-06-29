@@ -1,21 +1,19 @@
 import { Router } from 'express';
 import { getComments } from '../collections/comments/get';
-import { postComment } from '../collections/comments/post';
+import { createComment } from '../collections/comments/post';
 import { getTopics } from '../collections/topics/get';
-import { postTopic } from '../collections/topics/post';
 import { authorizeUser } from '../middlewares/auth';
 import { logout } from './logout';
-
-const API_V1 = '/api/v1';
+import { createTopic } from '../collections/topics/post';
 
 export function configureApiRouter() {
   const router: Router = Router();
 
-  router.get(`${API_V1}/forum/topics`, [authorizeUser], getTopics);
-  router.post(`${API_V1}/forum/topics`, [authorizeUser], postTopic);
-  router.get(`${API_V1}/forum/topics/:id(\\d+)/comments`, [authorizeUser], getComments);
-  router.post(`${API_V1}/forum/topics/:id(\\d+)/comments`, [authorizeUser], postComment);
-  router.post(`${API_V1}/forum/logout`, [authorizeUser], logout);
+  router.get(`/forum/topics`, [authorizeUser], getTopics);
+  router.post(`/forum/topics`, [authorizeUser], createTopic);
+  router.get(`/forum/topics/:id(\\d+)/comments`, [authorizeUser], getComments);
+  router.post(`/forum/topics/:id(\\d+)/comments`, [authorizeUser], createComment);
+  router.post(`/forum/logout`, [authorizeUser], logout);
 
   return router;
 }

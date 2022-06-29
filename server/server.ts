@@ -10,6 +10,7 @@ import swaggerProd from '../swaggerProd.json';
 import swaggerDev from '../swaggerDev.json';
 
 const app = express();
+const API_V1 = '/api/v1';
 
 const sess = {
   name: 'forumCookie',
@@ -37,7 +38,7 @@ if (app.get('env') === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10
 app.use(session(sess));
 app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());
-app.use(configureApiRouter(), [errorHandler]);
+app.use(API_V1, configureApiRouter(), [errorHandler]);
 app.use(render());
 
 export { app };
