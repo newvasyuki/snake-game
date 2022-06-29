@@ -40,7 +40,7 @@ export class Comment extends Model<Comment> {
 
   @AllowNull(false)
   @Column(DataType.DATE)
-  date: string;
+  date: number;
 
   @AllowNull(false)
   @ForeignKey(() => User)
