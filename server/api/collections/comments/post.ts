@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { postCommentToDb } from './service';
+import { saveCommentToDb } from './service';
 
 import { CommentInput } from './types';
 
@@ -11,7 +11,7 @@ interface Params {
   id: number;
 }
 
-export async function postComment(
+export async function createComment(
   req: Request<unknown, unknown, unknown, Query>,
   res: Response,
   next: NextFunction,
@@ -20,7 +20,7 @@ export async function postComment(
   const userId = Number.parseInt(req.query.userId, 10);
   const { id } = req.params as Params;
   try {
-    await postCommentToDb(comment, userId, id);
+    await saveCommentToDb(comment, userId, id);
     res.status(200).send();
   } catch (err) {
     next(err);
