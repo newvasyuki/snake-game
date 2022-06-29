@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
+import { StatusCodes } from '../../../utils/shared/constants';
 import { saveTopicToDb } from './service';
 import { TopicInput } from './types';
 
@@ -12,10 +13,10 @@ export async function createTopic(
   next: NextFunction,
 ) {
   const topic = req.body as TopicInput;
-  const userId = Number.parseInt(req.query.userId, 10);
+  const { user } = req.session;
   try {
-    await saveTopicToDb(topic, userId);
-    res.status(200).send();
+    await saveTopicToDb(topic, user.id);
+    res.status(StatusCodes.SUCCESS).send();
   } catch (err) {
     next(err);
   }

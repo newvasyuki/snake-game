@@ -1,0 +1,198 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "New Vasuyki snake Forum API",
+    "description": "API of the New Vasuyki snake game",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "snake.ya-praktikum.tech:5000",
+  "basePath": "/api/v1",
+  "paths": {
+    "/forum/topics": {
+      "get": {
+        "tags": ["Topics"],
+        "summary": "Get all created topics in a forum",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TopicsResponse",
+              "type": "array"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Topics"],
+        "summary": "Post topic to the forum",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Topic information to be stored in DB",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TopicRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/forum/topics/{id}/comments": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "Get all comments of a topic",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Topic Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CommentsResponse",
+              "type": "array"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Comments"],
+        "summary": "Post comment to a topic",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Topic Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment information to be stored in DB",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CommentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TopicsResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Topic"
+      }
+    },
+    "TopicRequest": {
+      "required": ["title", "content"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "CommentsResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Comment"
+      }
+    },
+    "CommentRequest": {
+      "required": ["content"],
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "Topic": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "likes": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "userId": {
+          "type": "number"
+        }
+      }
+    },
+    "Comment": {
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "topicId": {
+          "type": "number"
+        },
+        "content": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "userId": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Topics"
+    },
+    {
+      "name": "Comments"
+    }
+  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"]
+}
