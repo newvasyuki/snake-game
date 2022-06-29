@@ -5,7 +5,7 @@ import { BASE_URL } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
 
 const mockedUser = {
-  id: 1,
+  id: -1,
   first_name: 'Test',
   second_name: 'User',
   display_name: 'Testing user',
@@ -15,7 +15,7 @@ const mockedUser = {
   phone: 'string',
 };
 export async function authorizeUser(req: Request, res: Response, next: NextFunction) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
     req.session.user = mockedUser;
     // для дев среды без форума пропускаем реальную авторизацию
     return next();
