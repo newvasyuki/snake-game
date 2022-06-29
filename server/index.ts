@@ -16,12 +16,12 @@ if (app.get('env') === 'development') {
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
-if (process.env.FORUM === 'DEV_MODE') {
-  https.createServer(httpsOptions, app).listen(port, () => {
+if (app.get('env') === 'development') {
+  app.listen(port, () => {
     console.log(`Application is started on port: ${port}`);
   });
 } else {
-  app.listen(port, () => {
-    console.log('Application is started on port:', port);
+  https.createServer(httpsOptions, app).listen(port, () => {
+    console.log(`Application is started on port: ${port}`);
   });
 }

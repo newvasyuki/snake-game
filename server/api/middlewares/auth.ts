@@ -4,14 +4,25 @@ import { User } from '../../utils/shared/types';
 import { BASE_URL } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
 
+const mockedUser = {
+  id: 1,
+  first_name: 'Test',
+  second_name: 'User',
+  display_name: 'Testing user',
+  login: 'Bla',
+  avatar: '',
+  email: 'string',
+  phone: 'string',
+};
 export async function authorizeUser(req: Request, res: Response, next: NextFunction) {
-  if (process.env.NODE_ENV === 'development' && process.env.FORUM !== 'DEV_MODE') {
-    // для дев среды без форума пропускаем авторизацию
-    next();
+  if (process.env.NODE_ENV === 'development') {
+    req.session.user = mockedUser;
+    // для дев среды без форума пропускаем реальную авторизацию
+    return next();
   }
   if (req.session.user) {
     // юзер уже авторизован, пропускаем дальше
-    next();
+    return next();
   }
   if (!req.headers.cookie) {
     return next(new ForbiddenError('User cannot be authorized'));
