@@ -6,6 +6,7 @@
     "node": ">=14.0.0"
   },
   "scripts": {
+    "start": "cross-env NODE_ENV=production npm-run-all --print-label build start:server",
     "start:server": "node ./build/server-build/server/index.js",
     "watch:server": "nodemon --watch build ./build/server-build/server/index.js",
     "watch:build": "tsc --project server --watch",
