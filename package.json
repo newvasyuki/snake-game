@@ -17,7 +17,7 @@
     "watch:ssr": "webpack --mode development --watch --config ./webpack-configs/ssr.client.config.ts",
     "dev": "cross-env NODE_ENV=development SKIP_FORUM_AUTH=1 npm-run-all --print-label clean build:server --parallel watch:ssr start:server",
     "dev:watch": "cross-env NODE_ENV=development SKIP_FORUM_AUTH=1 npm-run-all --print-label clean build:server -p watch:build watch:ssr watch:server",
-    "dev:forum": "cross-env NODE_ENV=development SKIP_FORUM_AUTH=0 npm-run-all --print-label clean build:server build:ssr -p watch:build watch:ssr watch:server",
+    "dev:forumWithAuth": "cross-env NODE_ENV=development SKIP_FORUM_AUTH=0 npm-run-all --print-label clean build:server build:ssr -p watch:build watch:ssr watch:server",
     "eslint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint": "stylelint ./src/**/*.pcss && eslint \"src/**/*.{ts,tsx}\"",
     "lint-fix": "stylelint --fix ./src/**/*.pcss && eslint --fix \"src/**/*.{ts,tsx}\"",

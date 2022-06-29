@@ -50,7 +50,7 @@ For developers:
 
 В обоих случаях подключатся к базе данных можно с машины хоста, например при помощи [DBeaver](https://dbeaver.io) или любого другого клиента.
 
-## Работа с форумом в режиме разработки
+## Работа с форумом в режиме разработки с авторизацией
 
 1. Добавить алиас в файл hosts: 
 `127.0.0.1 snake.ya-praktikum.tech`
@@ -68,7 +68,7 @@ For developers:
 [Как использовать сгенерированный сертификат](https://blog.postman.com/using-self-signed-certificates-with-postman/)
 
 4. Запустить дев среду с форумом
-`npm run dev:forum`
+`npm run dev:forumWithAuth`
 
 5. [Swagger](https://snake.ya-praktikum.tech:5000/api-docs) доступен для тестирования эндпоинтов
 
