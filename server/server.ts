@@ -1,12 +1,13 @@
 import path from 'path';
 import express from 'express';
-import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import session from 'express-session';
+import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import render from './render';
 import { dbConnect } from '../db/init';
 import { configureApiRouter } from './api/routes/apiRouter';
-import swaggerDoc from '../swagger.json';
 import { errorHandler } from './utils/error/errorHandler';
+import swaggerProd from '../swaggerProd.json';
+import swaggerDev from '../swaggerDev.json';
 
 const app = express();
 
@@ -20,17 +21,20 @@ const sess = {
   },
 };
 
-if (app.get('env') === 'production') {
-  sess.cookie.secure = true;
-}
-
 // set up connection to DB
 (async () => {
   await dbConnect();
 })();
 
+if (app.get('env') === 'production') {
+  sess.cookie.secure = true;
+}
+if (app.get('env') === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDev as JsonObject));
+} else {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerProd as JsonObject));
+}
 app.use(session(sess));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc as JsonObject));
 app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());
 app.use(configureApiRouter(), [errorHandler]);
