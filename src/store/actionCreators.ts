@@ -1,3 +1,4 @@
+import { logoutForum } from 'api/forum';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
@@ -40,12 +41,6 @@ const updateUser = (updateUserInfo: UpdateUserInfoType) => {
 const registerWithFailure = () => {
   return {
     type: actionTypes.REGISTER_FAIL,
-  };
-};
-
-const logout = () => {
-  return {
-    type: actionTypes.LOGOUT,
   };
 };
 
@@ -127,9 +122,9 @@ export const signInUserAsync = (userData: SignInData) => async (dispatch: TypedD
 
 export const logoutAsync = () => async (dispatch: TypedDispatch) => {
   try {
+    await logoutForum(); // we need to do it first as we still need Yandex
     await authApi.logout();
     dispatch(updateUser({ userInfo: null, loading: false }));
-    dispatch(logout());
   } catch (e) {
     console.error(e);
   }

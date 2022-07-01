@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
+import { StatusCodes } from '../../../utils/shared/constants';
 import { saveCommentToDb } from './service';
 
 import { CommentInput } from './types';
@@ -17,10 +18,11 @@ export async function createComment(
   next: NextFunction,
 ) {
   const comment = req.body as CommentInput;
-  const userId = Number.parseInt(req.query.userId, 10);
+  const { user } = req.session;
   const { id } = req.params as Params;
   try {
-    await saveCommentToDb(comment, userId, id);
+    await saveCommentToDb(comment, user.id, id);
+    res.status(StatusCodes.SUCCESS).send();
     res.status(200).send();
   } catch (err) {
     next(err);

@@ -1,5 +1,5 @@
 import path from 'path';
-import { Configuration, HotModuleReplacementPlugin } from 'webpack';
+import { Configuration, HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import { commonConfig } from './common.config';
 import { MODE } from './constants';
 
@@ -32,7 +32,13 @@ const config: Configuration = {
     publicPath: '/',
   },
   target: 'web',
-  plugins: [isDev && new HotModuleReplacementPlugin()].filter(Boolean),
+  plugins: [
+    isDev && new HotModuleReplacementPlugin(),
+    isDev &&
+      new DefinePlugin({
+        'process.env.SKIP_FORUM_AUTH': JSON.stringify(process.env.SKIP_FORUM_AUTH),
+      }),
+  ].filter(Boolean),
 };
 
 export default config;

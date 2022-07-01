@@ -5,7 +5,7 @@ import { resolve } from 'path';
 // Для локального девелопмента без докера подягиваем переменные из .env
 // В продакшене эти переменные напрмяую прокидываются из docker-compoese
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || !parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
   dotenv.config({ path: resolve(__filename, '../../../../../.env') });
 }
 
