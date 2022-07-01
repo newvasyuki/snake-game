@@ -14,11 +14,13 @@ const block = bemCn('user-info');
 
 export const UserInfo = ({ userId, className }: Props) => {
   const [userInfo, setUserInfo] = useState<User>(null);
+  const [userName, setUserName] = useState('');
   useEffect(() => {
     async function getUserInfoById(id: number) {
       const res = await userApi.getUserInfoById(id);
       if (res) {
         setUserInfo(res);
+        setUserName(`${res?.first_name} ${res?.second_name[0]}`);
       }
     }
     if (userId) {
@@ -29,7 +31,7 @@ export const UserInfo = ({ userId, className }: Props) => {
   return (
     <div className={block(null, className)}>
       <Avatar src={userInfo?.avatar} />
-      <span className={block('user-name')}>{userInfo?.display_name}</span>
+      <span className={block('user-name')}>{userName}</span>
     </div>
   );
 };
