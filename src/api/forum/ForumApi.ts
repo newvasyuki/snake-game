@@ -1,8 +1,33 @@
+import { Threads } from 'pages/Forum/types';
 import { FORUM_URL } from '../../constants';
 import { isError } from '../../utils/types';
 import { TopicData } from './types';
 
-export function postForumTopic(topicData: TopicData) {
+export function getForumTopics(): Promise<Threads> {
+  return fetch(`${FORUM_URL}/forum/topics`, {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Forum topics cannot be retrieved');
+      }
+      return response.json();
+    })
+    .then((threads: Threads) => {
+      return threads;
+    })
+    .catch((error: unknown) => {
+      if (isError(error)) {
+        console.error(error);
+      }
+      throw error;
+    });
+}
+
+export function createForumTopic(topicData: TopicData) {
   return fetch(`${FORUM_URL}/forum/topics`, {
     method: 'POST',
     body: JSON.stringify(topicData),

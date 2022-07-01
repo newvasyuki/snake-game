@@ -1,23 +1,35 @@
+import { userApi } from 'api';
+import { User } from 'api/user/types';
 import bemCn from 'bem-cn-lite';
-import React, { useMemo } from 'react';
-import { ForumUser } from '../types';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
 type Props = {
-  user: ForumUser;
+  userId: number;
   className?: string;
 };
 
 const block = bemCn('user-info');
 
-export const UserInfo = ({ user, className }: Props) => {
-  const userName = useMemo(() => `${user.first_name} ${user.second_name[0]}.`, [user]);
+export const UserInfo = ({ userId, className }: Props) => {
+  const [userInfo, setUserInfo] = useState<User>(null);
+  useEffect(() => {
+    async function getUserInfoById(id: number) {
+      const res = await userApi.getUserInfoById(id);
+      if (res) {
+        setUserInfo(res);
+      }
+    }
+    if (userId) {
+      getUserInfoById(userId);
+    }
+  }, [userId]);
 
   return (
     <div className={block(null, className)}>
-      <Avatar src={user.avatar} />
-      <span className={block('user-name')}>{userName}</span>
+      <Avatar src={userInfo?.avatar} />
+      <span className={block('user-name')}>{userInfo?.display_name}</span>
     </div>
   );
 };

@@ -10,7 +10,6 @@ import {
   Length,
   HasMany,
   ForeignKey,
-  BelongsTo,
 } from 'sequelize-typescript';
 import { User } from './user';
 import { Comment } from './comment';

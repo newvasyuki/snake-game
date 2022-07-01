@@ -8,26 +8,7 @@ import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
 import { AnswersList } from './AnswersList';
 import './Thread.pcss';
-import { ForumUser } from '../types';
-
-export type AnswerType = {
-  id: string;
-  user: ForumUser;
-  date: Date;
-  message: string;
-};
-
-export type ThreadType = {
-  id: string;
-  user: ForumUser;
-  date: Date;
-  likes: number;
-  content: {
-    message: string;
-    title: string;
-  };
-  answers: AnswerType[];
-};
+import { ThreadType } from '../types';
 
 const block = bemCn('thread');
 
@@ -36,7 +17,7 @@ type Props = {
 };
 
 export const Thread: React.FC<Props> = ({ thread }) => {
-  const { user, content, answers, date, likes } = thread;
+  const { user, content, comments, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
 
   useEffect(() => {
@@ -48,7 +29,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   return (
     <div className={block()}>
       <div className={block('topic')}>
-        <UserInfo className={block('user')} user={user} />
+        <UserInfo className={block('user')} userId={user} />
         <ThreadDate className={block('date')} date={date} />
         <ThreadLikes
           className={block('likes')}
@@ -56,12 +37,12 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           likeClickHandler={() => setLikesCount((count) => count + 1)}
         />
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
-        <AnswersCount className={block('answers')} count={answers.length} />
+        <AnswersCount className={block('answers')} count={comments.length} />
       </div>
       <AnswersList>
-        {answers.map((answer) => (
-          <li key={answer.id}>
-            <Answer user={answer.user} date={answer.date} message={answer.message} />
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            <Answer userId={comment.userId} date={comment.date} message={comment.content} />
           </li>
         ))}
       </AnswersList>

@@ -9,6 +9,24 @@ export class UserApi {
     this.baseUrl = baseUrl;
   }
 
+  getUserInfoById(id: number) {
+    return fetch(`${this.baseUrl}/user/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Get user info failed');
+      })
+      .then((userData: User) => userData)
+      .catch((error: unknown) => {
+        console.error(error);
+        throw error;
+      });
+  }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}/auth/user`, {
       method: 'GET',

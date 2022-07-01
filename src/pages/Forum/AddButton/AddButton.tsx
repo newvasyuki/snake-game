@@ -2,7 +2,7 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
 import './AddButton.pcss';
-import { postForumTopic } from 'api/forum';
+import { createForumTopic } from 'api/forum';
 import randomWords from 'random-words';
 import PlusIcon from '../../../../assets/plus-icon.react.svg';
 
@@ -11,7 +11,7 @@ const block = bemCn('add-button');
 export const AddButton = () => {
   const onAddTopic = async () => {
     try {
-      await postForumTopic({
+      await createForumTopic({
         title: randomWords(2).join(' '),
         content: randomWords(5).join(' '),
       });
