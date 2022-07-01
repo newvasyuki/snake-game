@@ -21,6 +21,10 @@ const config: Configuration = {
   mode: (process.env.NODE_ENV as AppEnv) || MODE.DEV,
   entry: {
     client: [...hmrEntries, entryPath].filter(Boolean),
+    sw: {
+      import: './src/services/serviceWorker/sw.js',
+      filename: 'sw.js',
+    },
   },
   output: {
     filename: 'client.js',
