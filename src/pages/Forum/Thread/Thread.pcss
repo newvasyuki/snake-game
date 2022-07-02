@@ -11,7 +11,7 @@
     display: grid;
     grid-template-areas: "user user date"
       "likes content content"
-      ". answers answers";
+      ". . answers";
     align-items: center;
     grid-template-columns: 1fr 85% 1fr;
     row-gap: 10px;
@@ -41,5 +41,18 @@
 
   &__answers {
     grid-area: answers;
+  }
+
+  &__icon-wrapper {
+    svg {
+      fill: #72685D
+    }
+  }
+
+  &__reply-button {
+    display: flex;
+    width: 120px;
+    align-items: center;
+    justify-content: space-around;
   }
 }
