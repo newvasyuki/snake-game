@@ -27,7 +27,17 @@ export type Topic = {
   };
   user: number;
   likes: number;
-  comments: Comment[];
+  comments: CommentWtihChildren[];
 };
 
 export type Topics = Topic[];
+
+export interface CommentWtihChildren {
+  id: number;
+  topicId: number;
+  content: string;
+  date: number;
+  userId: number;
+  parentId: number;
+  children: Comment[];
+}

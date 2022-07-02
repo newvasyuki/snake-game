@@ -1,6 +1,40 @@
 import { Topic } from '../../../../db/models/topic';
-import { RawTopics, TopicInput, Topics } from './types';
+import { RawTopics, TopicInput, Topics, CommentWtihChildren } from './types';
 import { Comment } from '../../../../db/models/comment';
+
+function createTree(list: Comment[]) {
+  if (list.length === 0) {
+    return [];
+  }
+  const listCopy = list.map((node) => {
+    return {
+      id: node.id,
+      topicId: node.topicId,
+      content: node.content,
+      date: node.date,
+      userId: node.userId,
+      parentId: node.parentId,
+      children: [],
+    };
+  });
+  const map: Record<string, number> = {};
+  const roots: CommentWtihChildren[] = [];
+
+  for (let i = 0; i < listCopy.length; i++) {
+    map[listCopy[i].id] = i;
+  }
+
+  for (let i = 0; i < listCopy.length; i++) {
+    const node = listCopy[i];
+    if (node.parentId) {
+      const reversedIndex = map[node.parentId];
+      listCopy[reversedIndex].children.push(node);
+    } else {
+      roots.push(node);
+    }
+  }
+  return roots;
+}
 
 const postProcessTopics = (rawTopics: RawTopics) => {
   const topics: Topics = [];
@@ -14,7 +48,7 @@ const postProcessTopics = (rawTopics: RawTopics) => {
       },
       user: rawTopic.userId,
       likes: rawTopic.likes,
-      comments: rawTopic.comments,
+      comments: createTree(rawTopic.comments),
     }),
   );
   return topics;
