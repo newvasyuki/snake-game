@@ -25,6 +25,7 @@ export const Answer: React.FC<Props> = ({ userId, date, comment }) => {
         <ThreadDate date={date} className={block('date')} />
       </div>
       <p className={block('message')}>{comment.content}</p>
+      <p className={block('reply')}>Ответить</p>
       {nestedComments}
     </div>
   );

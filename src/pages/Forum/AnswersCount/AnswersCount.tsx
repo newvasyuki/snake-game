@@ -1,6 +1,7 @@
 import bemCn from 'bem-cn-lite';
 import React from 'react';
 import './AnswersCount.pcss';
+import AnswerIcon from '../../../../assets/answer-icon.react.svg';
 
 type Props = {
   count?: number;
@@ -12,6 +13,9 @@ const block = bemCn('answers-count');
 export const AnswersCount = ({ count, className }: Props) => {
   return (
     <div className={block(null, className)}>
+      <div className={block('icon-wrapper')}>
+        <AnswerIcon />
+      </div>
       <span className={block('count')}>{count ?? 0} Ответов</span>
     </div>
   );
