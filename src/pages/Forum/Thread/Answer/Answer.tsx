@@ -4,6 +4,7 @@ import React from 'react';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
+import AnswerIcon from '../../../../../assets/answer-icon.react.svg';
 
 type Props = {
   userId: number;
@@ -25,7 +26,12 @@ export const Answer: React.FC<Props> = ({ userId, date, comment }) => {
         <ThreadDate date={date} className={block('date')} />
       </div>
       <p className={block('message')}>{comment.content}</p>
-      <p className={block('reply')}>Ответить</p>
+      <div className={block('reply')}>
+        <div className={block('icon-wrapper')}>
+          <AnswerIcon />
+        </div>
+        <span>Ответить</span>
+      </div>
       {nestedComments}
     </div>
   );

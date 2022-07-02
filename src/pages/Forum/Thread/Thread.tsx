@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import bemCn from 'bem-cn-lite';
-import { Button } from 'components/Button';
 import { AnswersCount } from '../AnswersCount';
 import { ThreadDate } from '../ThreadDate';
 import { ThreadLikes } from '../ThreadLikes';
@@ -9,6 +8,7 @@ import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
 import './Thread.pcss';
 import { ThreadType } from '../types';
+import AnswerIcon from '../../../../assets/answer-icon.react.svg';
 
 const block = bemCn('thread');
 
@@ -39,7 +39,13 @@ export const Thread: React.FC<Props> = ({ thread }) => {
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
         <AnswersCount className={block('answers')} count={comments.length} />
       </div>
-      <p className={block('reply')}>Ответить</p>
+      <div className={block('reply')}>
+        <div className={block('icon-wrapper')}>
+          <AnswerIcon />
+        </div>
+        <span>Ответить</span>
+      </div>
+
       {comments.map((comment) => (
         <Answer userId={comment.userId} date={comment.date} comment={comment} />
       ))}
