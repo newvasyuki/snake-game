@@ -1,5 +1,5 @@
 import path from 'path';
-import { Configuration, HotModuleReplacementPlugin } from 'webpack';
+import { Configuration, HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import { commonConfig } from './common.config';
 import { MODE } from './constants';
 
@@ -21,6 +21,10 @@ const config: Configuration = {
   mode: (process.env.NODE_ENV as AppEnv) || MODE.DEV,
   entry: {
     client: [...hmrEntries, entryPath].filter(Boolean),
+    sw: {
+      import: './src/services/serviceWorker/sw.js',
+      filename: 'sw.js',
+    },
   },
   output: {
     filename: 'client.js',
@@ -28,7 +32,13 @@ const config: Configuration = {
     publicPath: '/',
   },
   target: 'web',
-  plugins: [isDev && new HotModuleReplacementPlugin()].filter(Boolean),
+  plugins: [
+    isDev && new HotModuleReplacementPlugin(),
+    isDev &&
+      new DefinePlugin({
+        'process.env.SKIP_FORUM_AUTH': JSON.stringify(process.env.SKIP_FORUM_AUTH),
+      }),
+  ].filter(Boolean),
 };
 
 export default config;

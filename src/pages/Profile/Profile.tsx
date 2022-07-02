@@ -86,8 +86,8 @@ const Profile = () => {
 
   const exit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(logoutAsync());
     navigate({ pathname: ROUTES.signIn });
+    dispatch(logoutAsync());
   };
 
   const onChangePassword = (data: ChangePasswordData) => {

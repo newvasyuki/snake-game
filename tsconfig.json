@@ -8,7 +8,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "lib": ["webworker", "es2015", "DOM"],
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true
   },
   "include": ["**/*", "webpack-configs"],
   "exclude": ["/node_modules"]

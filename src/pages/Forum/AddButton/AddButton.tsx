@@ -1,6 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import bemCn from 'bem-cn-lite';
 import PlusIcon from '../../../../assets/plus-icon.react.svg';
+
 import './AddButton.pcss';
 
 const block = bemCn('add-button');
