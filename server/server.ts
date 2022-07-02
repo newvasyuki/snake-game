@@ -14,7 +14,7 @@ const API_V1 = '/api/v1';
 
 const sess = {
   name: 'forumCookie',
-  secret: process.env.COOKIE_SECRET,
+  secret: process.env.COOKIE_SECRET ?? 'secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
