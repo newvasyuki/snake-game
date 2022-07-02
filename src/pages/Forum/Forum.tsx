@@ -17,8 +17,8 @@ export const Forum = () => {
 
   useEffect(() => {
     async function getThreads() {
-      const result = await getForumTopics();
-      setThreads(result);
+      const topics = await getForumTopics();
+      setThreads(topics);
     }
 
     getThreads();

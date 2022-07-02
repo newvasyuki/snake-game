@@ -6,7 +6,6 @@ import { ThreadLikes } from '../ThreadLikes';
 import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
-import { AnswersList } from './AnswersList';
 import './Thread.pcss';
 import { ThreadType } from '../types';
 
@@ -39,13 +38,9 @@ export const Thread: React.FC<Props> = ({ thread }) => {
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
         <AnswersCount className={block('answers')} count={comments.length} />
       </div>
-      <AnswersList>
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            <Answer userId={comment.userId} date={comment.date} message={comment.content} />
-          </li>
-        ))}
-      </AnswersList>
+      {comments.map((comment) => (
+        <Answer userId={comment.userId} date={comment.date} comment={comment} />
+      ))}
     </div>
   );
 };

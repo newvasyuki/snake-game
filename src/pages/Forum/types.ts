@@ -2,12 +2,14 @@ import { User } from '../../api/user/types';
 
 export type ForumUser = Pick<User, 'avatar' | 'first_name' | 'second_name'>;
 
-type Comment = {
+export type CommentType = {
   id: number;
   topicId: number;
   content: string;
   date: number;
   userId: number;
+  children: CommentType[];
+  parentId: number;
 };
 
 export type ThreadType = {
@@ -19,7 +21,7 @@ export type ThreadType = {
   };
   user: number;
   likes: number;
-  comments: Comment[];
+  comments: CommentType[];
 };
 
 export type Threads = ThreadType[];

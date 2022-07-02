@@ -1,12 +1,13 @@
 .thread-answer {
-  display: grid;
-  grid-template-areas: "user user date"
-    ". message message";
-  grid-template-columns: 40px auto auto;
-  row-gap: 15px;
-  grid-template-columns: 1fr 85% 1fr;
-  border-bottom: 1px solid var(--beige);
-  padding-bottom: 30px;
+  margin-left: 25px;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__user {
     grid-area: user;
@@ -18,7 +19,8 @@
 
   &__message {
     margin: 0;
-    padding: 0;
+    padding: 20px 0 15px 50px;
     grid-area: message;
+    border-bottom: 1px solid var(--beige);
   }
 }
