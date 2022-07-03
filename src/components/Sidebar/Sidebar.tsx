@@ -1,6 +1,7 @@
 import React from 'react';
 import './Sidebar.pcss';
 import { NavLink } from 'react-router-dom';
+import { ThemesToggle } from 'components/ThemesToggle';
 import MenuItemGame from '../../../assets/menuItemGame.react.svg';
 import MenuItemForum from '../../../assets/menuItemForum.react.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
@@ -88,6 +89,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
             </li>
           );
         })}
+        <ThemesToggle />
       </ul>
       <div className="sidebar__collapse-icon">
         <CollapseIcon
