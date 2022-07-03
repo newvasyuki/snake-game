@@ -7,6 +7,7 @@ import { User } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
 import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
+import { DARK_MODE } from './actionTypes';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -198,3 +199,15 @@ export const setLeaders =
     }
     dispatch(setLeadersAction(collectedLeaders));
   };
+
+export const handledarkMode = (e: { theme: string }) => async (dispatch: TypedDispatch) => {
+  try {
+    // await changeTheme()
+    dispatch({
+      type: DARK_MODE,
+      payload: e,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
