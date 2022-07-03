@@ -200,12 +200,12 @@ export const setLeaders =
     dispatch(setLeadersAction(collectedLeaders));
   };
 
-export const handledarkMode = (e: { theme: string }) => async (dispatch: TypedDispatch) => {
+export const handleDarkMode = (isDarkMode: boolean) => async (dispatch: TypedDispatch) => {
   try {
     // await changeTheme()
     dispatch({
       type: DARK_MODE,
-      payload: e,
+      payload: { isDarkMode },
     });
   } catch (err) {
     console.error(err);

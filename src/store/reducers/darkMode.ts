@@ -1,4 +1,4 @@
-import { DARK_MODE } from 'store/actionTypes';
+import { DARK_MODE } from '../actionTypes';
 
 const initialState = {
   isDarkMode: false,
@@ -10,12 +10,12 @@ type ThemeToggleAction = {
 };
 
 const darkModeReducer = (state = initialState, action: ThemeToggleAction) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case DARK_MODE:
       return {
         ...state,
-        // getting value from the action file and changing isdarkMode State.
-        isdarkMode: action.payload,
+        isDarkMode: payload.isDarkMode,
       };
     default:
       return state;

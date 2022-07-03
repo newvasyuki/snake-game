@@ -1,19 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { useTypedDispatch } from 'store';
+import { darkMode } from 'store/selectors';
+import bemCn from 'bem-cn-lite';
+import { handleDarkMode } from '../../store/actionCreators';
 import './ThemesToggle.pcss';
 
 const ThemesToggle = () => {
-  const makeDark = () => {
-    document.documentElement.setAttribute('data-theme', 'dark');
+  const dispatch = useTypedDispatch();
+  const { isDarkMode } = useSelector(darkMode);
+
+  const switchDarkMode = () => {
+    dispatch(handleDarkMode(!isDarkMode));
   };
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', '');
+    }
+  }, [isDarkMode]);
+
+  const darkModeToggle = bemCn('darkmode-toggle');
+
   return (
-    <div id="darkmode">
-      <input type="checkbox" className="checkbox" id="checkbox" onClick={makeDark} />
-      <label htmlFor="checkbox" className="label">
+    <div className={darkModeToggle()}>
+      <input
+        type="checkbox"
+        className={darkModeToggle('checkbox')}
+        id="checkbox"
+        checked={isDarkMode}
+        onClick={switchDarkMode}
+      />
+      <label htmlFor="checkbox" className={darkModeToggle('label')}>
         <BsFillSunFill color="yellow" />
         <BsMoonStarsFill color="white" />
-        <div className="ball" />
+        <div className={darkModeToggle('ball')} />
       </label>
     </div>
   );
