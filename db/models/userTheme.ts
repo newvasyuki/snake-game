@@ -1,7 +1,6 @@
 import {
   Table,
   Model,
-  AutoIncrement,
   PrimaryKey,
   Column,
   DataType,
@@ -11,13 +10,12 @@ import {
 import { User } from './user';
 
 @Table({
+  schema: 'snakedb',
   timestamps: false,
   paranoid: true,
   tableName: 'user_theme',
 })
 export class UserTheme extends Model<UserTheme> {
-  @AutoIncrement
-  @PrimaryKey
   @Column(DataType.INTEGER)
   id: number;
 
@@ -28,11 +26,12 @@ export class UserTheme extends Model<UserTheme> {
   @Column(DataType.STRING)
   theme: string;
 
+  @PrimaryKey
   @ForeignKey(() => User)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
-    field: 'owner_id',
+    field: 'user_id',
   })
   ownerId: number;
 }

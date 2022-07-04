@@ -8,7 +8,7 @@ interface Query {
 }
 
 interface Params {
-  id: number;
+  id: string;
 }
 
 export async function setTheme(
@@ -16,7 +16,7 @@ export async function setTheme(
   res: Response,
   next: NextFunction,
 ) {
-  const themeId = (req.params as Params).id;
+  const themeId = parseInt((req.params as Params).id, 10);
   const userId = parseInt(req.query.userId, 10);
   let themeName = '';
   switch (themeId) {

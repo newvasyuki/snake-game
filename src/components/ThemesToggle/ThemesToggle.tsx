@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { BsMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { useTypedDispatch } from 'store';
-import { darkMode } from 'store/selectors';
+import { useTypedDispatch, useTypedSelector } from 'store';
+import { darkMode, selectUserData } from 'store/selectors';
 import bemCn from 'bem-cn-lite';
 import { handleDarkMode } from '../../store/actionCreators';
 import './ThemesToggle.pcss';
 
 const ThemesToggle = () => {
+  const user = useTypedSelector(selectUserData);
   const dispatch = useTypedDispatch();
   const { isDarkMode } = useSelector(darkMode);
 
   const switchDarkMode = () => {
-    dispatch(handleDarkMode(!isDarkMode));
+    dispatch(handleDarkMode(!isDarkMode, user.id));
   };
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const ThemesToggle = () => {
         id="checkbox"
         checked={isDarkMode}
         onClick={switchDarkMode}
+        onChange={(e) => {}}
       />
       <label htmlFor="checkbox" className={darkModeToggle('label')}>
         <BsFillSunFill color="yellow" />
