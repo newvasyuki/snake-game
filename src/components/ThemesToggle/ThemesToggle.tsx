@@ -40,7 +40,7 @@ const ThemesToggle = () => {
         id="checkbox"
         checked={isDarkMode}
         onClick={switchDarkMode}
-        onChange={(e) => {}}
+        onChange={() => {}}
       />
       <label htmlFor="checkbox" className={darkModeToggle('label')}>
         <BsFillSunFill color="yellow" />
