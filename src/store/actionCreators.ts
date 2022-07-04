@@ -1,4 +1,4 @@
-import { logoutForum } from 'api/forum';
+import { fetchForumTopics, logoutForum } from 'api/forum';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
@@ -7,6 +7,7 @@ import { User } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
 import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
+import { Topic } from './reducers/forum';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -66,6 +67,13 @@ const setLeadersAction = (leaders: Leaders) => {
   return {
     type: actionTypes.SET_LEADERS,
     payload: { leaders },
+  };
+};
+
+const setTopics = (topics: Topic[]) => {
+  return {
+    type: actionTypes.SET_TOPICS,
+    payload: { topics },
   };
 };
 
@@ -198,3 +206,11 @@ export const setLeaders =
     }
     dispatch(setLeadersAction(collectedLeaders));
   };
+
+export const getTopics = () => async (dispatch: TypedDispatch) => {
+  const fetchedTopics = await fetchForumTopics();
+
+  if (fetchedTopics) {
+    dispatch(setTopics(fetchedTopics));
+  }
+};
