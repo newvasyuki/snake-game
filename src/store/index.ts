@@ -1,5 +1,5 @@
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
-import { applyMiddleware, AnyAction, legacy_createStore } from 'redux';
+import { applyMiddleware, AnyAction, legacy_createStore, compose, Store } from 'redux';
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import rootReducer from './reducers/index';
 
@@ -11,7 +11,13 @@ export type TypedThunk<ReturnType = void> = ThunkAction<ReturnType, ReduxState, 
 export const useTypedDispatch = () => useDispatch<TypedDispatch>();
 export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
 
-export const configureStore = (initialState = {}) => {
-  const store = legacy_createStore(rootReducer, initialState, applyMiddleware(thunk));
+export const configureStore = (initialState = {}, composeEnhancers?: typeof compose) => {
+  let store: Store;
+
+  if (composeEnhancers) {
+    store = legacy_createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunk)));
+  } else {
+    store = legacy_createStore(rootReducer, initialState, applyMiddleware(thunk));
+  }
   return { store };
 };
