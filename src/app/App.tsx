@@ -20,7 +20,7 @@ const App = () => {
       <Route path={ROUTES.home} element={<ProtectedRoutes />}>
         <Route path={ROUTES.home} element={<Layout />}>
           <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
-          <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
+          <Route path={ROUTES.forum} element={<Forum />} />
           <Route path={ROUTES.rules} element={<Rules />} />
           <Route path={ROUTES.game} element={<GamePage />} />
           <Route path="*" element={<Error404 />} />

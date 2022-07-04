@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import bemCn from 'bem-cn-lite';
 import { Modal } from 'components/Modal/Modal';
-import { Navigation } from '../Navigation';
 import { AddButton } from '../AddButton';
 import { CreateTopicForm } from '../CreateTopic/CreateTopic';
 import './Header.pcss';
@@ -17,7 +16,6 @@ export const Header = () => {
 
   return (
     <div className={block()}>
-      <Navigation />
       <AddButton onClick={onButtonClick} />
       <Modal
         isOpen={isCreatedTopic}

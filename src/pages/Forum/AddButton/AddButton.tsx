@@ -11,6 +11,7 @@ type Props = Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
 export const AddButton: React.FC<Props> = ({ onClick }) => {
   return (
     <button type="button" aria-label="Добавить тему" className={block()} onClick={onClick}>
+      <span>Новая тема</span>
       <div className={block('icon-wrapper')}>
         <PlusIcon />
       </div>
