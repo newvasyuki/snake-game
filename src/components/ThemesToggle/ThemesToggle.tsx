@@ -13,12 +13,14 @@ const ThemesToggle = () => {
   const { isDarkMode } = useSelector(darkMode);
 
   const switchDarkMode = () => {
-    dispatch(handleDarkMode(!isDarkMode, user.id));
+    dispatch(handleDarkMode(!isDarkMode, user?.id));
   };
 
   useEffect(() => {
-    dispatch(getUserTheme(user.id));
-  }, [dispatch, user.id]);
+    if (user?.id) {
+      dispatch(getUserTheme(user.id));
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (isDarkMode) {

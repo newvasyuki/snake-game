@@ -203,7 +203,7 @@ export const setLeaders =
   };
 
 export const handleDarkMode =
-  (isDarkMode: boolean, userId: number) => async (dispatch: TypedDispatch) => {
+  (isDarkMode: boolean, userId?: number) => async (dispatch: TypedDispatch) => {
     try {
       const themeId = isDarkMode ? Themes.DARK : Themes.LIGHT;
       if (userId) {
