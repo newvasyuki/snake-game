@@ -1,4 +1,6 @@
 import { logoutForum } from 'api/forum';
+import { setUserTheme } from 'api/userTheme';
+import { Themes } from 'api/userTheme/types';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
@@ -200,14 +202,21 @@ export const setLeaders =
     dispatch(setLeadersAction(collectedLeaders));
   };
 
-export const handleDarkMode = (isDarkMode: boolean) => async (dispatch: TypedDispatch) => {
-  try {
-    // await changeTheme()
-    dispatch({
-      type: DARK_MODE,
-      payload: { isDarkMode },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-};
+export const handleDarkMode =
+  (isDarkMode: boolean, userId: number) => async (dispatch: TypedDispatch) => {
+    try {
+      let themeId = Themes.LIGHT;
+      if (isDarkMode) {
+        themeId = Themes.DARK;
+      }
+      if (userId) {
+        await setUserTheme(themeId, userId);
+      }
+      dispatch({
+        type: DARK_MODE,
+        payload: { isDarkMode },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };

@@ -1,11 +1,10 @@
+import { isError } from 'utils/types';
 import { SNAKE_SERVER_URL } from '../../constants';
-import { isError } from '../../utils/types';
-import { TopicData } from './types';
+import { Themes } from './types';
 
-export function postForumTopic(topicData: TopicData) {
-  return fetch(`${SNAKE_SERVER_URL}/forum/topics`, {
+export function setUserTheme(themeId: Themes, userId: number) {
+  return fetch(`${SNAKE_SERVER_URL}/theme/${themeId}?userId=${userId}`, {
     method: 'POST',
-    body: JSON.stringify(topicData),
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
@@ -15,18 +14,18 @@ export function postForumTopic(topicData: TopicData) {
       if (response.ok) {
         return response.text();
       }
-      throw new Error('Forum topic cannot be created');
+      throw new Error('Theme cannot be set for a user');
     })
     .catch((error: unknown) => {
       if (isError(error)) {
         console.error(error);
       }
+      throw error;
     });
 }
 
-export function logoutForum() {
-  return fetch(`${SNAKE_SERVER_URL}/forum/logout`, {
-    method: 'POST',
+export function getUserTheme(userId: number) {
+  return fetch(`${SNAKE_SERVER_URL}/theme?userId=${userId}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
@@ -36,11 +35,12 @@ export function logoutForum() {
       if (response.ok) {
         return response.text();
       }
-      throw new Error('Logout from forum faile');
+      throw new Error(`Cannot get a them for a user ${userId}`);
     })
     .catch((error: unknown) => {
       if (isError(error)) {
         console.error(error);
       }
+      throw error;
     });
 }
