@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
 import { ForumSubPage } from './ForumSubPage';
 import { Header } from './Header';
@@ -17,8 +17,7 @@ export const Forum = () => {
       <Header />
       <div className={block('inner-page-container')}>
         <Routes>
-          {/* подумать над реализацией перехода в топ при переходе в форум */}
-          <Route index element={Top} />
+          <Route index element={<Navigate to="top" />} />
           <Route path="top" element={Top} />
           <Route path="latest" element={Latest} />
         </Routes>
