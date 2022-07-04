@@ -31,7 +31,7 @@ export class UserTheme extends Model<UserTheme> {
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
-    field: 'user_id',
+    field: 'owner_id',
   })
   ownerId: number;
 }

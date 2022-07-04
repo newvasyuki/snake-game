@@ -24,7 +24,7 @@ export function setUserTheme(themeId: Themes, userId: number) {
     });
 }
 
-export function getUserTheme(userId: number) {
+export function getTheme(userId: number) {
   return fetch(`${SNAKE_SERVER_URL}/theme?userId=${userId}`, {
     credentials: 'include',
     headers: {
@@ -33,10 +33,11 @@ export function getUserTheme(userId: number) {
   })
     .then((response) => {
       if (response.ok) {
-        return response.text();
+        return response.json();
       }
       throw new Error(`Cannot get a them for a user ${userId}`);
     })
+    .then((data: { themeId: number }) => data)
     .catch((error: unknown) => {
       if (isError(error)) {
         console.error(error);

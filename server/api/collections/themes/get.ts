@@ -13,8 +13,8 @@ export async function getTheme(
 ) {
   try {
     const userId = parseInt(req.query.userId, 10);
-    const theme = await getThemeForUser(userId);
-    res.status(StatusCodes.SUCCESS).send(theme);
+    const themeId = await getThemeForUser(userId);
+    res.status(StatusCodes.SUCCESS).send({ themeId });
   } catch (err) {
     next(err);
   }

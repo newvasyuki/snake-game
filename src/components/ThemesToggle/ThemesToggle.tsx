@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useTypedDispatch, useTypedSelector } from 'store';
 import { darkMode, selectUserData } from 'store/selectors';
 import bemCn from 'bem-cn-lite';
-import { handleDarkMode } from '../../store/actionCreators';
+import { handleDarkMode, getUserTheme } from '../../store/actionCreators';
 import './ThemesToggle.pcss';
 
 const ThemesToggle = () => {
@@ -15,6 +15,10 @@ const ThemesToggle = () => {
   const switchDarkMode = () => {
     dispatch(handleDarkMode(!isDarkMode, user.id));
   };
+
+  useEffect(() => {
+    dispatch(getUserTheme(user.id));
+  }, [dispatch, user.id]);
 
   useEffect(() => {
     if (isDarkMode) {

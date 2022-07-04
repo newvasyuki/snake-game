@@ -22,6 +22,7 @@ export const getThemeForUser = async (userId: number) => {
     if (theme.length !== 1) {
       throw new Error('No themes or more than one theme is found for a user');
     }
+    return theme[0].id;
   } catch (err) {
     console.error(err);
     throw err;
