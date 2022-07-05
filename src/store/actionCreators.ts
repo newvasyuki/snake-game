@@ -1,4 +1,5 @@
-import { fetchForumTopics, logoutForum } from 'api/forum';
+import { fetchForumTopics, logoutForum, postForumTopic } from 'api/forum';
+import { TopicData } from 'api/forum/types';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
@@ -212,5 +213,15 @@ export const getTopics = () => async (dispatch: TypedDispatch) => {
 
   if (fetchedTopics) {
     dispatch(setTopics(fetchedTopics));
+  }
+};
+
+export const postTopic = (topicData: TopicData) => async (dispatch: TypedDispatch) => {
+  try {
+    await postForumTopic(topicData);
+
+    dispatch(getTopics());
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
 import { useForm } from 'react-hook-form';
+import { TopicData } from 'api/forum/types';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 
@@ -8,6 +9,7 @@ import './CreateTopic.pcss';
 
 type Props = {
   onCancel: () => void;
+  onSubmit: (data: TopicData) => void;
 };
 
 type FormValues = {
@@ -17,7 +19,7 @@ type FormValues = {
 
 const topicBlock = bemCn('create-topic');
 
-export const CreateTopicForm: React.FC<Props> = ({ onCancel }) => {
+export const CreateTopicForm: React.FC<Props> = ({ onCancel, onSubmit }) => {
   const {
     register,
     formState: { errors },
@@ -30,8 +32,10 @@ export const CreateTopicForm: React.FC<Props> = ({ onCancel }) => {
   });
 
   const formSubmitHandler = (data: FormValues) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+    onSubmit({
+      title: data.topic,
+      content: data.content,
+    });
   };
 
   return (
