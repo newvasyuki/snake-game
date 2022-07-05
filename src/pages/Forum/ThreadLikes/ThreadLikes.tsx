@@ -1,6 +1,6 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
-import HeartIcon from '../../../../assets/heart-icon.react.svg'; // по неизвестной причине тайпскрипт перестал понимать кастомные модули в компонентах форума
+import HeartIcon from '../../../../assets/heart-icon.react.svg';
 import './ThreadLikes.pcss';
 
 type Props = {
