@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import bemCn from 'bem-cn-lite';
 import { useTypedDispatch, useTypedSelector } from 'store';
-import { fetchForumTopics } from 'api/forum';
-import { ForumSubPage } from './ForumSubPage';
+// import { fetchForumTopics } from 'api/forum';
+import { ForumSubPage, NewForumSubPage } from './ForumSubPage';
 import { Header } from './Header';
-import { getMockThreads } from '../../mocks';
+// import { getMockThreads } from '../../mocks';
+import { getTopics } from '../../store/actionCreators';
 import './Forum.pcss';
 
 const block = bemCn('forum');
@@ -16,14 +17,15 @@ export const Forum = () => {
   console.log(threads);
 
   useEffect(() => {
-    dispatch(fetchForumTopics);
+    dispatch(getTopics());
   }, [dispatch]);
 
   return (
     <div className={block()}>
       <Header />
       <div className={block('inner-page-container')}>
-        <ForumSubPage threads={getMockThreads(1)} />
+        {/* <ForumSubPage threads={getMockThreads(1)} /> */}
+        <NewForumSubPage threads={threads} />
       </div>
     </div>
   );

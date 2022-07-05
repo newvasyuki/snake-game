@@ -6,6 +6,7 @@ export type Topic = {
   likes: number;
   date: string;
   userId: number;
+  id: string;
 };
 
 export type ForumState = {
@@ -26,7 +27,7 @@ const forumReducer = (state: ForumState = initialState, action: TopicsUpdateActi
     case SET_TOPICS:
       return {
         ...state,
-        leaders: payload.topics,
+        topics: payload.topics,
       };
     default:
       return state;
