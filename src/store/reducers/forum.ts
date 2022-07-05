@@ -1,3 +1,4 @@
+import { AnswerType } from 'pages/Forum/types';
 import { SET_TOPICS } from '../actionTypes';
 
 export type Topic = {
@@ -7,6 +8,7 @@ export type Topic = {
   date: string;
   userId: number;
   id: string;
+  answers?: AnswerType[];
 };
 
 export type ForumState = {

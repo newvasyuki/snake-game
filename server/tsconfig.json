@@ -1,11 +1,12 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["**/*"],
+  "exclude": ["../webpack-configs"],
+  // "include": ["**/*"],
   "compilerOptions": {
     "outDir": "../build/server-build",
     "target": "es2016",
     "module": "commonjs",
     "skipDefaultLibCheck": true,
-    "emitDecoratorMetadata": true, 
+    "emitDecoratorMetadata": true
   }
 }

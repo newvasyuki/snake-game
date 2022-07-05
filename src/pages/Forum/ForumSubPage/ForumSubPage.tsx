@@ -1,10 +1,11 @@
 import bemCn from 'bem-cn-lite';
 import React from 'react';
-import { Thread, ThreadType } from '../Thread';
+import { Topic } from '../../../store/reducers/forum';
+import { Thread } from '../Thread';
 import { ThreadList } from '../ThreadList';
 
 type Props = {
-  threads?: ThreadType[];
+  threads?: Topic[];
 };
 
 const block = bemCn('forum-sub-page');
