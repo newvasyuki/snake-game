@@ -1,4 +1,5 @@
-import { logoutForum } from 'api/forum';
+import { getForumTopics, logoutForum } from 'api/forum';
+import { Threads } from 'pages/Forum/types';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
@@ -69,10 +70,34 @@ const setLeadersAction = (leaders: Leaders) => {
   };
 };
 
+const setThreadsAction = (threads: Threads) => {
+  return {
+    type: actionTypes.SET_THREADS,
+    payload: { threads },
+  };
+};
+
 export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
     dispatch(setUserInfo({ loading: true }));
     const user = await userApi.getUserInfo();
+    if (user) {
+      dispatch(setUserInfo({ user, loading: false }));
+    } else {
+      throw new Error('User information was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+    dispatch(setUserInfo({ loading: false }));
+  }
+};
+
+export const setUserInfoByIdAsync = (id: number) => async (dispatch: TypedDispatch) => {
+  try {
+    const user = await userApi.getUserInfoById(id);
+    if (user) {
+      dispatch(setUserInfo({ user, loading: false }));
+    }
     if (user) {
       dispatch(setUserInfo({ user, loading: false }));
     } else {
@@ -198,3 +223,8 @@ export const setLeaders =
     }
     dispatch(setLeadersAction(collectedLeaders));
   };
+
+export const setThreads = () => async (dispatch: TypedDispatch) => {
+  const threads: Threads = await getForumTopics();
+  dispatch(setThreadsAction(threads));
+};
