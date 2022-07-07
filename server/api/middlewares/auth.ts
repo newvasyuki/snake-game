@@ -39,6 +39,7 @@ export async function authorizeUser(req: Request, res: Response, next: NextFunct
     req.session.user = data;
     next();
   } catch (err) {
+    console.error(err);
     if (axios.isAxiosError(err)) {
       return next(new ForbiddenError('User cannot be authorized'));
     }

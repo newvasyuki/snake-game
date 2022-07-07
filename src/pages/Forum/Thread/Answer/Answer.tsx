@@ -1,23 +1,38 @@
 import bemClassNameLite from 'bem-cn-lite';
+import { CommentType } from 'pages/Forum/types';
 import React from 'react';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
+import AnswerIcon from '../../../../../assets/answer-icon.react.svg';
 
 type Props = {
   userId: number;
   date: number;
-  message: string;
+  comment: CommentType;
 };
 
 const block = bemClassNameLite('thread-answer');
 
-export const Answer: React.FC<Props> = ({ userId, date, message }) => {
+export const Answer: React.FC<Props> = ({ userId, date, comment }) => {
+  const nestedComments = (comment.children || []).map((nestedComment) => {
+    return <Answer userId={comment.userId} date={comment.date} comment={nestedComment} />;
+  });
+
   return (
     <div className={block()}>
-      <UserInfo userId={userId} className={block('user')} />
-      <ThreadDate date={date} className={block('date')} />
-      <p className={block('message')}>{message}</p>
+      <div className={block('header')}>
+        <UserInfo userId={userId} className={block('user')} />
+        <ThreadDate date={date} className={block('date')} />
+      </div>
+      <p className={block('message')}>{comment.content}</p>
+      <div className={block('reply')}>
+        <div className={block('icon-wrapper')}>
+          <AnswerIcon />
+        </div>
+        <span>Ответить</span>
+      </div>
+      {nestedComments}
     </div>
   );
 };

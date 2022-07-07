@@ -11,7 +11,7 @@
     display: grid;
     grid-template-areas: "user user date"
       "likes content content"
-      ". answers answers";
+      ". . answers";
     align-items: center;
     grid-template-columns: 1fr 85% 1fr;
     row-gap: 10px;
@@ -19,6 +19,7 @@
     padding: 12px 28px 18px 20px;
     border: 1px dashed #CCBBAD;
     border-radius: 15px;
+    margin-top: 15px;
   }
 
   &__user {
@@ -40,5 +41,28 @@
 
   &__answers {
     grid-area: answers;
+  }
+
+  &__icon-wrapper {
+    svg {
+      fill: #72685D
+    }
+  }
+
+  &__reply {
+    margin: 0;
+    padding: 0;
+    font-family: var(--baseFont);
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    width: 120px;
+    align-items: center;
+    justify-content: space-around;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 }
