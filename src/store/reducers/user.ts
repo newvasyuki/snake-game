@@ -3,6 +3,7 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   SET_USER_INFO,
   UPDATE_USER,
+  SET_USER_INFO_BY_ID,
 } from '../actionTypes';
 import { User } from '../../api/user/types';
 
@@ -23,6 +24,12 @@ const userReducer = (state: UserState = initialState, action: UserInfoAction) =>
   const { type, payload } = action;
   switch (type) {
     case SET_USER_INFO:
+      return {
+        ...state,
+        user: payload.user,
+        isUserLoading: payload.loading ?? false,
+      };
+    case SET_USER_INFO_BY_ID:
       return {
         ...state,
         user: payload.user,

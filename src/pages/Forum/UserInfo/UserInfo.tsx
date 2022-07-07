@@ -1,7 +1,8 @@
-import { userApi } from 'api';
-import { User } from 'api/user/types';
 import bemCn from 'bem-cn-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useTypedDispatch, useTypedSelector } from 'store';
+import { setUserInfoByIdAsync } from 'store/actionCreators';
+import { selectUserData } from 'store/selectors';
 import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
@@ -13,25 +14,21 @@ type Props = {
 const block = bemCn('user-info');
 
 export const UserInfo = ({ userId, className }: Props) => {
-  const [userInfo, setUserInfo] = useState<User>(null);
-  const [userName, setUserName] = useState('');
+  const userInfo = useTypedSelector(selectUserData);
+  const dispatch = useTypedDispatch();
+
   useEffect(() => {
-    async function getUserInfoById(id: number) {
-      const res = await userApi.getUserInfoById(id);
-      if (res) {
-        setUserInfo(res);
-        setUserName(`${res?.first_name} ${res?.second_name[0]}`);
-      }
-    }
     if (userId) {
-      getUserInfoById(userId);
+      dispatch(setUserInfoByIdAsync(userId));
     }
-  }, [userId]);
+  }, [dispatch, userId]);
 
   return (
     <div className={block(null, className)}>
       <Avatar src={userInfo?.avatar} />
-      <span className={block('user-name')}>{userName}</span>
+      <span className={block('user-name')}>
+        {userInfo?.first_name} {userInfo?.second_name}
+      </span>
     </div>
   );
 };

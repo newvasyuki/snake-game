@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
-import { getForumTopics } from 'api/forum';
+import { setThreads } from 'store/actionCreators';
+import { selectThreads } from 'store/selectors';
 import { ForumSubPage } from './ForumSubPage';
 import { Header } from './Header';
 import './Forum.pcss';
-import { Threads } from './types';
-
-// const Top = <ForumSubPage threads={getMockThreads(1)} />;
-// const Latest = <ForumSubPage threads={getMockThreads(2)} />;
+import { useTypedDispatch, useTypedSelector } from '../../store';
 
 const block = bemCn('forum');
 
 export const Forum = () => {
-  const [threads, setThreads] = useState<Threads>([]);
+  const threads = useTypedSelector(selectThreads);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    async function getThreads() {
-      const result = await getForumTopics();
-      setThreads(result);
-    }
-
-    getThreads();
-  }, []);
+    dispatch(setThreads());
+  }, [dispatch]);
 
   return (
     <div className={block()}>
       <Header />
       <div className={block('inner-page-container')}>
         <Routes>
-          {/* подумать над реализацией перехода в топ при переходе в форум */}
           <Route index element={<ForumSubPage threads={threads} />} />
-          <Route path="top" element={<ForumSubPage threads={threads} />} />
+          {/* подумать над реализацией перехода в топ при переходе в форум */}
+          {/* <Route path="top" element={<ForumSubPage threads={threads} />} /> */}
           {/* <Route path="latest" element={Latest} /> */}
         </Routes>
       </div>

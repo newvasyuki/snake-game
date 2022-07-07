@@ -12,7 +12,7 @@ type LeadersUpdateAction = {
 
 const initialState = { leaders: [] };
 
-const authReducer = (state: LeadersState = initialState, action: LeadersUpdateAction) => {
+const leadersReducer = (state: LeadersState = initialState, action: LeadersUpdateAction) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -26,4 +26,4 @@ const authReducer = (state: LeadersState = initialState, action: LeadersUpdateAc
   }
 };
 
-export default authReducer;
+export default leadersReducer;
