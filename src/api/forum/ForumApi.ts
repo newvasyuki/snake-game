@@ -1,7 +1,7 @@
 import { Threads } from 'pages/Forum/types';
 import { FORUM_URL } from '../../constants';
 import { isError } from '../../utils/types';
-import { TopicData } from './types';
+import { CommentData, TopicData } from './types';
 
 export function getForumTopics(): Promise<Threads> {
   return fetch(`${FORUM_URL}/forum/topics`, {
@@ -62,6 +62,28 @@ export function logoutForum() {
         return response.text();
       }
       throw new Error('Logout from forum faile');
+    })
+    .catch((error: unknown) => {
+      if (isError(error)) {
+        console.error(error);
+      }
+    });
+}
+
+export function createForumComment(commentData: CommentData, userId: number) {
+  return fetch(`${FORUM_URL}/forum/topics/${commentData.topicId}/comments?userId=${userId}`, {
+    method: 'POST',
+    body: JSON.stringify(commentData),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.text();
+      }
+      throw new Error('Topic comment cannot be created');
     })
     .catch((error: unknown) => {
       if (isError(error)) {

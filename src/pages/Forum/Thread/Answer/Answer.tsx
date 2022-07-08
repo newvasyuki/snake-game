@@ -1,6 +1,11 @@
 import bemClassNameLite from 'bem-cn-lite';
 import { CommentType } from 'pages/Forum/types';
+import randomWords from 'random-words';
 import React from 'react';
+import { Button } from 'components/Button';
+import { setThreads } from 'store/actionCreators';
+import { createForumComment } from 'api/forum';
+import { useTypedDispatch } from 'store';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
@@ -10,13 +15,41 @@ type Props = {
   userId: number;
   date: number;
   comment: CommentType;
+  parentId: number;
+  topicId: number;
 };
 
 const block = bemClassNameLite('thread-answer');
 
-export const Answer: React.FC<Props> = ({ userId, date, comment }) => {
+export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parentId }) => {
+  const dispatch = useTypedDispatch();
+
+  const onAddComment = async () => {
+    try {
+      await createForumComment(
+        {
+          topicId,
+          parentId: comment.id,
+          content: randomWords(5).join(' '),
+        },
+        userId,
+      );
+      dispatch(setThreads());
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const nestedComments = (comment.children || []).map((nestedComment) => {
-    return <Answer userId={comment.userId} date={comment.date} comment={nestedComment} />;
+    return (
+      <Answer
+        userId={comment.userId}
+        date={comment.date}
+        comment={nestedComment}
+        parentId={comment.id}
+        topicId={topicId}
+      />
+    );
   });
 
   return (
@@ -30,7 +63,7 @@ export const Answer: React.FC<Props> = ({ userId, date, comment }) => {
         <div className={block('icon-wrapper')}>
           <AnswerIcon />
         </div>
-        <span>Ответить</span>
+        <Button onClick={onAddComment}>Ответить</Button>
       </div>
       {nestedComments}
     </div>
