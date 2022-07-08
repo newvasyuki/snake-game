@@ -27,8 +27,8 @@ export function getForumTopics(): Promise<Threads> {
     });
 }
 
-export function createForumTopic(topicData: TopicData) {
-  return fetch(`${FORUM_URL}/forum/topics`, {
+export function createForumTopic(topicData: TopicData, userId: number) {
+  return fetch(`${FORUM_URL}/forum/topics?userId=${userId}`, {
     method: 'POST',
     body: JSON.stringify(topicData),
     credentials: 'include',

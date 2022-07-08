@@ -4,24 +4,23 @@ import { saveCommentToDb } from './service';
 
 import { CommentInput } from './types';
 
-interface Query {
-  userId: string;
-}
-
 interface Params {
-  id: number;
+  id?: string;
+}
+interface Query {
+  userId?: string;
 }
 
 export async function createComment(
-  req: Request<unknown, unknown, unknown, Query>,
+  req: Request<Params, unknown, unknown, Query>,
   res: Response,
   next: NextFunction,
 ) {
   const comment = req.body as CommentInput;
   const { user } = req.session;
-  const { id } = req.params as Params;
+  const { id } = req.params;
   try {
-    await saveCommentToDb(comment, user.id, id);
+    await saveCommentToDb(comment, user.id, parseInt(id, 10));
     res.status(StatusCodes.SUCCESS).send();
     res.status(200).send();
   } catch (err) {
