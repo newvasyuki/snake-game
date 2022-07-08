@@ -43,12 +43,9 @@ export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parent
   const nestedComments = (comment.children || []).map((nestedComment) => {
     return (
       <Answer
-<<<<<<< HEAD
-        key={comment.id}
-=======
->>>>>>> 3518c279ac117f3e21a9905c28aba6c4999a99e0
-        userId={comment.userId}
-        date={comment.date}
+        key={nestedComment.id}
+        userId={nestedComment.userId}
+        date={nestedComment.date}
         comment={nestedComment}
         parentId={comment.id}
         topicId={topicId}
