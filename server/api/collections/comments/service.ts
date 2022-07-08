@@ -11,5 +11,6 @@ export const saveCommentToDb = async (comment: CommentInput, userId: number, id:
     content: comment.content,
     date: new Date().getTime(),
     userId,
+    parentId: comment.parentId,
   });
 };
