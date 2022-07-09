@@ -40,5 +40,6 @@ app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());
 app.use(API_V1, configureApiRouter(), [errorHandler]);
 app.use(render());
+// test
 
 export { app };
