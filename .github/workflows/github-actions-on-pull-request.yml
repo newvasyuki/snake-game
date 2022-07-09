@@ -5,7 +5,7 @@ on:
       - feature/sprint9/cicd
     types: [opened, synchronize]
 jobs:
-  Explore-GitHub-Actions:
+  Unit-test-frontend:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
