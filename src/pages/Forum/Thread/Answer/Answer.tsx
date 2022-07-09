@@ -6,13 +6,14 @@ import { Button } from 'components/Button';
 import { setThreads } from 'store/actionCreators';
 import { createForumComment } from 'api/forum';
 import { useTypedDispatch } from 'store';
+import { ForumUser } from 'api/user/types';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
 import AnswerIcon from '../../../../../assets/answer-icon.react.svg';
 
 type Props = {
-  userId: number;
+  user: ForumUser;
   date: number;
   comment: CommentType;
   parentId: number;
@@ -21,7 +22,7 @@ type Props = {
 
 const block = bemClassNameLite('thread-answer');
 
-export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parentId }) => {
+export const Answer: React.FC<Props> = ({ user, date, comment, topicId, parentId }) => {
   const dispatch = useTypedDispatch();
 
   const onAddComment = async () => {
@@ -32,7 +33,7 @@ export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parent
           parentId: comment.id,
           content: randomWords(5).join(' '),
         },
-        userId,
+        user.id,
       );
       dispatch(setThreads());
     } catch (e) {
@@ -44,7 +45,7 @@ export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parent
     return (
       <Answer
         key={nestedComment.id}
-        userId={nestedComment.userId}
+        user={nestedComment.user}
         date={nestedComment.date}
         comment={nestedComment}
         parentId={comment.id}
@@ -56,7 +57,7 @@ export const Answer: React.FC<Props> = ({ userId, date, comment, topicId, parent
   return (
     <div className={block()}>
       <div className={block('header')}>
-        <UserInfo userId={userId} className={block('user')} />
+        <UserInfo user={user} className={block('user')} />
         <ThreadDate date={date} className={block('date')} />
       </div>
       <p className={block('message')}>{comment.content}</p>

@@ -1,6 +1,7 @@
 import { Topic } from '../../../../db/models/topic';
 import { RawTopics, TopicInput, Topics, CommentWtihChildren } from './types';
 import { Comment } from '../../../../db/models/comment';
+import { User } from '../../../../db/models/user';
 
 function createTree(list: Comment[]) {
   if (list.length === 0) {
@@ -12,7 +13,7 @@ function createTree(list: Comment[]) {
       topicId: node.topicId,
       content: node.content,
       date: node.date,
-      userId: node.userId,
+      user: node.user,
       parentId: node.parentId,
       children: [],
     };
@@ -46,7 +47,7 @@ const postProcessTopics = (rawTopics: RawTopics) => {
         title: rawTopic.title,
         message: rawTopic.content,
       },
-      user: rawTopic.userId,
+      user: rawTopic.user,
       likes: rawTopic.likes,
       comments: createTree(rawTopic.comments),
     }),
@@ -55,7 +56,12 @@ const postProcessTopics = (rawTopics: RawTopics) => {
 };
 
 export const loadTopics = async () => {
-  const rawTopics = await Topic.findAll({ include: [Comment] });
+  const rawTopics = await Topic.findAll({
+    include: [
+      { model: Comment, include: [User] },
+      { model: User, required: false },
+    ],
+  });
   return postProcessTopics(rawTopics);
 };
 

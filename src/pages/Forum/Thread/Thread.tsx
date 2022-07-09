@@ -40,7 +40,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           parentId: null,
           content: randomWords(5).join(' '),
         },
-        user,
+        user.id,
       );
       dispatch(setThreads());
     } catch (e) {
@@ -51,7 +51,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   return (
     <div className={block()}>
       <div className={block('topic')}>
-        <UserInfo className={block('user')} userId={user} />
+        <UserInfo className={block('user')} user={user} />
         <ThreadDate className={block('date')} date={date} />
         <ThreadLikes
           className={block('likes')}
@@ -71,7 +71,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
       {comments.map((comment) => (
         <Answer
           key={comment.id}
-          userId={comment.userId}
+          user={comment.user}
           date={comment.date}
           comment={comment}
           parentId={comment.id}

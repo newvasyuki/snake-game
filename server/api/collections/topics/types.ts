@@ -1,4 +1,5 @@
 import { Comment } from '../../../../db/models/comment';
+import { User } from '../../../../db/models/user';
 
 export type TopicInput = {
   title: string;
@@ -12,7 +13,7 @@ export type RawTopic = {
   id: number;
   likes: number;
   title: string;
-  userId: number;
+  user: User;
   comments: Comment[];
 };
 
@@ -25,7 +26,7 @@ export type Topic = {
     title: string;
     message: string;
   };
-  user: number;
+  user: User;
   likes: number;
   comments: CommentWtihChildren[];
 };
@@ -37,7 +38,7 @@ export interface CommentWtihChildren {
   topicId: number;
   content: string;
   date: number;
-  userId: number;
+  user: User | string;
   parentId: number;
   children: Comment[];
 }

@@ -1,6 +1,6 @@
 import { BASE_URL } from '../../constants';
 import { UserFormData } from '../../pages/Profile/types';
-import { User, PasswordData } from './types';
+import { YandexUser, PasswordData } from './types';
 
 export class UserApi {
   private baseUrl: string;
@@ -20,7 +20,7 @@ export class UserApi {
         }
         throw new Error('Get user info failed');
       })
-      .then((userData: User) => userData)
+      .then((userData: YandexUser) => userData)
       .catch((error: unknown) => {
         console.error(error);
         throw error;
@@ -38,7 +38,7 @@ export class UserApi {
         }
         throw new Error('Get user info failed');
       })
-      .then((userData: User) => userData)
+      .then((userData: YandexUser) => userData)
       .catch((error: unknown) => {
         console.error(error);
       });
@@ -59,7 +59,7 @@ export class UserApi {
         }
         throw new Error('Change of the Profile failed');
       })
-      .then((data: User) => data)
+      .then((data: YandexUser) => data)
       .catch((error: unknown) => {
         console.error(error);
       });
@@ -83,7 +83,7 @@ export class UserApi {
         }
         throw new Error('Change of the Avatar failed');
       })
-      .then((user: User) => {
+      .then((user: YandexUser) => {
         return user;
       })
       .catch((error: unknown) => {

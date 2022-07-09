@@ -5,15 +5,15 @@ import {
   UPDATE_USER,
   SET_USER_INFO_BY_ID,
 } from '../actionTypes';
-import { User } from '../../api/user/types';
+import { YandexUser } from '../../api/user/types';
 
 type UserInfoAction = {
   type: string;
-  payload: { user: User; loading: boolean };
+  payload: { user: YandexUser; loading: boolean };
 };
 
 export type UserState = {
-  user: User | null;
+  user: YandexUser | null;
   isUserLoading: boolean | null;
   isPasswordChangeFailed: boolean;
 };

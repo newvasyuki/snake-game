@@ -10,9 +10,10 @@ type Props = {
 const block = bemCn('avatar');
 
 export const Avatar = ({ src }: Props) => {
+  const avatarPath = src ? `${RESOURCES_URL}/${src}` : '';
   return (
     <div className={block()}>
-      <img className={block('image')} src={`${RESOURCES_URL}/${src}`} alt="Аватар" />
+      <img className={block('image')} src={avatarPath} alt="Аватар" />
     </div>
   );
 };

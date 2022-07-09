@@ -4,7 +4,7 @@ import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
-import { User } from '../api/user/types';
+import { YandexUser } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
 import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
@@ -15,7 +15,7 @@ type FormDataChangePassword = {
 };
 
 type SetUserType = {
-  user?: User | null;
+  user?: YandexUser | null;
   loading?: boolean;
 };
 

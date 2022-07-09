@@ -1,34 +1,25 @@
+import { ForumUser } from 'api/user/types';
 import bemCn from 'bem-cn-lite';
-import React, { useEffect } from 'react';
-import { useTypedDispatch, useTypedSelector } from 'store';
-import { setUserInfoByIdAsync } from 'store/actionCreators';
-import { selectUserData } from 'store/selectors';
+import React from 'react';
 import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
 type Props = {
-  userId: number;
+  user: ForumUser;
   className?: string;
 };
 
 const block = bemCn('user-info');
 
-export const UserInfo = ({ userId, className }: Props) => {
-  const userInfo = useTypedSelector(selectUserData);
-  const dispatch = useTypedDispatch();
+const displayName = (user?: ForumUser) => {
+  return user?.displayName ?? `${user?.firstName} ${user?.secondName}`;
+};
 
-  useEffect(() => {
-    if (userId) {
-      dispatch(setUserInfoByIdAsync(userId));
-    }
-  }, [dispatch, userId]);
-
+export const UserInfo = ({ user, className }: Props) => {
   return (
     <div className={block(null, className)}>
-      <Avatar src={userInfo?.avatar} />
-      <span className={block('user-name')}>
-        {userInfo?.first_name} {userInfo?.second_name}
-      </span>
+      <Avatar src={user?.avatar} />
+      <span className={block('user-name')}>{displayName(user)}</span>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { StatusCodes } from '../../../utils/shared/constants';
+import { upsertUser } from '../users';
 import { saveCommentToDb } from './service';
 
 import { CommentInput } from './types';
@@ -20,6 +21,7 @@ export async function createComment(
   const { user } = req.session;
   const { id } = req.params;
   try {
+    await upsertUser(user);
     await saveCommentToDb(comment, user.id, parseInt(id, 10));
     res.status(StatusCodes.SUCCESS).send();
     res.status(200).send();

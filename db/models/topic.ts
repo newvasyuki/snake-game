@@ -10,6 +10,7 @@ import {
   Length,
   HasMany,
   ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { User } from './user';
 import { Comment } from './comment';
@@ -48,4 +49,7 @@ export class Topic extends Model<Topic> {
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, field: 'user_id' })
   userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 }

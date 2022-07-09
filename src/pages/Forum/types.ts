@@ -1,13 +1,11 @@
-import { User } from '../../api/user/types';
-
-export type ForumUser = Pick<User, 'avatar' | 'first_name' | 'second_name'>;
+import { ForumUser } from '../../api/user/types';
 
 export type CommentType = {
   id: number;
   topicId: number;
   content: string;
   date: number;
-  userId: number;
+  user: ForumUser;
   children: CommentType[];
   parentId: number;
 };
@@ -19,7 +17,7 @@ export type ThreadType = {
     title: string;
     message: string;
   };
-  user: number;
+  user: ForumUser;
   likes: number;
   comments: CommentType[];
 };

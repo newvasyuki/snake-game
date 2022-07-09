@@ -51,4 +51,7 @@ export class Comment extends Model<Comment> {
   @ForeignKey(() => Topic)
   @Column({ type: DataType.INTEGER, field: 'parent_id' })
   parentId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 }
