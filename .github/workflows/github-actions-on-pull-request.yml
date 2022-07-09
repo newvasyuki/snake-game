@@ -1,5 +1,9 @@
-name: GitHub Actions Demo
-on: [push]
+name: Create Pull Request
+on:
+  pull_request:
+    branches:
+      - feature/sprint9/cicd
+    types: [opened, synchronize]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
