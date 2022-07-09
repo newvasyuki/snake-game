@@ -97,9 +97,6 @@ export const setUserInfoByIdAsync = (id: number) => async (dispatch: TypedDispat
     const user = await userApi.getUserInfoById(id);
     if (user) {
       dispatch(setUserInfo({ user, loading: false }));
-    }
-    if (user) {
-      dispatch(setUserInfo({ user, loading: false }));
     } else {
       throw new Error('User information was not retrieved successfully');
     }
