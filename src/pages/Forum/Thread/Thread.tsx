@@ -12,7 +12,7 @@ import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
 import './Thread.pcss';
-import { ThreadType } from '../types';
+import { CommentType, ThreadType } from '../types';
 import AnswerIcon from '../../../../assets/answer-icon.react.svg';
 
 const block = bemCn('thread');
@@ -48,6 +48,15 @@ export const Thread: React.FC<Props> = ({ thread }) => {
     }
   };
 
+  const commentsCount = (treeLikeComments: CommentType[], count = 0) => {
+    // eslint-disable-next-line no-param-reassign
+    count = treeLikeComments.length;
+    if (count === 0) return 0;
+    // eslint-disable-next-line no-return-assign, no-param-reassign
+    treeLikeComments.forEach((comment) => (count += commentsCount(comment.children, count)));
+    return count;
+  };
+
   return (
     <div className={block()}>
       <div className={block('topic')}>
@@ -59,7 +68,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           likeClickHandler={() => setLikesCount((count) => count + 1)}
         />
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
-        <AnswersCount className={block('answers')} count={comments.length} />
+        <AnswersCount className={block('answers')} count={commentsCount(comments)} />
       </div>
       <div className={block('reply')}>
         <div className={block('icon-wrapper')}>
