@@ -53,5 +53,5 @@ export class Comment extends Model<Comment> {
   parentId: number;
 
   @BelongsTo(() => User)
-  user: User;
+  author: User;
 }

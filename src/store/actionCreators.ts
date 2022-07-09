@@ -224,7 +224,7 @@ export const setLeaders =
     dispatch(setLeadersAction(collectedLeaders));
   };
 
-export const setThreads = () => async (dispatch: TypedDispatch) => {
-  const threads: Threads = await getForumTopics();
+export const setThreads = (userId: number) => async (dispatch: TypedDispatch) => {
+  const threads: Threads = await getForumTopics(userId);
   dispatch(setThreadsAction(threads));
 };

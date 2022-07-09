@@ -5,15 +5,16 @@ import React from 'react';
 import { Button } from 'components/Button';
 import { setThreads } from 'store/actionCreators';
 import { createForumComment } from 'api/forum';
-import { useTypedDispatch } from 'store';
+import { useTypedDispatch, useTypedSelector } from 'store';
 import { ForumUser } from 'api/user/types';
+import { selectUserData } from 'store/selectors';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
 import './Answer.pcss';
 import AnswerIcon from '../../../../../assets/answer-icon.react.svg';
 
 type Props = {
-  user: ForumUser;
+  author: ForumUser;
   date: number;
   comment: CommentType;
   parentId: number;
@@ -22,8 +23,9 @@ type Props = {
 
 const block = bemClassNameLite('thread-answer');
 
-export const Answer: React.FC<Props> = ({ user, date, comment, topicId, parentId }) => {
+export const Answer: React.FC<Props> = ({ author, date, comment, topicId, parentId }) => {
   const dispatch = useTypedDispatch();
+  const user = useTypedSelector(selectUserData);
 
   const onAddComment = async () => {
     try {
@@ -35,7 +37,7 @@ export const Answer: React.FC<Props> = ({ user, date, comment, topicId, parentId
         },
         user.id,
       );
-      dispatch(setThreads());
+      dispatch(setThreads(user.id));
     } catch (e) {
       console.error(e);
     }
@@ -45,7 +47,7 @@ export const Answer: React.FC<Props> = ({ user, date, comment, topicId, parentId
     return (
       <Answer
         key={nestedComment.id}
-        user={nestedComment.user}
+        author={nestedComment.author}
         date={nestedComment.date}
         comment={nestedComment}
         parentId={comment.id}
@@ -57,7 +59,7 @@ export const Answer: React.FC<Props> = ({ user, date, comment, topicId, parentId
   return (
     <div className={block()}>
       <div className={block('header')}>
-        <UserInfo user={user} className={block('user')} />
+        <UserInfo user={author} className={block('user')} />
         <ThreadDate date={date} className={block('date')} />
       </div>
       <p className={block('message')}>{comment.content}</p>

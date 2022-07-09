@@ -3,8 +3,8 @@ import { FORUM_URL } from '../../constants';
 import { isError } from '../../utils/types';
 import { CommentData, TopicData } from './types';
 
-export function getForumTopics(): Promise<Threads> {
-  return fetch(`${FORUM_URL}/forum/topics`, {
+export function getForumTopics(userId): Promise<Threads> {
+  return fetch(`${FORUM_URL}/forum/topics?userId=${userId}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',

@@ -24,7 +24,7 @@ export const AddButton = () => {
         },
         user.id,
       );
-      dispatch(setThreads());
+      dispatch(setThreads(user.id));
     } catch (e) {
       console.error(e);
     }

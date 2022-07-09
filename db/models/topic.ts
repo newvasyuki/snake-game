@@ -51,5 +51,5 @@ export class Topic extends Model<Topic> {
   userId: number;
 
   @BelongsTo(() => User)
-  user: User;
+  author: User;
 }

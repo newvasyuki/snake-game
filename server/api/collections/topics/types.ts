@@ -13,7 +13,7 @@ export type RawTopic = {
   id: number;
   likes: number;
   title: string;
-  user: User;
+  author: User;
   comments: Comment[];
 };
 
@@ -26,7 +26,7 @@ export type Topic = {
     title: string;
     message: string;
   };
-  user: User;
+  author: User;
   likes: number;
   comments: CommentWtihChildren[];
 };
@@ -38,7 +38,7 @@ export interface CommentWtihChildren {
   topicId: number;
   content: string;
   date: number;
-  user: User | string;
+  author: User | string;
   parentId: number;
   children: Comment[];
 }

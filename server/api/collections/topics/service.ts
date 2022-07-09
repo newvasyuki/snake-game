@@ -13,7 +13,7 @@ function createTree(list: Comment[]) {
       topicId: node.topicId,
       content: node.content,
       date: node.date,
-      user: node.user,
+      author: node.author,
       parentId: node.parentId,
       children: [],
     };
@@ -47,7 +47,7 @@ const postProcessTopics = (rawTopics: RawTopics) => {
         title: rawTopic.title,
         message: rawTopic.content,
       },
-      user: rawTopic.user,
+      author: rawTopic.author,
       likes: rawTopic.likes,
       comments: createTree(rawTopic.comments),
     }),

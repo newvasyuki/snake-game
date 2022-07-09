@@ -5,7 +5,7 @@ export type CommentType = {
   topicId: number;
   content: string;
   date: number;
-  user: ForumUser;
+  author: ForumUser;
   children: CommentType[];
   parentId: number;
 };
@@ -17,7 +17,7 @@ export type ThreadType = {
     title: string;
     message: string;
   };
-  user: ForumUser;
+  author: ForumUser;
   likes: number;
   comments: CommentType[];
 };

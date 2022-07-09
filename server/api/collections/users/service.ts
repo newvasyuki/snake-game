@@ -13,3 +13,7 @@ export function upsertUser(user: User) {
     phone: user.phone,
   });
 }
+
+export async function findUserById(userId: number) {
+  return UserModel.findOne({ where: { id: userId } });
+}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { User } from '../../utils/shared/types';
 import { BASE_URL } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
+import { findUserById } from '../collections/users';
 
 interface Query {
   userId?: string;
@@ -24,7 +25,19 @@ export async function authorizeUser(
   next: NextFunction,
 ) {
   if (process.env.NODE_ENV === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
-    req.session.user = { ...mockedUser, id: parseInt(req.query.userId, 10) };
+    const userId = parseInt(req.query.userId, 10);
+    if (Number.isNaN(userId)) {
+      return next(new Error('User id cannot be read'));
+    }
+    const storedUser = await findUserById(userId);
+    req.session.user = storedUser
+      ? {
+          first_name: storedUser.firstName,
+          second_name: storedUser.secondName,
+          display_name: storedUser.displayName,
+          ...storedUser.get({ plain: true }),
+        }
+      : { ...mockedUser, id: userId };
     // для дев среды без форума пропускаем реальную авторизацию
     return next();
   }

@@ -3,8 +3,9 @@ import bemCn from 'bem-cn-lite';
 import { createForumComment } from 'api/forum';
 import randomWords from 'random-words';
 import { setThreads } from 'store/actionCreators';
-import { useTypedDispatch } from 'store';
+import { useTypedDispatch, useTypedSelector } from 'store';
 import { Button } from 'components/Button';
+import { selectUserData } from 'store/selectors';
 import { AnswersCount } from '../AnswersCount';
 import { ThreadDate } from '../ThreadDate';
 import { ThreadLikes } from '../ThreadLikes';
@@ -22,9 +23,10 @@ type Props = {
 };
 
 export const Thread: React.FC<Props> = ({ thread }) => {
-  const { user, content, comments, date, likes } = thread;
+  const { author, content, comments, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
   const dispatch = useTypedDispatch();
+  const user = useTypedSelector(selectUserData);
 
   useEffect(() => {
     if (thread.likes) {
@@ -42,7 +44,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
         },
         user.id,
       );
-      dispatch(setThreads());
+      dispatch(setThreads(user.id));
     } catch (e) {
       console.error(e);
     }
@@ -60,7 +62,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   return (
     <div className={block()}>
       <div className={block('topic')}>
-        <UserInfo className={block('user')} user={user} />
+        <UserInfo className={block('user')} user={author} />
         <ThreadDate className={block('date')} date={date} />
         <ThreadLikes
           className={block('likes')}
@@ -80,7 +82,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
       {comments.map((comment) => (
         <Answer
           key={comment.id}
-          user={comment.user}
+          author={comment.author}
           date={comment.date}
           comment={comment}
           parentId={comment.id}
