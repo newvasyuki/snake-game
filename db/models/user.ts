@@ -21,10 +21,6 @@ export class User extends Model<User> {
   @Column({ type: DataType.INTEGER, field: 'user_id' })
   id: number;
 
-  @AllowNull(true)
-  @Column(DataType.STRING)
-  avatar: string;
-
   @AllowNull(false)
   @Column({ type: DataType.STRING, field: 'first_name' })
   firstName: string;
@@ -32,4 +28,30 @@ export class User extends Model<User> {
   @AllowNull(false)
   @Column({ type: DataType.STRING, field: 'second_name' })
   secondName: string;
+
+  @AllowNull(true)
+  @Column({ type: DataType.STRING, field: 'display_name' })
+  displayName: string;
+
+  @AllowNull(false)
+  @Column({ type: DataType.STRING, field: 'login' })
+  login: string;
+
+  @AllowNull(true)
+  @Column({ type: DataType.STRING, field: 'avatar' })
+  avatar: string;
+
+  @AllowNull(false)
+  @Column({ type: DataType.STRING, field: 'email' })
+  email: string;
+
+  @AllowNull(true)
+  @Column({ type: DataType.STRING, field: 'phone' })
+  phone: string;
+
+  @HasMany(() => Topic)
+  topics: Topic[];
+
+  @HasMany(() => Comment)
+  comments: Comment[];
 }

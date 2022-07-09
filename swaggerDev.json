@@ -15,7 +15,17 @@
     "/forum/topics": {
       "get": {
         "tags": ["Topics"],
-        "summary": "Get all created topics in a forum",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "User unique Identifier",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "summary": "Get all created topics in the forum",
         "responses": {
           "200": {
             "description": "OK",
@@ -133,21 +143,32 @@
     },
     "Topic": {
       "properties": {
-        "title": {
-          "type": "string"
-        },
-        "content": {
-          "type": "string"
-        },
-        "likes": {
+        "id": {
           "type": "number"
         },
         "date": {
           "type": "string",
           "format": "date"
         },
-        "userId": {
+        "title": {  
+          "type": "string"
+        },
+        "content": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "likes": {
           "type": "number"
+        },
+        "author": {
+          "$ref": "#/definitions/Comment"
         }
       }
     },
@@ -168,6 +189,34 @@
         },
         "userId": {
           "type": "number"
+        }
+      }
+    },
+    "Author": {
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "secondName": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
         }
       }
     }
