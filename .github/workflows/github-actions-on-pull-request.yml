@@ -7,9 +7,14 @@ on:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+      with:
+        node-version: ${{ matrix.node-version }}
     - name: Set up node 
       uses: actions/setup-node@v1
     - name: Install dependencies
