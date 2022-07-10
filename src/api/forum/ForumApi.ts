@@ -1,10 +1,9 @@
 import { Threads } from 'pages/Forum/types';
-import { FORUM_URL } from '../../constants';
 import { isError } from '../../utils/types';
 import { CommentData, TopicData } from './types';
 
 export function getForumTopics(userId): Promise<Threads> {
-  return fetch(`${FORUM_URL}/forum/topics?userId=${userId}`, {
+  return fetch(`/forumAPI/topics?userId=${userId}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
@@ -28,7 +27,7 @@ export function getForumTopics(userId): Promise<Threads> {
 }
 
 export function createForumTopic(topicData: TopicData, userId: number) {
-  return fetch(`${FORUM_URL}/forum/topics?userId=${userId}`, {
+  return fetch(`/forumAPI/topics?userId=${userId}`, {
     method: 'POST',
     body: JSON.stringify(topicData),
     credentials: 'include',
@@ -50,7 +49,7 @@ export function createForumTopic(topicData: TopicData, userId: number) {
 }
 
 export function logoutForum() {
-  return fetch(`${FORUM_URL}/forum/logout`, {
+  return fetch(`/forumAPI/logout`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -71,7 +70,7 @@ export function logoutForum() {
 }
 
 export function createForumComment(commentData: CommentData, userId: number) {
-  return fetch(`${FORUM_URL}/forum/topics/${commentData.topicId}/comments?userId=${userId}`, {
+  return fetch(`/forumAPI/topics/${commentData.topicId}/comments?userId=${userId}`, {
     method: 'POST',
     body: JSON.stringify(commentData),
     credentials: 'include',
