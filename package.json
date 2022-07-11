@@ -128,7 +128,7 @@
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
       "\\.(css|pcss)$": "identity-obj-proxy",
-      "\\.svg": "<rootDir>/src/test-mocks/svg.js"
+      "\\.react.svg": "<rootDir>/src/test-mocks/svgrMock.js"
     }
   }
 }
