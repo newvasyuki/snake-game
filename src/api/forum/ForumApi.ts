@@ -50,7 +50,7 @@ export function createForumTopic(topicData: TopicData, userId: number) {
 }
 
 export function logoutForum() {
-  return fetch(`${SNAKE_SERVER_URL}/forum/logout`, {
+  return fetch(`${FORUM_URL}/forum/logout`, {
     method: 'POST',
     credentials: 'include',
     headers: {

@@ -1,5 +1,15 @@
 /* eslint-disable import/no-cycle */
-import { Model, Table, Column, DataType, PrimaryKey, AllowNull } from 'sequelize-typescript';
+import {
+  Model,
+  Table,
+  Column,
+  DataType,
+  PrimaryKey,
+  AllowNull,
+  HasMany,
+} from 'sequelize-typescript';
+import { Topic } from './topic';
+import { Comment } from './comment';
 
 @Table({
   schema: 'snakedb',
