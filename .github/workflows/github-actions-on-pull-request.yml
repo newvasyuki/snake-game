@@ -5,7 +5,7 @@ on:
       - feature/sprint9/cicd
     types: [opened, synchronize]
 jobs:
-  Explore-GitHub-Actions:
+  Run-unit-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
