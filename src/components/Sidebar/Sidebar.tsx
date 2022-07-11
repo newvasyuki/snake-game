@@ -51,29 +51,6 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
     onChangeSidebar(true);
   };
 
-  const activeStyle = {
-    Position: 'relative',
-    height: '3rem',
-    backgroundColor: 'var(--bittersweet)',
-    borderRadius: '0 0.6rem 0.6rem 0',
-    color: 'white',
-    display: 'flex',
-    FlexDirection: 'row',
-    alignItems: 'center',
-    TextDecoration: 'underline',
-    cursor: 'pointer',
-  };
-
-  const defaultStyle = {
-    Position: 'relative',
-    width: '17rem',
-    height: '3rem',
-    display: 'flex',
-    FlexDirection: 'row',
-    alignItems: 'center',
-    cursor: 'pointer',
-  };
-
   const blockRegPage = bemCn('sidebar');
 
   return (
@@ -87,7 +64,7 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
             <li key={item[1].uniqueId}>
               <NavLink
                 to={item[1].route}
-                style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
               >
                 <div className={blockRegPage('item-icon')}>{item[1].icon}</div>
                 <div className={isExpanded ? '' : blockRegPage('text_collapsed')}>
