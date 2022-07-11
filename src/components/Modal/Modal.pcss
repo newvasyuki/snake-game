@@ -15,4 +15,35 @@
 
 .modal__wrapper {
   margin: auto;
+  position: relative;
+}
+
+
+.modal__button {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 0;
+  width: 15px;
+  height: 15px;
+
+  &:before, &:after {
+    position: absolute;
+    content: '';
+    width: 2px;
+    height: 13px;
+    background-color: black;
+    top: 0;
+    left: 5px;
+
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
 }

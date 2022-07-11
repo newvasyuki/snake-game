@@ -1,5 +1,6 @@
 import { Threads } from 'pages/Forum/types';
 import {
+  CLEAR_FORUM_STATE,
   SET_ANSWERED_COMMENT_ID,
   SET_ANSWERED_THREAD_ID,
   SET_ANSWER_MODAL_STATUS,
@@ -7,7 +8,7 @@ import {
   SET_TOPIC_CREATE_MODAL_STATUS,
 } from '../actionTypes';
 
-export type ThreadsState = {
+export type ForumState = {
   isAnswerModalOpen: boolean;
   isTopicCreationModalOpen: boolean;
   answeredTopicId: number | null;
@@ -15,39 +16,32 @@ export type ThreadsState = {
   threads: Threads;
 };
 
-type ThreadsUpdateAction = {
-  type: typeof SET_THREADS;
-  payload: { threads: Threads };
+type Action<ActionType, PayloadType = null> = {
+  type: ActionType;
+  payload: PayloadType;
 };
 
-type AnswerModalUpdateAction = {
-  type: typeof SET_ANSWER_MODAL_STATUS;
-  payload: { isAnswerModalOpen: boolean };
-};
+type Payload<K extends keyof ForumState> = Record<K, ForumState[K]>;
 
-type TopicCreateModalUpdateAction = {
-  type: typeof SET_TOPIC_CREATE_MODAL_STATUS;
-  payload: { isTopicCreationModalOpen: boolean };
-};
-
-type TopicIdSetAction = {
-  type: typeof SET_ANSWERED_THREAD_ID;
-  payload: { answeredTopicId: number | null };
-};
-
-type CommentIdSetAction = {
-  type: typeof SET_ANSWERED_COMMENT_ID;
-  payload: { answeredCommentId: number | null };
-};
+type ThreadsUpdateAction = Action<typeof SET_THREADS, Payload<'threads'>>;
+type AnswerModalUpdateAction = Action<typeof SET_ANSWER_MODAL_STATUS, Payload<'isAnswerModalOpen'>>;
+type TopicCreateModalUpdateAction = Action<
+  typeof SET_TOPIC_CREATE_MODAL_STATUS,
+  Payload<'isTopicCreationModalOpen'>
+>;
+type TopicIdSetAction = Action<typeof SET_ANSWERED_THREAD_ID, Payload<'answeredTopicId'>>;
+type CommentIdSetAction = Action<typeof SET_ANSWERED_COMMENT_ID, Payload<'answeredCommentId'>>;
+type ClearStateAction = Action<typeof CLEAR_FORUM_STATE>;
 
 type ForumAction =
   | ThreadsUpdateAction
   | AnswerModalUpdateAction
   | TopicIdSetAction
   | CommentIdSetAction
-  | TopicCreateModalUpdateAction;
+  | TopicCreateModalUpdateAction
+  | ClearStateAction;
 
-const initialState: ThreadsState = {
+const initialState: ForumState = {
   threads: [],
   answeredCommentId: null,
   answeredTopicId: null,
@@ -55,7 +49,7 @@ const initialState: ThreadsState = {
   isTopicCreationModalOpen: false,
 };
 
-const forumReducer = (state: ThreadsState = initialState, action: ForumAction) => {
+const forumReducer = (state: ForumState = initialState, action: ForumAction) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -84,6 +78,8 @@ const forumReducer = (state: ThreadsState = initialState, action: ForumAction) =
         ...state,
         answeredCommentId: payload.answeredCommentId,
       };
+    case CLEAR_FORUM_STATE:
+      return initialState;
     default:
       return state;
   }

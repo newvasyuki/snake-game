@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
 import {
+  clearForumState,
   setAnsweredCommentIdAction,
   setAnsweredThreadIdAction,
   setAnswerModalStatusAction,
@@ -10,91 +11,108 @@ import {
 } from 'store/actionCreators';
 import { createForumComment, createForumTopic } from 'api/forum';
 import { TopicData } from 'api/forum/types';
-import { ReduxState, useTypedDispatch, useTypedSelector } from 'store';
-import { selectThreads, selectUserData } from 'store/selectors';
-import { Modal } from 'components/Modal/Modal';
-import randomWords from 'random-words';
+import { useTypedDispatch, useTypedSelector } from 'store';
+import {
+  selectCommentId,
+  selectIsAnswerModalOpen,
+  selectIsTopicCreateModalOpen,
+  selectThreads,
+  selectTopicId,
+  selectUserId,
+} from 'store/selectors';
+import { Modal } from 'components/Modal';
 import { ForumSubPage } from './ForumSubPage';
 import { Header } from './Header';
-import { CreateTopicForm } from './CreateTopic/CreateTopic';
+import { CreateTopicForm } from './CreateTopic';
+import { CreateAnswerForm } from './CreateAnswer';
 import './Forum.pcss';
-import { CreateAnswerForm } from './CreateAnswer/CreateAnswer';
 
 const block = bemCn('forum');
 
 export const Forum = () => {
-  const threads = useTypedSelector(selectThreads);
   const dispatch = useTypedDispatch();
-  const user = useTypedSelector(selectUserData);
-
-  const isCreatedTopic = useTypedSelector(
-    (store: ReduxState) => store.forumReducer.isTopicCreationModalOpen,
-  );
-  const isAnsweredTopic = useTypedSelector(
-    (store: ReduxState) => store.forumReducer.isAnswerModalOpen,
-  );
-  const topicId = useTypedSelector((store: ReduxState) => store.forumReducer.answeredTopicId);
-  const commentId = useTypedSelector((store: ReduxState) => store.forumReducer.answeredCommentId);
+  const threads = useTypedSelector(selectThreads);
+  const userId = useTypedSelector(selectUserId);
+  const topicId = useTypedSelector(selectTopicId);
+  const commentId = useTypedSelector(selectCommentId);
+  const isTopicCreateModalOpen = useTypedSelector(selectIsTopicCreateModalOpen);
+  const isAnsweredTopic = useTypedSelector(selectIsAnswerModalOpen);
 
   const root = useMemo(() => document.getElementById('root'), []);
 
   useEffect(() => {
-    dispatch(setThreads(user.id));
-  }, [dispatch, user]);
+    return () => {
+      dispatch(clearForumState());
+    };
+  }, [dispatch]);
 
-  const onAnswerModalClose = () => {
+  useEffect(() => {
+    dispatch(setThreads(userId));
+  }, [dispatch, userId]);
+
+  const onAnswerModalClose = useCallback(() => {
     dispatch(setAnsweredThreadIdAction(null));
     dispatch(setAnsweredCommentIdAction(null));
     dispatch(setAnswerModalStatusAction(false));
-  };
-
-  const onModalOpen = useCallback(() => {
-    dispatch(setTopicCreateModalStatusAction(true));
   }, [dispatch]);
 
-  const onModalClose = useCallback(() => {
-    dispatch(setTopicCreateModalStatusAction(false));
-  }, [dispatch]);
+  const toggleTopicCreateModal = useCallback(
+    (status: boolean) => {
+      dispatch(setTopicCreateModalStatusAction(status));
+    },
+    [dispatch],
+  );
 
   const onSubmitTopicCreation = useCallback(
     async (data: TopicData) => {
       try {
-        await createForumTopic(data, user.id);
-        dispatch(setThreads(user.id));
-        onModalClose();
+        await createForumTopic(data, userId);
+        dispatch(setThreads(userId));
+        toggleTopicCreateModal(false);
       } catch (e) {
         console.error(e);
       }
     },
-    [dispatch, onModalClose, user.id],
+    [dispatch, toggleTopicCreateModal, userId],
   );
 
-  const onSubmitAnswerCreation = async (data: TopicData) => {
-    try {
-      await createForumComment(
-        {
-          topicId,
-          parentId: commentId,
-          content: data.content,
-        },
-        user.id,
-      );
-      dispatch(setThreads(user.id));
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const onSubmitAnswerCreation = useCallback(
+    async (data: TopicData) => {
+      try {
+        await createForumComment(
+          {
+            topicId,
+            parentId: commentId,
+            content: data.content,
+          },
+          userId,
+        );
+        dispatch(setThreads(userId));
+        onAnswerModalClose();
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [dispatch, onAnswerModalClose, commentId, topicId, userId],
+  );
 
   return (
     <div className={block()}>
-      <Header onAddTopic={onModalOpen} />
-      <div className={block('inner-page-container')}>
+      <Header onAddTopic={() => toggleTopicCreateModal(true)} />
+      <div className={block('inner-page-container', { empty: !threads || !threads.length })}>
         <Routes>
           <Route index element={<ForumSubPage threads={threads} />} />
         </Routes>
       </div>
-      <Modal isOpen={isCreatedTopic} container={root} onClose={onModalClose}>
-        <CreateTopicForm onCancel={onModalClose} onSubmit={onSubmitTopicCreation} />
+      <Modal
+        isOpen={isTopicCreateModalOpen}
+        container={root}
+        onClose={() => toggleTopicCreateModal(false)}
+      >
+        <CreateTopicForm
+          onCancel={() => toggleTopicCreateModal(false)}
+          onSubmit={onSubmitTopicCreation}
+        />
       </Modal>
       <Modal isOpen={isAnsweredTopic} container={root} onClose={onAnswerModalClose}>
         <CreateAnswerForm onCancel={onAnswerModalClose} onSubmit={onSubmitAnswerCreation} />
