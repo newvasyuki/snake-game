@@ -9,9 +9,10 @@ import { ThreadLikes } from '../ThreadLikes';
 import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
-import './Thread.pcss';
 import { CommentType, ThreadType } from '../types';
 import AnswerIcon from '../../../../assets/answer-icon.react.svg';
+
+import './Thread.pcss';
 
 const block = bemCn('thread');
 
@@ -33,19 +34,6 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   const onAddComment = () => {
     dispatch(setAnsweredThreadIdAction(thread.id));
     dispatch(setAnswerModalStatusAction(true));
-    // try {
-    //   await createForumComment(
-    //     {
-    //       topicId: thread.id,
-    //       parentId: null,
-    //       content: randomWords(5).join(' '),
-    //     },
-    //     user.id,
-    //   );
-    //   dispatch(setThreads(user.id));
-    // } catch (e) {
-    //   console.error(e);
-    // }
   };
 
   const commentsCount = (treeLikeComments: CommentType[], count = 0) => {
@@ -83,7 +71,6 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           author={comment.author}
           date={comment.date}
           comment={comment}
-          parentId={comment.id}
           topicId={thread.id}
         />
       ))}

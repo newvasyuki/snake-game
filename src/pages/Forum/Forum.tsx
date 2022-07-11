@@ -8,11 +8,12 @@ import {
   setThreads,
   setTopicCreateModalStatusAction,
 } from 'store/actionCreators';
-import { createForumTopic } from 'api/forum';
+import { createForumComment, createForumTopic } from 'api/forum';
 import { TopicData } from 'api/forum/types';
 import { ReduxState, useTypedDispatch, useTypedSelector } from 'store';
 import { selectThreads, selectUserData } from 'store/selectors';
 import { Modal } from 'components/Modal/Modal';
+import randomWords from 'random-words';
 import { ForumSubPage } from './ForumSubPage';
 import { Header } from './Header';
 import { CreateTopicForm } from './CreateTopic/CreateTopic';
@@ -32,6 +33,8 @@ export const Forum = () => {
   const isAnsweredTopic = useTypedSelector(
     (store: ReduxState) => store.forumReducer.isAnswerModalOpen,
   );
+  const topicId = useTypedSelector((store: ReduxState) => store.forumReducer.answeredTopicId);
+  const commentId = useTypedSelector((store: ReduxState) => store.forumReducer.answeredCommentId);
 
   const root = useMemo(() => document.getElementById('root'), []);
 
@@ -66,6 +69,22 @@ export const Forum = () => {
     [dispatch, onModalClose, user.id],
   );
 
+  const onSubmitAnswerCreation = async (data: TopicData) => {
+    try {
+      await createForumComment(
+        {
+          topicId,
+          parentId: commentId,
+          content: data.content,
+        },
+        user.id,
+      );
+      dispatch(setThreads(user.id));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className={block()}>
       <Header onAddTopic={onModalOpen} />
@@ -78,7 +97,7 @@ export const Forum = () => {
         <CreateTopicForm onCancel={onModalClose} onSubmit={onSubmitTopicCreation} />
       </Modal>
       <Modal isOpen={isAnsweredTopic} container={root} onClose={onAnswerModalClose}>
-        <CreateAnswerForm onCancel={onAnswerModalClose} onSubmit={() => {}} />
+        <CreateAnswerForm onCancel={onAnswerModalClose} onSubmit={onSubmitAnswerCreation} />
       </Modal>
     </div>
   );

@@ -2,42 +2,35 @@ import bemClassNameLite from 'bem-cn-lite';
 import { CommentType } from 'pages/Forum/types';
 import React from 'react';
 import { Button } from 'components/Button';
-import { setAnswerModalStatusAction } from 'store/actionCreators';
+import {
+  setAnsweredCommentIdAction,
+  setAnsweredThreadIdAction,
+  setAnswerModalStatusAction,
+} from 'store/actionCreators';
 import { useTypedDispatch } from 'store';
 import { ForumUser } from 'api/user/types';
 import { ThreadDate } from '../../ThreadDate';
 import { UserInfo } from '../../UserInfo';
-import './Answer.pcss';
 import AnswerIcon from '../../../../../assets/answer-icon.react.svg';
+
+import './Answer.pcss';
 
 type Props = {
   author: ForumUser;
   date: number;
   comment: CommentType;
-  parentId: number;
   topicId: number;
 };
 
 const block = bemClassNameLite('thread-answer');
 
-export const Answer: React.FC<Props> = ({ author, date, comment, topicId, parentId }) => {
+export const Answer: React.FC<Props> = ({ author, date, comment, topicId }) => {
   const dispatch = useTypedDispatch();
 
   const onAddComment = () => {
+    dispatch(setAnsweredThreadIdAction(topicId));
+    dispatch(setAnsweredCommentIdAction(comment.id));
     dispatch(setAnswerModalStatusAction(true));
-    // try {
-    //   await createForumComment(
-    //     {
-    //       topicId,
-    //       parentId: comment.id,
-    //       content: randomWords(5).join(' '),
-    //     },
-    //     user.id,
-    //   );
-    //   dispatch(setThreads(user.id));
-    // } catch (e) {
-    //   console.error(e);
-    // }
   };
 
   const nestedComments = (comment.children || []).map((nestedComment) => {
@@ -47,7 +40,6 @@ export const Answer: React.FC<Props> = ({ author, date, comment, topicId, parent
         author={nestedComment.author}
         date={nestedComment.date}
         comment={nestedComment}
-        parentId={comment.id}
         topicId={topicId}
       />
     );
