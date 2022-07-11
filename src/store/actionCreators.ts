@@ -77,6 +77,34 @@ const setThreadsAction = (threads: Threads) => {
   };
 };
 
+export const setAnswerModalStatusAction = (isAnswerModalOpen: boolean) => {
+  return {
+    type: actionTypes.SET_ANSWER_MODAL_STATUS,
+    payload: { isAnswerModalOpen },
+  };
+};
+
+export const setTopicCreateModalStatusAction = (isTopicCreationModalOpen: boolean) => {
+  return {
+    type: actionTypes.SET_TOPIC_CREATE_MODAL_STATUS,
+    payload: { isTopicCreationModalOpen },
+  };
+};
+
+export const setAnsweredThreadIdAction = (answeredTopicId: number | null) => {
+  return {
+    type: actionTypes.SET_ANSWERED_THREAD_ID,
+    payload: { answeredTopicId },
+  };
+};
+
+export const setAnsweredCommentIdAction = (answeredCommentId: number | null) => {
+  return {
+    type: actionTypes.SET_ANSWERED_COMMENT_ID,
+    payload: { answeredCommentId },
+  };
+};
+
 export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
     dispatch(setUserInfo({ loading: true }));

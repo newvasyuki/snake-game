@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import bemCn from 'bem-cn-lite';
-import { createForumComment } from 'api/forum';
-import randomWords from 'random-words';
-import { setThreads } from 'store/actionCreators';
-import { useTypedDispatch, useTypedSelector } from 'store';
+import { setAnsweredThreadIdAction, setAnswerModalStatusAction } from 'store/actionCreators';
+import { useTypedDispatch } from 'store';
 import { Button } from 'components/Button';
-import { selectUserData } from 'store/selectors';
 import { AnswersCount } from '../AnswersCount';
 import { ThreadDate } from '../ThreadDate';
 import { ThreadLikes } from '../ThreadLikes';
@@ -26,7 +23,6 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   const { author, content, comments, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
   const dispatch = useTypedDispatch();
-  const user = useTypedSelector(selectUserData);
 
   useEffect(() => {
     if (thread.likes) {
@@ -34,20 +30,22 @@ export const Thread: React.FC<Props> = ({ thread }) => {
     }
   }, [thread]);
 
-  const onAddComment = async () => {
-    try {
-      await createForumComment(
-        {
-          topicId: thread.id,
-          parentId: null,
-          content: randomWords(5).join(' '),
-        },
-        user.id,
-      );
-      dispatch(setThreads(user.id));
-    } catch (e) {
-      console.error(e);
-    }
+  const onAddComment = () => {
+    dispatch(setAnsweredThreadIdAction(thread.id));
+    dispatch(setAnswerModalStatusAction(true));
+    // try {
+    //   await createForumComment(
+    //     {
+    //       topicId: thread.id,
+    //       parentId: null,
+    //       content: randomWords(5).join(' '),
+    //     },
+    //     user.id,
+    //   );
+    //   dispatch(setThreads(user.id));
+    // } catch (e) {
+    //   console.error(e);
+    // }
   };
 
   const commentsCount = (treeLikeComments: CommentType[], count = 0) => {
