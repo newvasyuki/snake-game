@@ -1,39 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import bemCn from 'bem-cn-lite';
-import './AddButton.pcss';
-import { createForumTopic } from 'api/forum';
-import randomWords from 'random-words';
-import { useTypedDispatch, useTypedSelector } from 'store';
-import { selectUserData } from 'store/selectors';
-import { setThreads } from 'store/actionCreators';
 import PlusIcon from '../../../../assets/plus-icon.react.svg';
+
+import './AddButton.pcss';
 
 const block = bemCn('add-button');
 
-export const AddButton = () => {
-  const user = useTypedSelector(selectUserData);
-  const dispatch = useTypedDispatch();
+type Props = Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
 
-  const onAddTopic = async () => {
-    try {
-      await createForumTopic(
-        {
-          title: randomWords(2).join(' '),
-          content: randomWords(5).join(' '),
-        },
-        user.id,
-      );
-      dispatch(setThreads(user.id));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+export const AddButton: React.FC<Props> = ({ onClick }) => {
   return (
-    <button type="button" aria-label="Добавить тему" className={block()}>
+    <button type="button" aria-label="Добавить тему" className={block()} onClick={onClick}>
+      <span>Новая тема</span>
       <div className={block('icon-wrapper')}>
-        <PlusIcon onClick={onAddTopic} />
+        <PlusIcon />
       </div>
     </button>
   );
