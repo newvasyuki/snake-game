@@ -1,3 +1,5 @@
+import { getTheme, setUserTheme } from 'api/userTheme';
+import { Themes } from 'api/userTheme/types';
 import { getForumTopics, logoutForum } from 'api/forum';
 import { Threads } from 'pages/Forum/types';
 import * as actionTypes from './actionTypes';
@@ -8,6 +10,7 @@ import { YandexUser } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
 import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
+import { DARK_MODE } from './actionTypes';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -220,6 +223,39 @@ export const setLeaders =
     }
     dispatch(setLeadersAction(collectedLeaders));
   };
+
+export const handleDarkMode =
+  (isDarkMode: boolean, userId?: number) => async (dispatch: TypedDispatch) => {
+    try {
+      const themeId = isDarkMode ? Themes.DARK : Themes.LIGHT;
+      if (userId) {
+        await setUserTheme(themeId, userId);
+      }
+      dispatch({
+        type: DARK_MODE,
+        payload: { isDarkMode },
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+export const getUserTheme = (userId: number) => async (dispatch: TypedDispatch) => {
+  try {
+    if (userId) {
+      const res = await getTheme(userId);
+      const isDarkMode = res.themeId === Themes.DARK;
+      dispatch({
+        type: DARK_MODE,
+        payload: { isDarkMode },
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
 
 export const setThreads = (userId: number) => async (dispatch: TypedDispatch) => {
   const threads: Threads = await getForumTopics(userId);

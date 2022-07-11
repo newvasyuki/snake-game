@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './Registration.pcss';
 import { useNavigate } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
+import { ThemesToggle } from 'components/ThemesToggle';
 import { registerUserAsync } from '../../store/actionCreators';
 import { useTypedDispatch, useTypedSelector } from '../../store';
 import { ROUTES } from '../../constants';
@@ -144,6 +145,7 @@ export const Registration = () => {
           </div>
         </div>
       </form>
+      <ThemesToggle />
     </div>
   );
 };

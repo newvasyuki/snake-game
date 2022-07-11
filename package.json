@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Game project by New Vasuyki team",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0",
+    "npm": "<=8.5.5"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production npm-run-all --print-label build start:server",
@@ -111,6 +112,7 @@
     "react-dom": "17.0.0",
     "react-hook-form": "7.30.0",
     "react-hot-loader": "4.13.0",
+    "react-icons": "^4.4.0",
     "react-redux": "8.0.1",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
