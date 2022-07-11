@@ -1,7 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import axios from 'axios';
 import { User } from '../../utils/shared/types';
-import { BASE_URL } from '../../utils/shared/constants';
+import { YANDEX_API } from '../../utils/shared/constants';
 import { ForbiddenError } from '../../utils/error/ForbiddenError';
 import { findUserById } from '../collections/users';
 
@@ -56,7 +56,7 @@ export async function authorizeUser(
         cookie: req.headers.cookie, // пробрасываем куку яндекса (authCookie)
       },
     };
-    const { data } = await axios.get<User>(`${BASE_URL}/auth/user`, opts);
+    const { data } = await axios.get<User>(`${YANDEX_API}/auth/user`, opts);
     req.session.user = data;
     next();
   } catch (err) {
