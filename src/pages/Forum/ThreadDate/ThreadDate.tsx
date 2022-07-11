@@ -3,14 +3,14 @@ import bemCn from 'bem-cn-lite';
 import './ThreadDate.pcss';
 
 type Props = {
-  date?: Date;
+  date: number;
   className?: string;
 };
 
 const block = bemCn('thread-date');
 
-export const ThreadDate = ({ date = new Date(), className }: Props) => {
-  const dateString = date.toLocaleDateString();
+export const ThreadDate = ({ date, className }: Props) => {
+  const dateString = new Date(date).toLocaleDateString();
 
   return (
     <time className={block(null, className)} dateTime={dateString}>

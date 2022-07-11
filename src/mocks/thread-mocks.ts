@@ -1,4 +1,3 @@
-import { ThreadType } from '../pages/Forum/Thread/Thread';
 import { mockUserData } from './user-mock';
 
 const mockText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, pariatur libero illo,
@@ -26,7 +25,7 @@ const mockAnswers = [
   },
 ];
 
-const getMockThread = (index: number): ThreadType => {
+const getMockThread = (index: number) => {
   return {
     id: String(index),
     date: new Date(),
@@ -36,10 +35,10 @@ const getMockThread = (index: number): ThreadType => {
     },
     user: mockUserData,
     likes: Math.round(Math.random() * 3000),
-    answers: mockAnswers,
+    comments: mockAnswers,
   };
 };
 
-export const getMockThreads = (count: number): ThreadType[] => {
+export const getMockThreads = (count: number) => {
   return new Array(count).fill(1).map((_, index) => getMockThread(index));
 };

@@ -1,6 +1,6 @@
+import { ForumUser } from 'api/user/types';
 import bemCn from 'bem-cn-lite';
-import React, { useMemo } from 'react';
-import { ForumUser } from '../types';
+import React from 'react';
 import { Avatar } from './Avatar';
 import './UserInfo.pcss';
 
@@ -11,13 +11,15 @@ type Props = {
 
 const block = bemCn('user-info');
 
-export const UserInfo = ({ user, className }: Props) => {
-  const userName = useMemo(() => `${user.first_name} ${user.second_name[0]}.`, [user]);
+const displayName = (user?: ForumUser) => {
+  return user?.displayName ?? `${user?.firstName} ${user?.secondName}`;
+};
 
+export const UserInfo = ({ user, className }: Props) => {
   return (
     <div className={block(null, className)}>
-      <Avatar src={user.avatar} />
-      <span className={block('user-name')}>{userName}</span>
+      <Avatar src={user?.avatar} />
+      <span className={block('user-name')}>{displayName(user)}</span>
     </div>
   );
 };

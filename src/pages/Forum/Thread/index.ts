@@ -1,1 +1,1 @@
-export { Thread, ThreadType, AnswerType } from './Thread';
+export { Thread } from './Thread';
