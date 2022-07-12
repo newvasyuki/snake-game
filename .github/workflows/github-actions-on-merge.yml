@@ -15,4 +15,8 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_YANDEX_PRIVATE_KEY }}
-        script: whoami
+        script: |
+          git pull git@github.com:newvasyuki/game.git
+          git checkout fix/sprint9/startintUpProd
+          docker compose down
+          docker compose up
