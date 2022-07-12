@@ -1,9 +1,12 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from 'components/Button';
+import * as yup from 'yup';
 
 import './CreateAnswer.pcss';
+import { Textarea } from 'components/Textarea/Textarea';
 
 type Props = {
   onCancel: () => void;
@@ -11,18 +14,26 @@ type Props = {
 };
 
 type FormValues = {
-  topic?: string;
   content: string;
 };
+
+const schema = yup.object({
+  content: yup.string().min(10).max(400),
+});
 
 const topicBlock = bemCn('create-answer');
 
 export const CreateAnswerForm: React.VFC<Props> = ({ onCancel, onSubmit }) => {
-  const { register, handleSubmit } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
-      topic: '',
       content: '',
     },
+    resolver: yupResolver(schema),
+    mode: 'all',
   });
 
   const formSubmitHandler = (data: FormValues) => {
@@ -34,7 +45,11 @@ export const CreateAnswerForm: React.VFC<Props> = ({ onCancel, onSubmit }) => {
   return (
     <form className={topicBlock()} onSubmit={handleSubmit(formSubmitHandler)}>
       <label htmlFor="content">Сообщение</label>
-      <textarea className={topicBlock('answer-content')} {...register('content')} />
+      <Textarea
+        className={topicBlock('answer-content')}
+        errorMessage={errors.content?.message}
+        {...register('content')}
+      />
       <Button type="submit" className={topicBlock('button')}>
         Ответить в теме
       </Button>
