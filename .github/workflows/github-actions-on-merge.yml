@@ -1,0 +1,18 @@
+name: On Merging Pull Request
+on:
+  pull_request:
+    branches:
+      - feature/sprint9/cicd
+    types: [opened, synchronize]
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_YANDEX_PRIVATE_KEY }}
+        script: whoami
