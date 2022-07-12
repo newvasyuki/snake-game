@@ -3,10 +3,12 @@ on:
   pull_request:
     branches:
       - feature/sprint9/cicd
-    types: [closed]
+    # todo: uncomment once dev test is done
+    # types: [closed]
+    types: [opened, synchronize]
 jobs:
   if_merged:
-    if: github.event.pull_request.merged
+    # if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
