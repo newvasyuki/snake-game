@@ -3,7 +3,7 @@ on:
   pull_request:
     branches:
       - feature/sprint9/cicd
-    types: [opened, synchronize]
+    types: [closed]
 jobs:
   if_merged:
     if: github.event.pull_request.merged
