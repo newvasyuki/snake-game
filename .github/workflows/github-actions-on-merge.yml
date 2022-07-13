@@ -17,6 +17,6 @@ jobs:
         key: ${{ secrets.SSH_YANDEX_PRIVATE_KEY }}
         script: |
           cd ~/game && git pull
-          git checkout fix/sprint9/startintUpProd
+          git checkout main
           docker compose down
-          docker compose up
+          docker compose up -d
