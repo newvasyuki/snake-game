@@ -1,13 +1,16 @@
 .forum {
   display: flex;
   flex-direction: column;
-  gap: 35px;
   width: 100%;
   padding: 50px 150px;
   box-sizing: border-box;
-  background-color: var(--floralWhite);
+  background-color: var(--main-background);
 
   &__inner-page-container {
     overflow: auto;
+
+    &_empty {
+      height: 100%;
+    }
   }
 }

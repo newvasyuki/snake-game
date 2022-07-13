@@ -36,12 +36,23 @@ const config = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(webp|png|jpe?g|gif)$/,
+        test: /\.(webp|png|jpe?g)$/,
         loader: 'null-loader',
       },
       {
         test: /\.(ttf|woff|woff2|eot)$/,
         loader: 'null-loader',
+      },
+      {
+        test: /\.(gif|mp3)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },

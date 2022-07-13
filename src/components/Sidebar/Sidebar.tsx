@@ -1,6 +1,8 @@
 import React from 'react';
 import './Sidebar.pcss';
 import { NavLink } from 'react-router-dom';
+import { ThemesToggle } from 'components/ThemesToggle';
+import bemCn from 'bem-cn-lite';
 import MenuItemGame from '../../../assets/menuItemGame.react.svg';
 import MenuItemForum from '../../../assets/menuItemForum.react.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
@@ -49,51 +51,36 @@ const Sidebar = ({ onChangeSidebar, isExpanded }: ChildProps) => {
     onChangeSidebar(true);
   };
 
-  const activeStyle = {
-    Position: 'relative',
-    height: '3rem',
-    backgroundColor: 'var(--bittersweet)',
-    borderRadius: '0 0.6rem 0.6rem 0',
-    color: 'white',
-    display: 'flex',
-    FlexDirection: 'row',
-    alignItems: 'center',
-    TextDecoration: 'underline',
-    cursor: 'pointer',
-  };
-
-  const defaultStyle = {
-    Position: 'relative',
-    width: '17rem',
-    height: '3rem',
-    display: 'flex',
-    FlexDirection: 'row',
-    alignItems: 'center',
-    cursor: 'pointer',
-  };
+  const blockRegPage = bemCn('sidebar');
 
   return (
-    <div className={isExpanded ? 'sidebar' : 'sidebar_collapsed'} data-testid="sidebar">
-      <ul className="sidebar__menu">
+    <div
+      className={isExpanded ? blockRegPage() : blockRegPage({ collapsed: true })}
+      data-testid="sidebar"
+    >
+      <ul className={blockRegPage('menu')}>
         {Object.entries(menuItems).map((item) => {
           return (
             <li key={item[1].uniqueId}>
               <NavLink
                 to={item[1].route}
-                style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
               >
-                <div className="sidebar__menu__item-icon">{item[1].icon}</div>
-                <div className={isExpanded ? '' : 'sidebar__text_collapsed'}>{item[1].label}</div>
+                <div className={blockRegPage('item-icon')}>{item[1].icon}</div>
+                <div className={isExpanded ? '' : blockRegPage('text_collapsed')}>
+                  {item[1].label}
+                </div>
               </NavLink>
             </li>
           );
         })}
+        <ThemesToggle />
       </ul>
-      <div className="sidebar__collapse-icon">
+      <div className={blockRegPage('collapse-icon')}>
         <CollapseIcon
           onClick={handleToggler}
-          data-testid="sidebar-collapse-btn"
-          className={isExpanded ? '' : 'sidebar__collapse-icon_collapsed'}
+          data-testid={blockRegPage('collapse-btn')}
+          className={isExpanded ? '' : blockRegPage('collapse-icon', { collapsed: true })}
         />
       </div>
     </div>

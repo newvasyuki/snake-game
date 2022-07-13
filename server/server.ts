@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import session from 'express-session';
 import swaggerUi, { JsonObject } from 'swagger-ui-express';
+import morgan from 'morgan';
 import render from './render';
 import { dbConnect } from '../db/init';
 import { configureApiRouter } from './api/routes/apiRouter';
@@ -14,7 +15,7 @@ const API_V1 = '/api/v1';
 
 const sess = {
   name: 'forumCookie',
-  secret: process.env.COOKIE_SECRET,
+  secret: process.env.COOKIE_SECRET ?? 'secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -35,6 +36,8 @@ if (app.get('env') === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10
 } else {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerProd as JsonObject));
 }
+app.use(morgan('combined'));
+
 app.use(session(sess));
 app.use(express.static(path.resolve(__dirname, '../../')));
 app.use(express.json());

@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../constants';
+import { YANDEX_API } from '../../constants';
 import { isError } from '../../utils/types';
 import { SignUpData, SignInData } from './types';
 
@@ -114,4 +114,4 @@ export class AuthApi {
   }
 }
 
-export const authApi = new AuthApi(BASE_URL);
+export const authApi = new AuthApi(YANDEX_API);

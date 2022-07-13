@@ -49,4 +49,7 @@ export class Topic extends Model<Topic> {
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, field: 'user_id' })
   userId: number;
+
+  @BelongsTo(() => User)
+  author: User;
 }

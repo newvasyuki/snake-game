@@ -1,12 +1,16 @@
-import { logoutForum } from 'api/forum';
+import { getTheme, setUserTheme } from 'api/userTheme';
+import { Themes } from 'api/userTheme/types';
+import { getForumTopics, logoutForum } from 'api/forum';
+import { Threads } from 'pages/Forum/types';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';
 import { TypedDispatch } from '.';
-import { User } from '../api/user/types';
+import { YandexUser } from '../api/user/types';
 import { OauthData } from '../api/auth/AuthApi';
 import { newLeader, getAllLeaderboard } from '../api/leaderBoard';
 import { Leaders } from '../pages/LeaderBoard/types';
+import { DARK_MODE } from './actionTypes';
 
 type FormDataChangePassword = {
   oldPassword: string;
@@ -14,7 +18,7 @@ type FormDataChangePassword = {
 };
 
 type SetUserType = {
-  user?: User | null;
+  user?: YandexUser | null;
   loading?: boolean;
 };
 
@@ -69,10 +73,53 @@ const setLeadersAction = (leaders: Leaders) => {
   };
 };
 
+const setThreadsAction = (threads: Threads) => ({
+  type: actionTypes.SET_THREADS,
+  payload: { threads },
+});
+
+export const setAnswerModalStatusAction = (isAnswerModalOpen: boolean) => ({
+  type: actionTypes.SET_ANSWER_MODAL_STATUS,
+  payload: { isAnswerModalOpen },
+});
+
+export const setTopicCreateModalStatusAction = (isTopicCreationModalOpen: boolean) => ({
+  type: actionTypes.SET_TOPIC_CREATE_MODAL_STATUS,
+  payload: { isTopicCreationModalOpen },
+});
+
+export const setAnsweredThreadIdAction = (answeredTopicId: number | null) => ({
+  type: actionTypes.SET_ANSWERED_THREAD_ID,
+  payload: { answeredTopicId },
+});
+
+export const setAnsweredCommentIdAction = (answeredCommentId: number | null) => ({
+  type: actionTypes.SET_ANSWERED_COMMENT_ID,
+  payload: { answeredCommentId },
+});
+
+export const clearForumState = () => ({
+  type: actionTypes.CLEAR_FORUM_STATE,
+});
+
 export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {
     dispatch(setUserInfo({ loading: true }));
     const user = await userApi.getUserInfo();
+    if (user) {
+      dispatch(setUserInfo({ user, loading: false }));
+    } else {
+      throw new Error('User information was not retrieved successfully');
+    }
+  } catch (e) {
+    console.error(e);
+    dispatch(setUserInfo({ loading: false }));
+  }
+};
+
+export const setUserInfoByIdAsync = (id: number) => async (dispatch: TypedDispatch) => {
+  try {
+    const user = await userApi.getUserInfoById(id);
     if (user) {
       dispatch(setUserInfo({ user, loading: false }));
     } else {
@@ -198,3 +245,41 @@ export const setLeaders =
     }
     dispatch(setLeadersAction(collectedLeaders));
   };
+
+export const handleDarkMode =
+  (isDarkMode: boolean, userId?: number) => async (dispatch: TypedDispatch) => {
+    try {
+      const themeId = isDarkMode ? Themes.DARK : Themes.LIGHT;
+      if (userId) {
+        await setUserTheme(themeId, userId);
+      }
+      dispatch({
+        type: DARK_MODE,
+        payload: { isDarkMode },
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+export const getUserTheme = (userId: number) => async (dispatch: TypedDispatch) => {
+  try {
+    if (userId) {
+      const res = await getTheme(userId);
+      const isDarkMode = res.themeId === Themes.DARK;
+      dispatch({
+        type: DARK_MODE,
+        payload: { isDarkMode },
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const setThreads = (userId: number) => async (dispatch: TypedDispatch) => {
+  const threads: Threads = await getForumTopics(userId);
+  dispatch(setThreadsAction(threads));
+};

@@ -28,7 +28,7 @@
 ## Запуск в докере и подключение к базе данных
 For production:
 
-`docker-compose -f docker-compose.yaml up`
+`docker-compose up -d`
 
 For developers:
 

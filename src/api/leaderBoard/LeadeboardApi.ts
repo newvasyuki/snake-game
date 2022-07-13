@@ -1,9 +1,9 @@
-import { BASE_URL } from '../../constants';
+import { YANDEX_API } from '../../constants';
 import { isError } from '../../utils/types';
 import { LeaderDataWithRatingField, GetAllLeaderBoard, LeadersResponse } from './types';
 
 export function newLeader(leaderData: LeaderDataWithRatingField) {
-  return fetch(`${BASE_URL}/leaderboard`, {
+  return fetch(`${YANDEX_API}/leaderboard`, {
     method: 'POST',
     body: JSON.stringify(leaderData),
     credentials: 'include',
@@ -26,7 +26,7 @@ export function newLeader(leaderData: LeaderDataWithRatingField) {
 }
 
 export function getAllLeaderboard(leaderboardAllData: GetAllLeaderBoard) {
-  return fetch(`${BASE_URL}/leaderboard/all`, {
+  return fetch(`${YANDEX_API}/leaderboard/all`, {
     method: 'POST',
     body: JSON.stringify(leaderboardAllData),
     credentials: 'include',

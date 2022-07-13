@@ -44,9 +44,33 @@
     flex-grow: 1;
     padding: 0;
     justify-content: center;
+    margin-right: 7px;
+
+    & .default {
+      position: relative;
+      width: 17rem;
+      height: 3rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    & .active {
+      position: relative;
+      height: 3rem;
+      background-color: var(--bittersweet);
+      border-radius: 0 0.6rem 0.6rem 0;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
-  &__menu__item-icon {
+  &__item-icon {
     margin: 0 2rem 0 1rem;
   }
 

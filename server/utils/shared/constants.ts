@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+export const YANDEX_API = 'https://ya-praktikum.tech/api/v2';
 
 export enum StatusCodes {
   SUCCESS = 200,

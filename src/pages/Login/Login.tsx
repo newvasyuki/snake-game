@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './Login.pcss';
 import { useNavigate } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
+import { ThemesToggle } from 'components/ThemesToggle';
 import Input from '../../components/Input/Input';
 import { Button } from '../../components/Button';
 import { signInUserAsync } from '../../store/actionCreators';
@@ -108,6 +109,7 @@ export const Login = () => {
           </div>
         </div>
       </form>
+      <ThemesToggle />
     </div>
   );
 };

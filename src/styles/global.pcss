@@ -8,19 +8,101 @@ body,
 }
 
 :root {
-  --sidebar-width: 20rem;
-  --sidebar-width-collapsed: 4rem;
-  --header-heigth: 4rem;
+  --sidebar-width: 270px;
+  --sidebar-width-collapsed: 65px;
+  --header-heigth: 65px;
   --gray: #999999;
+  --dark: #858585;
   --black: #000000;
   --beige: #CDC1B3;
+  --white: #FFFFFF;
+  --sidebar-dark: #2b313b;
+  --sidebar-dark-double: #1a1e23;
   --brightGray: #EAEAEA;
   --bittersweet: #F57C5F;
   --softOrange: #F59565;
   --middleYellow: #F0B17B;
   --springWood: #EEE4DA;
-  --floralWhite: #FBF8F1;
+  --main-background: #FBF8F1;
+  --dark-background: #1a1e23;
   --sandDune: #7C746B;
   --success: #13b20c;
+  --red: #ff0000;
+  --white: #ffffff;
   --baseFont: "Roboto", sans-serif;
+}
+
+html[data-theme='dark'] {
+  --main-background: var(--dark-background);
+  color: var(--white);
+
+  & .header {
+    background: var(--sidebar-dark);
+    border-bottom: none;
+
+    &__description {
+      --bittersweet: var(--dark);
+    }
+  }
+
+  & .profile-helper {
+    color: var(--white);
+  }
+
+  & .sidebar {
+    background: var(--sidebar-dark-double);
+  }
+
+  & .sidebar__menu .active {
+    background: var(--sidebar-dark);
+  }
+
+  & .progress__score,
+  & .progress__record {
+    color: var(--sandDune);
+  }
+
+  & .forum-nav-item,
+  & .thread-date {
+    color: var(--bittersweet);
+  }
+
+  & .profile-page__change-data-btn:hover,
+  & .profile-page__exit-btn:hover {
+    color: var(--white);
+    border-bottom-color: var(--white);
+  }
+
+  & .profile-page__sidebar,
+  & .change-password {
+    background-color: var(--sidebar-dark);
+  }
+
+  & .progress__score > span:first-child,
+  & .progress__record > span:first-child {
+    color: var(--dark);
+  }
+
+  & .game-page__game-screen,
+  & .start-button {
+    border-color: transparent;
+  }
+
+  & .login,
+  & .registration {
+    --springWood: var(--dark-background);
+  }
+
+  & .logo-wrapper {
+    --springWood: var(--sidebar-dark);
+  }
+
+  & .input {
+    color: var(--white);
+  }
+
+  & .login-form,
+  & .registration-form {
+    border-color: var(--dark);
+  }
 }

@@ -1,33 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import bemCn from 'bem-cn-lite';
+import { setAnsweredThreadIdAction, setAnswerModalStatusAction } from 'store/actionCreators';
+import { useTypedDispatch } from 'store';
+import { Button } from 'components/Button';
 import { AnswersCount } from '../AnswersCount';
 import { ThreadDate } from '../ThreadDate';
 import { ThreadLikes } from '../ThreadLikes';
 import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
-import { AnswersList } from './AnswersList';
+import { ThreadType } from '../types';
+import { getCommentsCount } from './utils';
+import AnswerIcon from '../../../../assets/answer-icon.react.svg';
+
 import './Thread.pcss';
-import { ForumUser } from '../types';
-
-export type AnswerType = {
-  id: string;
-  user: ForumUser;
-  date: Date;
-  message: string;
-};
-
-export type ThreadType = {
-  id: string;
-  user: ForumUser;
-  date: Date;
-  likes: number;
-  content: {
-    message: string;
-    title: string;
-  };
-  answers: AnswerType[];
-};
 
 const block = bemCn('thread');
 
@@ -36,8 +22,9 @@ type Props = {
 };
 
 export const Thread: React.FC<Props> = ({ thread }) => {
-  const { user, content, answers, date, likes } = thread;
+  const { author, content, comments, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     if (thread.likes) {
@@ -45,10 +32,15 @@ export const Thread: React.FC<Props> = ({ thread }) => {
     }
   }, [thread]);
 
+  const onAddComment = () => {
+    dispatch(setAnsweredThreadIdAction(thread.id));
+    dispatch(setAnswerModalStatusAction(true));
+  };
+
   return (
     <div className={block()}>
       <div className={block('topic')}>
-        <UserInfo className={block('user')} user={user} />
+        <UserInfo className={block('user')} user={author} />
         <ThreadDate className={block('date')} date={date} />
         <ThreadLikes
           className={block('likes')}
@@ -56,15 +48,24 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           likeClickHandler={() => setLikesCount((count) => count + 1)}
         />
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
-        <AnswersCount className={block('answers')} count={answers.length} />
+        <AnswersCount className={block('answers')} count={getCommentsCount(comments)} />
       </div>
-      <AnswersList>
-        {answers.map((answer) => (
-          <li key={answer.id}>
-            <Answer user={answer.user} date={answer.date} message={answer.message} />
-          </li>
-        ))}
-      </AnswersList>
+      <div className={block('reply')}>
+        <div className={block('icon-wrapper')}>
+          <AnswerIcon />
+        </div>
+        <Button onClick={onAddComment}>Ответить</Button>
+      </div>
+
+      {comments.map((comment) => (
+        <Answer
+          key={comment.id}
+          author={comment.author}
+          date={comment.date}
+          comment={comment}
+          topicId={thread.id}
+        />
+      ))}
     </div>
   );
 };
