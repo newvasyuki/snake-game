@@ -5,14 +5,9 @@ import path from 'path';
 import { app } from './server';
 
 const httpsOptions = {
-  key: null,
-  cert: null,
+  key: fs.readFileSync(path.resolve(__dirname, '../../../ssl/key.pem')),
+  cert: fs.readFileSync(path.resolve(__dirname, '../../../ssl/cert.pem')),
 };
-
-if (app.get('env') === 'development') {
-  httpsOptions.key = fs.readFileSync(path.resolve(__dirname, '../../../ssl/key.pem'));
-  httpsOptions.cert = fs.readFileSync(path.resolve(__dirname, '../../../ssl/cert.pem'));
-}
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 

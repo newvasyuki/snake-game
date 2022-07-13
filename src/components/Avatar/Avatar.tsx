@@ -17,8 +17,9 @@ const Avatar = (props: Props) => {
   useEffect(() => {
     if (userData) {
       if (userData.avatar) {
+        const url = `${RESOURCES_URL}/${userData.avatar}`.replace(/\s+/g, '%20');
         setAvatarDivStyle({
-          background: `url(${RESOURCES_URL}/${userData.avatar}) center center/cover`,
+          background: `url(${url}) center center/cover`,
         });
       }
     }

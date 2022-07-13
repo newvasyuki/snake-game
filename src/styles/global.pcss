@@ -8,9 +8,9 @@ body,
 }
 
 :root {
-  --sidebar-width: 20rem;
-  --sidebar-width-collapsed: 4rem;
-  --header-heigth: 4rem;
+  --sidebar-width: 270px;
+  --sidebar-width-collapsed: 65px;
+  --header-heigth: 65px;
   --gray: #999999;
   --dark: #858585;
   --black: #000000;
@@ -27,6 +27,8 @@ body,
   --dark-background: #1a1e23;
   --sandDune: #7C746B;
   --success: #13b20c;
+  --red: #ff0000;
+  --white: #ffffff;
   --baseFont: "Roboto", sans-serif;
 }
 
@@ -89,6 +91,10 @@ html[data-theme='dark'] {
   & .login,
   & .registration {
     --springWood: var(--dark-background);
+  }
+
+  & .logo-wrapper {
+    --springWood: var(--sidebar-dark);
   }
 
   & .input {
