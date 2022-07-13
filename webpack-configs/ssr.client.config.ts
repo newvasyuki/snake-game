@@ -43,6 +43,17 @@ const config = {
         test: /\.(ttf|woff|woff2|eot)$/,
         loader: 'null-loader',
       },
+      {
+        test: /\.(mp3)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   externals: [webpackNodeExternals()],
