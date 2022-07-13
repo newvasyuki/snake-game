@@ -1,6 +1,13 @@
 import { Food } from './Food';
 import { Snake } from './Snake';
 import { Size } from './types';
+import soundCollision from '../../../assets/sounds/collision.mp3';
+import soundStartGame from '../../../assets/sounds/start.mp3';
+import soundEndGame from '../../../assets/sounds/end.mp3';
+import soundUp from '../../../assets/sounds/up.mp3';
+import soundLeft from '../../../assets/sounds/left.mp3';
+import soundRight from '../../../assets/sounds/right.mp3';
+import soundDown from '../../../assets/sounds/down.mp3';
 
 type EventHandler<T = unknown> = (...args: T[]) => void;
 
@@ -42,6 +49,8 @@ export class Game {
 
   count: number;
 
+  sound: boolean;
+
   constructor(canvas: HTMLCanvasElement, canvasSize: Size, gridSize: Size) {
     this.status = GAME_STATUS.INITIAL;
     this.canvasRef = canvas;
@@ -51,6 +60,7 @@ export class Game {
     this.gridSize = gridSize;
     this.init();
     this.addEventListeners();
+    this.sound = true;
   }
 
   subscribeEvent(eventName: 'start' | 'end' | 'updateScore', cb: (...args) => void) {
@@ -69,7 +79,6 @@ export class Game {
     if (!this.listeners[eventName]) {
       return;
     }
-
     this.listeners[eventName].forEach((event) => event(...args));
   }
 
@@ -85,15 +94,19 @@ export class Game {
     switch (evt.key) {
       case 'ArrowDown':
         this.snake.changeDirection('down');
+        this.playEvent(soundDown);
         break;
       case 'ArrowUp':
         this.snake.changeDirection('up');
+        this.playEvent(soundUp);
         break;
       case 'ArrowLeft':
         this.snake.changeDirection('left');
+        this.playEvent(soundLeft);
         break;
       case 'ArrowRight':
         this.snake.changeDirection('right');
+        this.playEvent(soundRight);
         break;
       default:
     }
@@ -141,6 +154,8 @@ export class Game {
         !this.snake.isFoodEaten()
       ) {
         this.food.genFood();
+      } else if (this.snake.isFoodCoordsInsideSnake(this.food.x, this.food.y)) {
+        this.playEvent(soundCollision);
       }
 
       // змейка утопает на 1 клетку, иначе не получилось
@@ -153,6 +168,7 @@ export class Game {
       ) {
         // hit border stop the game
         this.resetGame();
+        this.playEvent(soundEndGame);
         return;
       }
       this.emit('updateScore', this.snake.getScore());
@@ -197,6 +213,7 @@ export class Game {
     this.msInterval = 500;
     this.startTime = performance.now();
     this.draw();
+    this.playEvent(soundStartGame);
   }
 
   pauseGame() {
@@ -208,5 +225,12 @@ export class Game {
   resetGame() {
     this.pauseGame();
     this.init();
+  }
+
+  playEvent(mp3File) {
+    if ('MediaSource' in window && this.sound) {
+      let sound: HTMLMediaElement = new Audio(mp3File);
+      sound.play().then(r => r);
+    }
   }
 }

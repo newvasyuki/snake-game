@@ -23,6 +23,8 @@ const GamePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const wrapperRef = useRef<HTMLDivElement>();
   const blockRef = useRef<HTMLDivElement>();
+  const buttonFullscreenRef = useRef<HTMLButtonElement>();
+  const buttonSoundRef = useRef<HTMLButtonElement>();
 
   const [game, setGame] = useState<Game>();
   const [width, setWidth] = useState<number>();
@@ -69,8 +71,20 @@ const GamePage = () => {
   const buttonFullScreen = () => {
     if (!document.fullscreenElement) {
       blockRef.current?.requestFullscreen();
+      buttonFullscreenRef.current.textContent = 'Exit fullscreen';
     } else {
       document?.exitFullscreen();
+      buttonFullscreenRef.current.textContent = 'Fullscreen';
+    }
+  };
+
+  const switchSound = () => {
+    if (game?.sound) {
+      game.sound = false;
+      buttonSoundRef.current.textContent = 'Sound OFF';
+    } else {
+      game.sound = true;
+      buttonSoundRef.current.textContent = 'Sound ON';
     }
   };
 
@@ -86,7 +100,7 @@ const GamePage = () => {
           />
         )}
       </div>
-      <div>
+      <div className={block('right-column')}>
         <Progress score={score} />
         <button
           type="button"
@@ -96,8 +110,17 @@ const GamePage = () => {
         >
           Pause
         </button>
-        <button type="button" className={block('btn-fullscreen')} onClick={buttonFullScreen}>
+        <button
+          type="button"
+          ref={buttonFullscreenRef}
+          onClick={buttonFullScreen}>
           Fullscreen
+        </button>
+        <button
+          type="button"
+          ref={buttonSoundRef}
+          onClick={switchSound}>
+          Sound ON
         </button>
       </div>
     </div>

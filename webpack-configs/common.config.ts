@@ -48,6 +48,17 @@ export const commonConfig: Configuration = {
         test: /\.(ttf|woff|woff2|eot)$/,
         type: 'asset/resource',
       },
+      {
+        test: /\.(mp3)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   devtool: isDev ? 'source-map' : false,
