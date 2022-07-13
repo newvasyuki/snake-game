@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import bemCn from 'bem-cn-lite';
-import { createForumComment } from 'api/forum';
-import randomWords from 'random-words';
-import { setThreads } from 'store/actionCreators';
-import { useTypedDispatch, useTypedSelector } from 'store';
+import { setAnsweredThreadIdAction, setAnswerModalStatusAction } from 'store/actionCreators';
+import { useTypedDispatch } from 'store';
 import { Button } from 'components/Button';
-import { selectUserData } from 'store/selectors';
 import { AnswersCount } from '../AnswersCount';
 import { ThreadDate } from '../ThreadDate';
 import { ThreadLikes } from '../ThreadLikes';
 import { UserInfo } from '../UserInfo';
 import { ThreadContent } from './ThreadContent';
 import { Answer } from './Answer';
-import './Thread.pcss';
-import { CommentType, ThreadType } from '../types';
+import { ThreadType } from '../types';
+import { getCommentsCount } from './utils';
 import AnswerIcon from '../../../../assets/answer-icon.react.svg';
+
+import './Thread.pcss';
 
 const block = bemCn('thread');
 
@@ -26,7 +25,6 @@ export const Thread: React.FC<Props> = ({ thread }) => {
   const { author, content, comments, date, likes } = thread;
   const [likesCount, setLikesCount] = useState(likes);
   const dispatch = useTypedDispatch();
-  const user = useTypedSelector(selectUserData);
 
   useEffect(() => {
     if (thread.likes) {
@@ -34,29 +32,9 @@ export const Thread: React.FC<Props> = ({ thread }) => {
     }
   }, [thread]);
 
-  const onAddComment = async () => {
-    try {
-      await createForumComment(
-        {
-          topicId: thread.id,
-          parentId: null,
-          content: randomWords(5).join(' '),
-        },
-        user.id,
-      );
-      dispatch(setThreads(user.id));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const commentsCount = (treeLikeComments: CommentType[], count = 0) => {
-    // eslint-disable-next-line no-param-reassign
-    count = treeLikeComments.length;
-    if (count === 0) return 0;
-    // eslint-disable-next-line no-return-assign, no-param-reassign
-    treeLikeComments.forEach((comment) => (count += commentsCount(comment.children, count)));
-    return count;
+  const onAddComment = () => {
+    dispatch(setAnsweredThreadIdAction(thread.id));
+    dispatch(setAnswerModalStatusAction(true));
   };
 
   return (
@@ -70,7 +48,7 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           likeClickHandler={() => setLikesCount((count) => count + 1)}
         />
         <ThreadContent className={block('content')} title={content.title} text={content.message} />
-        <AnswersCount className={block('answers')} count={commentsCount(comments)} />
+        <AnswersCount className={block('answers')} count={getCommentsCount(comments)} />
       </div>
       <div className={block('reply')}>
         <div className={block('icon-wrapper')}>
@@ -85,7 +63,6 @@ export const Thread: React.FC<Props> = ({ thread }) => {
           author={comment.author}
           date={comment.date}
           comment={comment}
-          parentId={comment.id}
           topicId={thread.id}
         />
       ))}

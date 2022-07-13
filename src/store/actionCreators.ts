@@ -73,12 +73,34 @@ const setLeadersAction = (leaders: Leaders) => {
   };
 };
 
-const setThreadsAction = (threads: Threads) => {
-  return {
-    type: actionTypes.SET_THREADS,
-    payload: { threads },
-  };
-};
+const setThreadsAction = (threads: Threads) => ({
+  type: actionTypes.SET_THREADS,
+  payload: { threads },
+});
+
+export const setAnswerModalStatusAction = (isAnswerModalOpen: boolean) => ({
+  type: actionTypes.SET_ANSWER_MODAL_STATUS,
+  payload: { isAnswerModalOpen },
+});
+
+export const setTopicCreateModalStatusAction = (isTopicCreationModalOpen: boolean) => ({
+  type: actionTypes.SET_TOPIC_CREATE_MODAL_STATUS,
+  payload: { isTopicCreationModalOpen },
+});
+
+export const setAnsweredThreadIdAction = (answeredTopicId: number | null) => ({
+  type: actionTypes.SET_ANSWERED_THREAD_ID,
+  payload: { answeredTopicId },
+});
+
+export const setAnsweredCommentIdAction = (answeredCommentId: number | null) => ({
+  type: actionTypes.SET_ANSWERED_COMMENT_ID,
+  payload: { answeredCommentId },
+});
+
+export const clearForumState = () => ({
+  type: actionTypes.CLEAR_FORUM_STATE,
+});
 
 export const setUserInfoAsync = () => async (dispatch: TypedDispatch) => {
   try {

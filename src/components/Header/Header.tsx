@@ -11,7 +11,7 @@ const Header = ({ isLogoSmall = false }: Props) => {
   return (
     <div className="header" data-testid="header">
       <Logo isSmall={isLogoSmall} />
-      <div className="header__description">Собери как можно длинную змейку!</div>
+      <div className="header__description">Собери самую длинную змейку!</div>
       <ProfileHelper />
     </div>
   );

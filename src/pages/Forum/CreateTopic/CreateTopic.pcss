@@ -1,0 +1,49 @@
+.create-topic {
+  width: 500px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  display: grid;
+  grid-template-rows: repeat(3, 20px) 100px repeat(2, 40px);
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--floralWhite);
+  font-family: var(--baseFont);
+  font-size: 14px;
+}
+
+.create-topic__topic-name {
+  width: 100%;
+  background-color: transparent;
+  box-sizing: border-box;
+
+  &:focus,
+  &:active {
+    border-bottom-color: var(--bittersweet);
+  }
+
+  &_error {
+    border-color: var(--red);
+  }
+}
+
+.create-topic__topic-content {
+  &_error {
+    border-color: var(--red);
+  }
+}
+
+.create-topic__button {
+  background-color: transparent;
+  border: 1px solid var(--beige);
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: inherit;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--bittersweet);
+  }
+}

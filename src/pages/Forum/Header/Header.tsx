@@ -1,16 +1,19 @@
 import React from 'react';
 import bemCn from 'bem-cn-lite';
-import { Navigation } from '../Navigation';
 import { AddButton } from '../AddButton';
+
 import './Header.pcss';
 
 const block = bemCn('forum-header');
 
-export const Header = () => {
+type Props = {
+  onAddTopic: () => void;
+};
+
+export const Header: React.VFC<Props> = ({ onAddTopic }) => {
   return (
     <div className={block()}>
-      <Navigation />
-      <AddButton />
+      <AddButton onClick={onAddTopic} />
     </div>
   );
 };
