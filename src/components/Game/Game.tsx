@@ -227,10 +227,10 @@ export class Game {
     this.init();
   }
 
-  playEvent(mp3File) {
+  playEvent(mp3File: string) {
     if ('MediaSource' in window && this.sound) {
-      let sound: HTMLMediaElement = new Audio(mp3File);
-      sound.play().then(r => r);
+      const sound: HTMLMediaElement = new Audio(mp3File);
+      sound.play().then((r) => r);
     }
   }
 }

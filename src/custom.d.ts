@@ -13,4 +13,7 @@ declare module '*.gif' {
   export default src;
 }
 
-declare module '*.mp3';
+declare module '*.mp3' {
+  const src: string;
+  export default src;
+}

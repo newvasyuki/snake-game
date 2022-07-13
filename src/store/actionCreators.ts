@@ -1,7 +1,7 @@
-import { getTheme, setUserTheme } from 'api/userTheme';
-import { Themes } from 'api/userTheme/types';
-import { getForumTopics, logoutForum } from 'api/forum';
 import { Threads } from 'pages/Forum/types';
+import { getForumTopics, logoutForum } from '../api/forum';
+import { Themes } from '../api/userTheme/types';
+import { getTheme, setUserTheme } from '../api/userTheme';
 import * as actionTypes from './actionTypes';
 import { SignUpData, authApi, userApi, SignInData } from '../api';
 import { UserFormData } from '../pages/Profile/types';

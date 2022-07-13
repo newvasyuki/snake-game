@@ -13,7 +13,7 @@ import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
 import { Rules } from '../pages/Rules';
-import { MainPage } from "../pages/MainPage";
+import { MainPage } from '../pages/MainPage';
 
 const App = () => {
   return (
