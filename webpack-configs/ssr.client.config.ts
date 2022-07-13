@@ -40,22 +40,11 @@ const config = {
         loader: 'null-loader',
       },
       {
-        test: /\.(gif)/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            },
-          },
-        ],
-      },
-      {
         test: /\.(ttf|woff|woff2|eot)$/,
         loader: 'null-loader',
       },
       {
-        test: /\.(mp3)/,
+        test: /\.(gif|mp3)$/,
         use: [
           {
             loader: 'file-loader',

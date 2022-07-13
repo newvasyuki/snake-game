@@ -49,18 +49,7 @@ export const commonConfig: Configuration = {
         type: 'asset/resource',
       },
       {
-        test: /\.(gif)/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(mp3)/,
+        test: /\.(gif|mp3)$/,
         use: [
           {
             loader: 'file-loader',
