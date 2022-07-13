@@ -41,12 +41,23 @@ export const commonConfig: Configuration = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(webp|png|jpe?g|gif)$/,
+        test: /\.(webp|png|jpe?g)$/,
         type: 'asset/resource',
       },
       {
         test: /\.(ttf|woff|woff2|eot)$/,
         type: 'asset/resource',
+      },
+      {
+        test: /\.(gif)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.(mp3)/,
