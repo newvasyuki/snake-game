@@ -15,7 +15,7 @@ if (app.get('env') === 'development') {
 }
 
 const port = parseInt(process.env.PORT, 10) || 5000;
-// test 1 2 3 4 5
+// test 1 2 3 4 5 6
 if (app.get('env') === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
   // создаем приложение без авторизации ручек форума
   app.listen(port, () => {
