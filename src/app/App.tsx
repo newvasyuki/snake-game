@@ -13,12 +13,14 @@ import { ProtectedRoutes } from '../components/ProtectedRoutes';
 import { PublicRoutes } from '../components/PublicRoutes';
 import { Login } from '../pages/Login';
 import { Rules } from '../pages/Rules';
+import { MainPage } from "../pages/MainPage";
 
 const App = () => {
   return (
     <Routes>
       <Route path={ROUTES.home} element={<ProtectedRoutes />}>
         <Route path={ROUTES.home} element={<Layout />}>
+          <Route index element={<MainPage />} />
           <Route path={ROUTES.leaderboard} element={<LeaderBoard />} />
           <Route path={`${ROUTES.forum}/*`} element={<Forum />} />
           <Route path={ROUTES.rules} element={<Rules />} />
