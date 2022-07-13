@@ -2,7 +2,7 @@ name: Create Pull Request
 on:
   pull_request:
     branches:
-      - feature/sprint9/cicd
+      - main
     types: [opened, synchronize]
 jobs:
   Run-unit-tests:
