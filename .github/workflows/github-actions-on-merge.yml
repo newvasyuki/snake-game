@@ -1,0 +1,25 @@
+name: On Merging Pull Request
+on:
+  pull_request:
+    branches:
+      - feature/sprint9/cicd
+    # todo: uncomment once dev test is done
+    # types: [closed]
+    types: [opened, synchronize]
+jobs:
+  if_merged:
+    # if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_YANDEX_PRIVATE_KEY }}
+        script: |
+          cd ~/game
+          git pull
+          git checkout fix/sprint9/startintUpProd
+          docker compose down
+          docker compose up
