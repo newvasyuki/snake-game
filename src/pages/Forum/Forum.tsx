@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
 import {
@@ -50,51 +50,42 @@ export const Forum = () => {
     dispatch(setThreads(userId));
   }, [dispatch, userId]);
 
-  const onAnswerModalClose = useCallback(() => {
+  const onAnswerModalClose = () => {
     dispatch(setAnsweredThreadIdAction(null));
     dispatch(setAnsweredCommentIdAction(null));
     dispatch(setAnswerModalStatusAction(false));
-  }, [dispatch]);
+  };
 
-  const toggleTopicCreateModal = useCallback(
-    (status: boolean) => {
-      dispatch(setTopicCreateModalStatusAction(status));
-    },
-    [dispatch],
-  );
+  const toggleTopicCreateModal = (status: boolean) => {
+    dispatch(setTopicCreateModalStatusAction(status));
+  };
 
-  const onSubmitTopicCreation = useCallback(
-    async (data: TopicData) => {
-      try {
-        await createForumTopic(data, userId);
-        dispatch(setThreads(userId));
-        toggleTopicCreateModal(false);
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [dispatch, toggleTopicCreateModal, userId],
-  );
+  const onSubmitTopicCreation = async (data: TopicData) => {
+    try {
+      await createForumTopic(data, userId);
+      dispatch(setThreads(userId));
+      toggleTopicCreateModal(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-  const onSubmitAnswerCreation = useCallback(
-    async (data: TopicData) => {
-      try {
-        await createForumComment(
-          {
-            topicId,
-            parentId: commentId,
-            content: data.content,
-          },
-          userId,
-        );
-        dispatch(setThreads(userId));
-        onAnswerModalClose();
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [dispatch, onAnswerModalClose, commentId, topicId, userId],
-  );
+  const onSubmitAnswerCreation = async (data: TopicData) => {
+    try {
+      await createForumComment(
+        {
+          topicId,
+          parentId: commentId,
+          content: data.content,
+        },
+        userId,
+      );
+      dispatch(setThreads(userId));
+      onAnswerModalClose();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className={block()}>
