@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../constants';
+import { YANDEX_API } from '../../constants';
 import { UserFormData } from '../../pages/Profile/types';
 import { YandexUser, PasswordData } from './types';
 
@@ -114,4 +114,4 @@ export class UserApi {
   }
 }
 
-export const userApi = new UserApi(BASE_URL);
+export const userApi = new UserApi(YANDEX_API);

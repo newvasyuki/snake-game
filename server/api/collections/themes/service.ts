@@ -14,15 +14,12 @@ export const setThemeForUser = async (
 
 export const getThemeForUser = async (userId: number) => {
   try {
-    const theme = await UserTheme.findAll({
+    const theme = await UserTheme.findOne({
       where: {
         ownerId: userId,
       },
     });
-    if (theme.length !== 1) {
-      throw new Error('No themes or more than one theme is found for a user');
-    }
-    return theme[0].id;
+    return theme.id;
   } catch (err) {
     console.error(err);
     throw err;

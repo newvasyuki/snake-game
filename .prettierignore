@@ -1,2 +1,3 @@
 #игнорируем css потому что eslit-prettier не хочет работать с древней версией stylelint
 *.pcss
+./build

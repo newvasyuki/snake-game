@@ -1,9 +1,9 @@
 import { isError } from 'utils/types';
-import { FORUM_URL } from '../../constants';
+import { APP_API } from '../../constants';
 import { Themes } from './types';
 
 export function setUserTheme(themeId: Themes, userId: number) {
-  return fetch(`${FORUM_URL}/theme/${themeId}?userId=${userId}`, {
+  return fetch(`${APP_API}/theme/${themeId}?userId=${userId}`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -25,7 +25,7 @@ export function setUserTheme(themeId: Themes, userId: number) {
 }
 
 export function getTheme(userId: number) {
-  return fetch(`${FORUM_URL}/theme?userId=${userId}`, {
+  return fetch(`${APP_API}/theme?userId=${userId}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
