@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.pcss';
 import { NavLink } from 'react-router-dom';
 import bemCn from 'bem-cn-lite';
-import { ThemesToggle } from 'components/ThemesToggle';
+import { ThemesToggle } from '../ThemesToggle';
 import MenuItemGame from '../../../assets/menuItemGame.react.svg';
 import MenuItemForum from '../../../assets/menuItemForum.react.svg';
 import MenuItemLeaders from '../../../assets/menuItemLeaders.react.svg';
