@@ -23,6 +23,7 @@ const GamePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const wrapperRef = useRef<HTMLDivElement>();
   const blockRef = useRef<HTMLDivElement>();
+  const buttonRef = useRef<HTMLButtonElement>();
 
   const [game, setGame] = useState<Game>();
   const [width, setWidth] = useState<number>();
@@ -69,8 +70,10 @@ const GamePage = () => {
   const buttonFullScreen = () => {
     if (!document.fullscreenElement) {
       blockRef.current?.requestFullscreen();
+      buttonRef.current.textContent = 'Exit fullscreen';
     } else {
       document?.exitFullscreen();
+      buttonRef.current.textContent = 'Fullscreen';
     }
   };
 
@@ -96,7 +99,7 @@ const GamePage = () => {
         >
           Pause
         </button>
-        <button type="button" className={block('btn-fullscreen')} onClick={buttonFullScreen}>
+        <button type="button" ref={buttonRef} className={block('btn-fullscreen')} onClick={buttonFullScreen}>
           Fullscreen
         </button>
       </div>
