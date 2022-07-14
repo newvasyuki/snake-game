@@ -27,7 +27,8 @@ jobs:
             cd ${{ github.event.repository.name }}
             git pull --rebase
           else
-            git clone git@github.com:newvasyuki/game.git
+            git clone git@github.com:newvasyuki/${{ github.event.repository.name }}.git
+            cd ${{ github.event.repository.name }}
           fi
           docker compose down
           docker compose up --build -d
