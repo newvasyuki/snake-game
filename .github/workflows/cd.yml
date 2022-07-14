@@ -1,9 +1,13 @@
 name: On Merging Pull Request
 on:
   pull_request:
+  # todo: uncomment once dev test is done 
     branches:
-      - main
-    types: [closed]
+      - furtherImprovementsToBranch
+    types: [opened, synchronize]
+    # branches:
+    #   - main
+    # types: [closed]
 jobs:
   if_merged:
     if: github.event.pull_request.merged
@@ -16,6 +20,15 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_YANDEX_PRIVATE_KEY }}
         script: |
-          cd ~/game && git checkout main && git pull
+          mkdir -p ~/projects
+          cd ~/projects
+          if [ -d "${{ github.event.repository.name }}" ]; then
+            echo "Directory already exists"
+            cd ${{ github.event.repository.name }}
+            git pull --rebase
+          else
+            git clone git@github.com:newvasyuki/game.git
+          fi
           docker compose down
           docker compose up --build -d
+          echo 'Deployment to server succesful!'
