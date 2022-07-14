@@ -10,6 +10,7 @@ const httpsOptions = {
 };
 
 const port = parseInt(process.env.PORT, 10) || 5000;
+// test 1
 
 if (app.get('env') === 'development' && parseInt(process.env.SKIP_FORUM_AUTH, 10)) {
   // создаем приложение без авторизации ручек форума
