@@ -23,4 +23,4 @@ ReactDOM.hydrate(
   document.getElementById('root'),
 );
 
-startServiceWorker();
+// startServiceWorker(); // пока отключил ибо не работает стабильно

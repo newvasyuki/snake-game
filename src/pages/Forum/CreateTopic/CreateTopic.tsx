@@ -22,7 +22,7 @@ type FormValues = {
 
 const schema = yup.object({
   content: yup.string().min(10).max(400),
-  topic: yup.string().min(5).max(10),
+  topic: yup.string().min(5).max(40),
 });
 
 const topicBlock = bemCn('create-topic');
