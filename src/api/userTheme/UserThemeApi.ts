@@ -1,4 +1,4 @@
-import { isError } from 'utils/types';
+import { isError } from '../../utils/types';
 import { APP_API } from '../../constants';
 import { Themes } from './types';
 

@@ -110,16 +110,10 @@ const GamePage = () => {
         >
           Pause
         </button>
-        <button
-          type="button"
-          ref={buttonFullscreenRef}
-          onClick={buttonFullScreen}>
+        <button type="button" ref={buttonFullscreenRef} onClick={buttonFullScreen}>
           Fullscreen
         </button>
-        <button
-          type="button"
-          ref={buttonSoundRef}
-          onClick={switchSound}>
+        <button type="button" ref={buttonSoundRef} onClick={switchSound}>
           Sound ON
         </button>
       </div>

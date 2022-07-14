@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BsMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { useTypedDispatch, useTypedSelector } from 'store';
-import { darkMode, selectUserData } from 'store/selectors';
 import bemCn from 'bem-cn-lite';
+import { useTypedSelector, useTypedDispatch } from '../../store';
+import { darkMode, selectUserData } from '../../store/selectors';
 import { handleDarkMode, getUserTheme } from '../../store/actionCreators';
 import './ThemesToggle.pcss';
 
