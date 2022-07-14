@@ -95,7 +95,7 @@ export class AuthApi {
 
   getClientIdOAuth(redirectUri: string) {
     const queryParams = new URLSearchParams({
-      service_id: redirectUri,
+      redirect_uri: redirectUri,
     });
     return fetch(`${this.baseUrl}/oauth/yandex/service-id?${queryParams}`)
       .then((response) => {

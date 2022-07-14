@@ -49,11 +49,13 @@ export const Login = () => {
   const blockRegForm = bemCn('login-form');
 
   const onYandexAuth = async () => {
-    const redirectUrl = `${window.location.origin}/`;
+    const redirectUrl = `${window.location.origin}`;
     const clientId = await authApi.getClientIdOAuth(redirectUrl);
-    window.location.replace(
-      `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}`,
-    );
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}`
+        : `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}`;
+    window.location.replace(url);
   };
 
   return (
