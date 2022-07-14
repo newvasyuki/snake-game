@@ -10,7 +10,7 @@ on:
     # types: [closed]
 jobs:
   if_merged:
-    if: github.event.pull_request.merged
+    # if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
