@@ -3,7 +3,7 @@ on:
   pull_request:
   # todo: uncomment once dev test is done 
     branches:
-      - furtherImprovementsToBranch
+      - fix/sprint9/furtherImprovementsToBranch
     types: [opened, synchronize]
     # branches:
     #   - main
