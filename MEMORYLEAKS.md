@@ -1,7 +1,7 @@
-## Утечка памяти (memory leak)
+## memory leaks
 
-После проверки приложения в Developer Tools браузера 
-Google Chrome (вкладка Performance) утечек памяти не обнаружено.
+After inspecting the application in the browser's Developer Tools
+Google Chrome (Performance tab) found no memory leaks.
 
-Тестирование проходило в течение двух минут, отчёт расположен 
-в корне репозитория под названием snake-memory.json
+Testing took place within two minutes, the report is located
+at the root of the repository called snake-memory.json
