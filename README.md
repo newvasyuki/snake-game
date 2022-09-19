@@ -96,9 +96,15 @@ In both cases, you can connect to the database from the host machine, for exampl
 5. [Swagger](https://snake.ya-praktikum.tech:5000/api-docs) available for testing endpoints
 
 ## Snaphsots
+<<<<<<< HEAD
 ![Login page](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/login.png)
 ![Game interface](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/game.png)
 ![Game interface dark theme](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/game_dark_theme.png)
+=======
+[Login page](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/login.png)
+[Game interface](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/game.png)
+[Game interface dark theme](https://raw.githubusercontent.com/newvasyuki/snake-game/ba571515b32cc5cb2cf3105187f78d8e72766437/assets/snapshots/game_dark_theme.png)
+>>>>>>> 7a6d9907dedbfa65412563896177206f2736bef7
 ## About team
 
 The project was made by
